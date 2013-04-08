@@ -1,0 +1,179 @@
+\documentclass[a4paper,11pt,oneside]{book}
+
+\usepackage[utf8]{inputenc}
+%\usepackage{pslatex}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage[ngerman]{babel}
+%\usepackage{ps4pdf}
+%\PSforPDF{
+	\usepackage{pstricks}
+	\usepackage{pst-all}
+	\usepackage{multido}
+	\usepackage{pst-plot}
+	\usepackage{pst-3dplot}
+%}
+%\usepackage{pdftricks}
+\usepackage{hyperref}
+\usepackage[mathscr]{euscript}
+\usepackage{makeidx}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage[cmtip,arrow]{xy}
+\usepackage{pb-diagram,pb-xy}
+\usepackage{breqn}
+\usepackage{dsfont}
+%\usepackage{bbold}
+%\usepackage[active]{preview}
+\usepackage{stackrel}
+
+% Theoreme
+%\theoremstyle{plain}
+\newtheorem{satz}{Satz}[chapter]
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{theorem}[satz]{Theorem}
+\newtheorem{kor}[satz]{Korollar}
+\theoremstyle{definition}
+\newtheorem*{defi}{Definition}
+\newtheorem{bemdef}[satz]{Bemerkungen und Definitionen}
+\theoremstyle{remark}
+\newtheorem{bem}[satz]{Bemerkung}
+\newtheorem*{bem*}{Bemerkung}
+\newtheorem*{folge}{Folgerung}
+\newtheorem*{einschr}{Einschränkung}
+\newtheorem{bsp}[satz]{Beispiel}
+\newtheorem*{bsp*}{Beispiel}
+\newtheorem*{erinnerung}{Erinnerung}
+\newtheorem*{notation}{Notation}
+\newtheorem*{vor}{Voraussetzungen}
+
+% kleine Helferlein
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\D}{\mathscr{D}}
+\newcommand{\E}{\mathscr{E}}
+\newcommand{\F}{\mathscr{F}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\Ext}{\text{Ext}}
+\newcommand{\id}{\text{id}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\Lloc}{L_{1,\scriptsize{\textnormal{loc}}}}
+\newcommand{\diff}[1]{\frac{d}{d #1}}
+\newcommand{\pdiff}[1]{\frac{\partial}{\partial #1}}
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\spur}{\operatorname{spur}}
+\DeclareMathOperator{\graph}{graph}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\im}{im}
+\newcommand{\spn}{\operatorname{span}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\d}{\,\mathrm{d}}
+\newcommand{\Ra}{\Longrightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\hhookrightarrow}{\lhook\mkern-3mu\relbar\mkern-12mu\hookrightarrow}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\Abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\Norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\fa}{\forall}
+\newcommand{\with}{\;\vert\,}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\dom}{\operatorname{dom}}
+
+
+% Gleichung nummerieren
+\newcommand{\eq}[1]{\
+  \addtocounter{equation}{1}
+  \tag{\theequation}
+  \label{#1}
+}
+
+% Index
+\newcommand{\idx}[1]{\index{#1}#1}
+\makeindex
+
+\newcommand{\nameofchapter}{}
+\newcommand{\newchapter}[1]{\chapter{#1}
+	\renewcommand{\nameofchapter}{#1}
+	\setcounter{satz}{0}
+	\setcounter{equation}{0}}
+
+
+% Titel etc.
+\title{Partielle Differentialgleichungen}
+\author{Verfasser: Marc Hauptmann \\
+	erweitert durch: Cornelius Rüther}
+
+% Dokument
+\begin{document}
+\frontmatter
+
+\maketitle
+\tableofcontents
+\thispagestyle{fancy}{
+	\rhead{}
+	\lhead{\sl Inhaltsverzeichnis}
+	%\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\headheight}{14pt}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\cfoot{\thepage}
+}
+
+\mainmatter
+
+\pagestyle{fancy}{
+	\rhead{}
+	\lhead{\sl\thechapter. \nameofchapter}
+	%\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\headheight}{14pt}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\cfoot{\thepage}
+}
+
+
+\input{Kapitel01}
+\input{Kapitel02}
+\input{Kapitel03}
+\input{Kapitel04}
+\input{Kapitel05}
+\input{Kapitel06}
+\input{Kapitel07}
+\input{Kapitel08}
+\input{Kapitel09}
+\input{Kapitel10}
+
+\backmatter
+
+% Literatur
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\begin{thebibliography}{}
+\bibitem{evans} L.C. Evans. \emph{Partial Differential Equations.} American Mathematical Society.
+\bibitem{arendt} W. Arendt, K. Urban. \emph{Partielle Differentialgleichungen.} Spektrum Akademischer Verlag 2010.
+\bibitem{jost} J. Jost. \emph{Partielle Differentialgleichungen.} Springer 1998.
+\bibitem{gilbarg} D. Gilbarg, N. Trudinger. \emph{Elliptic Partial Differential Equations of Second Order.} Springer.
+\end{thebibliography}
+\newpage
+
+% Index
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,604 @@
+
+\newchapter{Gleichungen 1. Ordnung: Methode der Charakteristiken}
+
+\section{Motivation}
+
+Für $(x,y)\in\Omega\subset\R^2$ offen betrachten wir
+\[
+  \left.
+  \begin{aligned}
+      a(x,y)\cdot u_x+b(x,y)\cdot u_y & = c(x,y,u), &(x,y)\in\Omega \\
+    \text{mit}\qquad  u(x,y) &= \varphi(x,y), &(x,y)\in\Gamma
+  \end{aligned}
+  \quad
+  \right\}
+  \eq{eq:charakteristik}
+\]
+wobei $a,b:\Omega\ra\R$, $c:\Omega\times\R\ra\R$, $\Gamma$ eine 1-dimensionale Kurve in $\Omega$ und $\varphi:\Gamma\ra\R$ gegeben sind. 
+
+Wir suchen nun ein $u=u(x,y)$, das \eqref{eq:charakteristik} erfüllt.
+Die linke Seite von \eqref{eq:charakteristik} ist die Richtungsableitung von diesem $u(x,y)$ in Richtung $(a(x,y),b(x,y))$. Es ist nun naheliegend, dass wir diejenigen Kurven $(x,y)=(x(t),y(t))$ durch einen Punkt $(x_0,y_0)\in\Gamma$ betrachen, deren Tangentialvektor $(\dot x,\dot y)$ in Richtung von $\left(a(x(t),y(t)), b(x(t),y(t))\right)$ zeigt. Also erhalten wir
+\begin{eqnarray*}
+  \dot x = a(x,y), & x(0)=x_0 \\
+  \dot y = b(x,y), & y(0)=y_0\;.
+\end{eqnarray*}
+Entlang einer charakteristischen Kurve genügt $u=u(x(t),y(t))$ einer gewöhn\-lichen Differentialgleichung, denn:
+\[
+\left.
+  \begin{aligned}
+    \diff t u(t) &= \dot x u_x+\dot y u_y=a(x,y)u_x+b(x,y)u_y \\
+    &= c(x(t),y(t),u(t))
+  \end{aligned}
+  \quad
+\right\vert
+\eq{eq:gewDgl_charakteristik}
+\]
+mit $u(0)=u(x_0,y_0)=\varphi (x_0,y_0)$. Damit haben wir eine Reduktion des Problems auf gewöhnliche Differentialgleichungen erreicht, und $u$ ist durch $\varphi(x_0,y_0)$ entlang der gesamten charakteristischen Kurve durch $(x_0,y_0)\in\Gamma$ eindeutig bestimmt.
+\begin{itemize}
+\item[$\Ra$] $u(x,y)$: Projektionen der charakteristischen Kurven durch $(x_0,y_0)\in\Gamma$
+\end{itemize}
+
+Es liegt nun folgende Vermutung nahe: Mittels Gleichung \eqref{eq:gewDgl_charakteristik} lässt sich eine eindeutige Lösung von \eqref{eq:charakteristik} in dem Gebiet bestimmen, das durch die charakteristischen Kurven abgedeckt wird.
+
+Allerdings darf der Vektor  $(a(x_0,y_0),b(x_0,y_0))$ in keinem Punkt $(x_0,y_0)\in\Gamma$ tangential an $\Gamma$ stehen! Genau dann nennen wir $\Gamma$ nicht-charakteristisch.
+
+\begin{satz}
+  \label{satz:2.1}
+  Sei $f\in C^1(\R\times\R^n,\R^n)$, $x_0\in\R^n$. Dann existiert eine Umgebung $(\alpha,\beta)\times\Omega$ von $(0,x_0) \in \R\times\R^n$, sodass das Anfangswertproblem
+  \[ \dot x=f(t,x),\quad x(0)=\xi \]
+  für jedes $\xi\in\Omega$ eine eindeutige Lösung
+  \[ w=w(\;\cdot\;;\xi)\in C^1((\alpha,\beta),\R^n) \]
+  hat. 
+
+  Ferner gilt: $w\in C^1((\alpha,\beta)\times\Omega,\R^n)$.
+\end{satz}
+
+\begin{proof}
+  Siehe Analysis II (Picard-Lindelöf).
+\end{proof}
+
+\section{Quasilineare Gleichungen 1. Ordnung}
+
+Wir betrachten
+\begin{align*}
+\left.
+  \begin{aligned}
+    a(x,y,u)u_x+b(x,y,u)u_y & =c(x,y,u), &(x,y)\in\Omega \\
+    u(x,y) & =\varphi(x,y), &(x,y)\in\Gamma
+  \end{aligned}
+  \quad
+\right\rvert
+\eq{eq:3}
+\end{align*}
+wobei $\Gamma$ eine $C^1$-Kurve in $\Omega\subset\R^2$ mit Parameterdarstellung $\gamma:[a,b]\ra\R^2$ ist, und $\varphi\in C^1(\Gamma)$, $a,b,c\in C^1(\Omega\times\R)$. Ist $u\in C^1(\Omega)$ eine Lösung von \eqref{eq:3}, so gilt
+\[
+\vec A :=
+\begin{pmatrix}
+  a(x,y,u(x,y)) \\
+  b(x,y,u(x,y)) \\
+  c(x,y,u(x,y))
+\end{pmatrix}
+\perp
+\begin{pmatrix}
+  u_x(x,y) \\
+  u_y(x,y) \\
+  -1
+\end{pmatrix}
+=: \vec u.
+\]
+Das heißt, $\vec A=\vec A(x,y,u)$ liegt tangential auf dem Graphen $\{(x,y,z)\with z=u(x,y)\}$.
+
+\begin{figure}[ht!]
+  \centering
+  \begin{pspicture}(-1,-2)(5,6)
+    \psset{Alpha=155,Beta=12}
+    \pstThreeDCoor[linewidth=.8pt,linecolor=black,xMax=6, yMax=8]
+    
+    % Weg am Boden
+    \listplotThreeD[plotstyle=curve]{
+      1.5  3  0
+      2  4  0
+      3  3  0
+      4  4  0
+    }
+
+    % Weg auf Fläche
+    \listplotThreeD[plotstyle=curve]{
+      1.5 3 2
+      2 4 2.1
+      3 3 2.2
+      4 4 1.5
+    }
+    \pstThreeDLine[linestyle=dotted](1.5, 3, 0)(1.5, 3, 2)
+    \pstThreeDLine[linestyle=dotted](4, 4, 0)(4, 4, 1.5)
+
+    % Weg Beschriftungen
+    \pstThreeDPut[origin=lt](4.3, 4, 0){$\Gamma$}
+    \pstThreeDPut[origin=lb](4.3, 4.2, 1.9){$\graph(\varphi)$}
+   
+    % A und u
+    \pstThreeDLine[arrows=->](2, 4, 2.1)(3, 4, 2.1)
+    \pstThreeDPut[origin=b](2, 4, 3.3){$\vec u$}
+    \pstThreeDLine[arrows=->](2, 4, 2.1)(2, 4,3.1)
+    \pstThreeDPut(3.1, 4, 2.3){$\vec A$}
+
+    % Graph von u
+    \listplotThreeD[plotstyle=curve]{
+      1 1 2
+      3 1 2.2
+      5 1 1.5
+    }
+    \listplotThreeD[plotstyle=curve]{
+      1 6 2
+      3 6 2.2
+      5 6 1.5
+    }
+    \pstThreeDLine(1, 1, 2)(1, 6, 2)
+    \pstThreeDLine(5, 1, 1.5)(5, 6, 1.5)
+
+    % Graph Beschriftung
+    \pstThreeDPut[origin=lb](3, 6, 2.6){$\graph(u)$}
+  \end{pspicture}
+  \caption{Weg $\Gamma$}
+\end{figure}
+
+\begin{defi}
+  Der Graph $\Sigma$ einer Funktion $u\in C^1(\Omega)$ heißt \idx{Lösungsfläche} für Gleichung \eqref{eq:3}, falls in jedem $P=(x,y,z)\in\Sigma$ der Vektor $$
+\vec A =
+\begin{pmatrix}
+  a(P) \\ b(P) \\ c(P)
+\end{pmatrix}
+$$ tangential in $\Sigma$ liegt.
+\end{defi}
+
+\begin{defi}
+  Lösungen $(t\mapsto (x(t),y(t),z(t))$ von
+  \begin{eqnarray*}
+    \dot x=a(x,y,z), & x(0)=x_0 \\
+    \dot y=b(x,y,z), & y(0)=y_0 \\
+    \dot z=c(x,y,z), & z(0)=z_0
+  \end{eqnarray*}
+  heißen Charakteristiken\index{Charakteristik} von \eqref{eq:3} durch $(x_0,y_0,z_0)$.
+\end{defi}
+
+\begin{lemma}
+  Sei $u\in C^1(\Omega)$, $\Sigma=\graph(u)$. $\Sigma$ ist genau dann eine Lösungs-fläche wenn es die Vereinigung von Charakteristiken ist.
+\end{lemma}
+
+\begin{proof}
+  Es sei $\Sigma:=\{(\bar x, \bar y, \bar z)\in\Omega\times\R\with \bar z=u(\bar x,\bar y)\}$, $t\mapsto(x(t),y(t),z(t))$ Charakteristik durch einen beliebigen Punkt $(x_0,y_0,z_0)\in\Sigma$ und $w(t):=z(t)-u(x(t),y(t))$. Damit ist
+  \[
+  \eq{eq:5}
+  w(0)=z_0-u(x_0,y_0)=0,  
+  \]
+  da $(x_0,y_0,z_0)\in\Sigma$.
+
+  Ferner ist 
+  \[
+  \left.
+    \begin{aligned}
+      \dot w(t)=\;&\dot z-\dot xu_x-\dot yu_y=c(x,y,z)-a(x,y,z)u_x-b(x,y,z)u_y \\
+      =\;& c(x,y,w+u(x,y))-a(x,y,w+u(x,y))u_x \\
+      &-b(x,y,w+u(x,y))u_y
+    \end{aligned}
+    \quad
+  \right\vert
+  \eq{eq:6}
+  \]
+  und $w$ ist durch \eqref{eq:5}, \eqref{eq:6} eindeutig bestimmt.
+  
+  \begin{itemize}
+  \item["`$\Rightarrow$"']  Sei $\Sigma$ eine Lösungsfläche. Damit gilt $au_x+bu_y=c$. Aus \eqref{eq:5}, \eqref{eq:6} folgt $\dot w\equiv 0$, und da $w(0)=0$ ist, gilt $w\equiv 0$. Die Charakteristik $(t\mapsto (x(t),y(t),z(t)))$ liegt also ganz in $\Sigma$. Nun ist aber $(x_0,y_0,z_0)\in\Sigma$ beliebig gewählt. Somit ist $\Sigma$ eine Vereinigung von Charakteristiken.
+
+  \item["`$\La$"'] Es sei $\Sigma$ Vereinigung von Charakteristiken. Es ist also $w\equiv 0$ und mit Gleichung \eqref{eq:6} folgt 
+    \[
+    c(x_0,y_0,\underbrace{u(x_0,y_0)}_{z_0})-a(x_0,y_0,z_0)u_x
+    -b(x_0,y_0,z_0)u_y=0.
+    \]
+    Das heißt, $
+      \begin{pmatrix}
+        a(x_0,y_0,z_0) ,
+        b(x_0,y_0,z_0) ,
+        c(x_0,y_0,z_0)
+      \end{pmatrix}^T
+      $ steht tangential an $\Sigma$. Da $(x_0,y_0,z_0)$ beliebig ist, ist $\Sigma$ eine Lösungsfläche.
+  \end{itemize}
+  Damit folgt die Behauptung.
+\end{proof}
+
+\begin{folge}
+  Lösungsflächen lassen sich durch Vereinigung von Charakteristiken durch jeden $(\gamma(s),\varphi(\gamma(s))), s\in [\alpha,\beta]$ (mit $\gamma : \R \ra \R^2$) konstruieren.
+\end{folge}
+
+\begin{einschr}
+  Der Vektor $(a(\gamma(s),\varphi(\gamma(s))), b(\gamma(s),\varphi(\gamma(s))))$ darf in keinem Punkt $\gamma(s)=(\gamma_1(s),\gamma_2(s))\in\Gamma$ tangential sein an $\Gamma$. Der Weg $\Gamma$ ist also genau dann nicht-charakteristisch, wenn
+  \begin{align*} \tag{$\ast$}
+    a\left(\gamma(s),\varphi(\gamma(s))\right)\dot\gamma_2(s)
+    -b\left(\gamma(s),\varphi(\gamma(s))\right)\dot\gamma_1(s)\neq 0\quad \fa s\in
+    [\alpha,\beta]\;
+  \end{align*}
+  gilt.
+  \index{Weg!nicht-charakteristisch}
+\end{einschr}
+
+\begin{theorem}
+  Seien $a,b,c,\varphi$ reellwertige Charakteristiken und $\,\Gamma$ eine nicht-charakteristische $C^1$-Kurve. Dann besitzt das quasilineare Problem 1. Ordnung
+  \[
+  a(x,y,u)u_x+b(x,y,u)u_y=c(x,y,u),\quad u\vert_\Gamma=\varphi
+  \]
+  in einer Umgebung von $\Gamma$ eine eindeutige $C^1$-Lösung $u$.
+\end{theorem}
+
+\begin{proof}
+  \begin{description}
+  \item[Existenz:] Für $s\in [\alpha,\beta]$ berechnet $x(t,s),y(t,s),z(t,s)$ durch:
+    \[
+    \left.
+     \begin{aligned}
+       \pdiff t x(t,s)=a(x,y,z), &\quad x(0,s)=\gamma_1(s) \\
+       \pdiff t y(t,s)=b(x,y,z), &\quad y(0,s)=\gamma_2(s) \\
+       \pdiff t z(t,s)=c(x,y,z), &\quad z(0,s)=\varphi(\gamma(s))
+    \end{aligned}
+    \quad
+    \right\rbrace
+    \eq{eq:star1}
+    \]
+    (Charakteristik durch $(\gamma(s), \varphi(\gamma(s)))$)
+
+    Nach Satz~\ref{satz:2.1} exitiert eine eindeutige Lösung $(x,y,z)$ und hängt $C^1$ von $s$ ab.
+
+    Für $t=0$:
+    \begin{align*}
+      \det
+      \begin{pmatrix}
+        \partial_t x(0,s) & \partial_sx(0,s) \\
+        \partial_t y(0,s) & \partial_sy(0,s)
+      \end{pmatrix}
+      =\det
+      \begin{pmatrix}
+        a(\gamma(s),\varphi(\gamma(s))) & \dot\gamma_1(s) \\
+        b(\gamma(s),\varphi(\gamma(s))) & \dot\gamma_2(s)
+      \end{pmatrix}
+      \stackrel{(\ast)}{\neq} 0
+     \end{align*}
+     Nach dem Satz über Umkehrabbildungen ist die Abbildung $((t,s)\mapsto(x,y) = (x(s,t),y(s,t)))$ umkehrbar in einer Umgebung der Anfangskurve $t=0$. Also existieren  $t=t(x,y)$ und $s=s(x,y)$ in einer Umgebung $D\subset\R^2$ von $\Gamma$ und sind dort $C^1$. Setze $$u(x,y):=z(t(x,y),s(x,y)),  \quad(x,y)\in D.$$
+Nun ist einerseits
+\begin{align*}
+  \pdiff t u(x,y)= \ &u_x(x,y)\cdot \pdiff t x+u_y(x,y)\pdiff t y \\
+  \overset{\scriptsize\eqref{eq:star1}}=& a(x,y,u(x,y))u_x(x,y)+b(x,y,u(x,y))u_y(x,y) \eq{eq:7} \\
+  \intertext{und andererseits}
+  \pdiff t u(x,y)=&\pdiff t z(t,s)\overset{\scriptsize\eqref{eq:star1}}=
+  c(x,y,z)=c(x,y,u(x,y)). \eq{eq:8}
+\end{align*}
+         
+Aus den Gleichungen \eqref{eq:7} und \eqref{eq:8} folgt, dass $u$ eine Lösungsfläche über $D$ definiert.
+
+       \item[Eindeutigkeit:] Es sei nun $\bar u$ eine weitere Lösung. Wir setzen $\bar z(t,s):=\bar u(\bar x(t,s),\bar y(t,s))$, wobei
+    \begin{eqnarray*}
+      \partial_t\bar x(t,s)=a(\bar x,\bar y,\bar u(\bar x,\bar y)), &
+      \bar x(0,s)=\gamma_1(s), \\
+      \partial_t\bar y(t,s)=b(\bar x,\bar y,\bar u(\bar x,\bar y)), &
+      \bar y(0,s)=\gamma_2(s).
+    \end{eqnarray*}
+Dann ist
+    \begin{align*}
+      \pdiff t \bar z(t,s) = \ & a(\bar x,\bar y,\bar u)\bar u_x
+      + b(\bar x,\bar y,\bar u)\bar u_y = c(\bar x,\bar y,\bar u) \\
+      \underset{\scriptsize\text{Def.}}=&c(\bar x,\bar y,\bar z).
+    \end{align*}
+Nun ist
+\[
+\bar z(0,s)=\bar u(\gamma_1(s),\gamma_2(s))\overset{\bar u\; \scriptsize\text{Lsg.}}=\varphi(\gamma(s))
+\]
+und  $(\bar x,\bar y,\bar z)$ löst \eqref{eq:star1}. Der Satz von Picard-Lindelöf liefert die Eindeutigkeit der Lösung, d.h. $(x,y,z)=(\bar x,\bar y,\bar z)$. Also ist $u=\bar u$.
+  \end{description}
+  
+  Damit folgt komplett die Behauptung.
+\end{proof}
+
+\begin{bem}
+  \begin{enumerate}[(a)]
+  \item Der Beweis ist konstruktiv!
+  \item Der Beweis lässt sich auf $n>2$ verallgemeinern.
+  \end{enumerate}
+\end{bem}
+
+\begin{bsp}
+  $\Gamma:=\{(x,1)\with x\in\R\}$, $\alpha\in\R$, $\varphi\in C^1(\R)$. Wir betrachten die lineare Differentialgleichung erster Ordnung
+  \begin{align*}
+    \left.
+      \begin{aligned}
+        xu_x+yu_y=&\;\alpha u\\
+        u\rvert_\Gamma=&\;\varphi
+      \end{aligned}
+      \quad\right\rvert
+  \end{align*}
+  Damit ist $
+  \begin{pmatrix}
+    a(x,y,u) \\
+    b(x,y,u) \\
+    c(x,y,u)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    x \\
+    y \\
+    \alpha u
+  \end{pmatrix}$, und für $\Gamma$ gilt wegen $
+  \begin{pmatrix}
+    a(x,y,u) \\
+    b(x,y,u)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    x \\
+    1
+  \end{pmatrix}$, dass es nicht-charakteristisch ist, da $(a,b)^T$ für $y = 0$ tangential wäre.
+
+  \begin{figure}[ht!]
+    \centering
+    \begin{pspicture}(-4,-1)(4,3)
+      \psaxes{->}(0,0)(-4,-1)(4,3)
+      \psline[linewidth=1.6pt](-4,1)(4,1)
+      \rput[tl](1.1,.9){$\Gamma$}
+      \psline{->}(1,1)(2,2)
+      \psline{->}(1.5,1)(3,2)
+      \psline{->}(2,1)(4,2)
+      \psline{->}(0.5,1)(1,2)
+      \psline{->}(0,1)(0,2)
+      \psline{->}(-0.5,1)(-1,2)
+      \psline{->}(-1,1)(-2,2)
+      \psline{->}(-1.5,1)(-3,2)
+      \psline{->}(-2,1)(-4,2)
+    \end{pspicture}
+    \caption{Weg $\Gamma$ mit Vektorfeld $(x,1)$}
+  \end{figure}
+  Wir treffen die Vereinbarung, dass die zeitliche Ableitung durch einen Punkt dargestellt wird, also $\dot{\hspace{1em}} := \partial_t$. Mit dieser Notation ergibt sich aus den obigen Gleichungen
+  \begin{eqnarray*}
+    &\dot x = x, & x(0,s)=s \\
+    &\dot y = y, & y(0,s)=1 \\
+    &\dot z = \alpha \cdot z, & z(0,s)=\varphi(s).
+  \end{eqnarray*}
+  Wir erkennen sofort, dass $x=x(t,s)=s\cdot e^t$ und $y=y(t,s)=e^t$ sein muss. Zusätzlich ergibt sich $z=z(t,s)=\varphi(s)e^{\alpha t}$. Durch Auflösen der Gleichungen für $x$ und $y$ nach $t,s$, erhalten wir $t=\ln y$ und $s=\frac x y$. Schließlich erhalten wir      
+  \[
+  \underline{u(x,y)}=\varphi\left(\frac x y\right)e^{\alpha\ln
+    y}=\underline{\varphi\left(\frac x y\right)y^\alpha}
+  \]
+  mit $x,y\in\R$ und $y>0$.
+\end{bsp}
+
+\begin{bsp}[nicht-viskose Burgersgleichung]
+  \index{Burgersgleichung}
+  \label{bsp:6}
+  Wir betrachten die quasilineare Differentialgleichung
+  \begin{align*}
+    \left.
+      \begin{aligned}
+        u_x+uu_y&=0,  &&x>0,y\in\R \\
+        u(0,y)&=h(y), && y\in\R
+      \end{aligned}\quad
+    \right\vert\tag{B}\label{eq:B}
+  \end{align*}
+  \[
+  \begin{pmatrix}
+    a(x,y,u) \\
+    b(x,y,u)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1 \\
+    u
+  \end{pmatrix}
+  \]
+  \begin{figure}[ht!]
+    \centering
+    \begin{pspicture}(-1,-2)(3,2)
+      \psaxes{->}(0,0)(-1,-2)(3,2)
+      \psline[linewidth=1.6pt](0,-2)(0,2)
+      \rput[bl](0.1,1.1){$\Gamma$}
+    \end{pspicture}
+    \caption{Weg $\Gamma$ entlang der y-Achse}
+  \end{figure}
+  Dies führt auf das Gleichungssystem
+  \begin{eqnarray*}
+    \dot x = 1, &x(0,s)=0 \\
+    \dot y=z, &y(0,s)=s \\
+    \dot z=0, &z(0,s)=h(s),
+  \end{eqnarray*}
+  mit folgender Lösung:
+  \begin{align*}
+    \left.
+      \begin{aligned}
+        x=x(t,s)=t \\
+        y=y(t,s)=s+h(s)t \\
+        z=z(t,s)=h(s)
+      \end{aligned}\quad
+    \right\}\eq{eq:star2}
+  \end{align*}
+  Wir erkennen, dass $u$ entlang der Geraden durch $(0,s)$ mit der Steigung $h(s)$ den konstanten Wert $h(s)$ hat. Also haben wir
+  \[ u(t,s+h(s)t)=h(s).\eq{eq:star3} \]
+  Wir wissen $(t,s)\mapsto (x,y)$ ist \underline{lokal} ein Diffeomorphismus. Es ergibt sich die implizite Gleichung 
+  \[
+  \boxed{
+    u(x,y) \stackrel{\scriptsize\eqref{eq:star3}}= h(s)
+    \stackrel{\scriptsize\eqref{eq:star2}}=h(y-h(s)x)=h(y-u(x,y)x)
+  }\,.
+  \]
+  Global kann aber ein Problem entstehen: Die Geraden
+  \[
+  \{(t,s+h(s)t\with t\geq0\} \text{ und }
+  \{(t,\bar s+h(\bar s)t\with t\geq 0\}
+  \]
+  können sich schneiden. Im Schnittpunkt müsste $u$ beide Werte
+  $h(s)$ bzw. $h(\bar s)$ annehmen. Dies ist ein Widerspruch.
+  \begin{figure}[ht!]
+    \centering
+    \begin{pspicture}(-1,-1)(4,3)
+      \psaxes[labels=none,ticks=none]{->}(0,0)(-1,-1)(3,3)
+      \psline(-1,0)(3,2)
+      \rput[l](3.1,2){$u=h(s)$}
+      \rput[br](-.1,.5){$s$}
+      \psline(-1,1.5)(3,1.5)
+      \rput[l](3.1,1.5){$u=h(\bar s)$}
+      \rput[br](-.1,1.6){$\bar s$}
+      \pscircle(2,1.5){.3}
+    \end{pspicture}
+    \caption{Schnitt der Geraden}
+  \end{figure}
+
+  Wir betrachten nun $u(x,y)=h(y-u(x,y)x)$. Ableiten nach $y$ ergibt
+  \begin{align*}
+    u_y(x,y)=&\underbrace{h'(y-u(x,y)x)}_{=h'(s)}\cdot(1-u_y(x,y) x)
+    \end{align*}
+    und somit
+    \begin{align*}
+    u_y(x,y)=&\frac{h'(s)}{1+h'(s)x} \, .
+  \end{align*}
+  Ist nun $h'(s)<0$, so geht $u_y(x,y) \ra -\infty$ für $x\ra\frac {-1}
+  {h'(s)}$. Dieses Verhalten nennt man "`Schock"' (der Gradient "`explodiert"').
+  \begin{figure}[ht!]
+    \centering
+    \begin{pspicture}(-1,-1)(4,4)
+      \psaxes[labels=none,ticks=none]{->}(0,0)(-1,-1)(4,4)
+      \psline(0,0.5)(1.5,1.25)
+      \psline(0,1.5)(3,3)
+      \psline[linestyle=dotted](1.5,0)(1.5,3.5)
+      \psline[linestyle=dotted](3,0)(3,3.5)
+      \psdot(3,3)
+      \psdot(1.5,1.25)
+      \rput[r](-.1,.5){$s_0$}
+      \rput[t](1.5,-.1){$-\frac 1{h'(s_0)}$}
+    \end{pspicture}
+    \caption{Test}
+  \end{figure}
+
+  Ist also allgemeiner $h'(s_0)=\min h'<0$, so gibt es keine $C^1$-Lösung in einer beidseitigen Umgebung der Geraden $x=\frac{-1}{h'(s_0)}$. Dieser "`\idx{blow-up}"' ist "`typisch"' für nicht-lineare Gleichungen.
+  Als Ausweg verwenden wir einen "`schwächeren"' Lösungsbegriff (nicht $C^1$). Seien $R,S\in C^1(\R),S'(w)=wR'(w)$, $R'(w)\neq0\, \fa\,  w\in\R$. Sei $u$ eine $C^1$-Lösung von \eqref{eq:B}. Wir betrachten dafür die Divergenzform
+  \begin{align*}
+    \partial_xR(u)+\partial_yS(u)=&R'(u)\cdot u_x+S'(u)u_y \\
+    =& R'(u)(u_x+uu_y)=0.
+  \end{align*}
+  Integrieren wir diese bezüglich $y$, erhalten wir
+  \[ \diff x
+  \int\limits_a^bR(u(x,y))dy+S(u(x,b))-S(u(x,a))=0\eq{eq:I}
+  \]
+  $\quad\fa\, x>0,\fa\, a<b$. Jede Funktion $u$, die \eqref{eq:I} löst, heißt \idx{Integrallösung} von \eqref{eq:B}. Somit gilt \eqref{eq:I} für eine größere Klasse von Funktionen. Wenn allerdings $u$ eine Integrallösung und $C^1$ ist, dann differenziere \eqref{eq:I} nach \eqref{eq:B}, und wir erhalten
+  \begin{align*}
+    \underbrace{R'(u(x,b))}_{\neq 0}(u_x(x,b)+u(x,b)\cdot u_y(x,b))=0
+    \end{align*}
+    {und schließlich ist}
+    \begin{align*}
+    u_x(x,b)+u(x,b)\cdot u_y(x,b)=0
+  \end{align*}
+  mit $x>0$ und $b\in\R$. Also ist $u$ Integrallösung und $C^1$ bzw. $u$ ist $C^1$-Lösung von \eqref{eq:B}.
+\end{bsp}
+
+Betrachten wir nun folgende Situation: Ein Gebiet $\Omega\subset\R^2$ wird durch eine glatte Kurve $y=\xi(x)$ in zwei Gebiete $\Omega_+$ und $\Omega_-$ zerlegt und $u\in C^1$ sei eine auf $\Omega_+$ bzw. $\Omega_-$ von beiden Seiten bis zum Rand $y=\xi(x)$ stetige Integrallösung von \eqref{eq:I}. Allerdings sei $u$ einem Sprung auf $y=\xi(x)$ versehen. Wir setzen
+\[ u^\pm(x):=\lim_{y\ra\xi^\pm(x)}u(x,y). \]
+
+\begin{figure}[ht!]
+  \centering
+  \begin{pspicture}(-1,-1)(6,5)
+    \psaxes[labels=none,ticks=none]{->}(0,0)(-.5,-.5)(5.5,4.5)
+    \rput[tl](5.5,-.1){$x$}
+    \rput[br](-.1,4.5){$y$}
+
+    %Omega
+    \psccurve(1,1)(2.5,.7)(4,.7)(4,3)(1,3)
+    \rput[tl](4,.7){$\Omega$}
+    \rput(3.5,1.5){$\Omega_-$}
+    \rput(1.8,2.5){$\Omega_+$}
+
+    % Kurve
+    \pscurve(.5,.5)(2,1.5)(3,2.5)(4.5,3.5)
+    \rput[tl](4.5,3.5){$y=\xi(x)$}
+  \end{pspicture}
+  \caption{Zerlegung von $\Omega$ in zwei Gebiete}
+\end{figure}
+Unser Ziel ist eine Charakterisierung der \idx{Schockkurve} $y=\xi(x)$. Für $a<\xi(x)<b$:
+\begin{align*}
+  0=&S(a(x,b))-S(u(x,a))+\diff x\Big( 
+    \int_a^{\xi(x)}R(u(x,y))\d y+\int\limits_{\xi(x)}^bR(u(x,y))\d y 
+  \Big) \\
+  =& S(u(x,b))-S(u(x,a))+\xi'(x)R(u^-(x))-\xi'(x)R(u^+(x)) \\
+  &+\Big(
+    \int_b^{\xi(x)}\underbrace{\partial_x R(u(x,y))}_{=-\partial_yS(u(x,y))}\d y
+    +\int_{\xi(x)}^b\underbrace{\partial_x R(u(x,y))}_{=-\partial_yS(u(x,y))}\d y
+  \Big) \\
+  =& \xi'(x)\left(
+    R(u^-(x))-R(u^+(x))
+  \right) - S(u^-(x))+S(u^+(x)).
+\end{align*}
+
+Falls $R(u^-)\neq R(u^+)$, so gilt:
+\[
+\left. 
+  \xi'(x)=\frac{S(u^-(x))-S(u^+(x))}{R(u^-(x))-R(u^+(x))}\quad
+\right\vert\qquad\text{"`Schockrelation"'}
+\]
+
+\begin{bsp}[vergleiche Beispiel~\ref{bsp:6}]
+  Wir betrachten wieder die Burgersgleichung mit einem konkreten $h$
+  \begin{align*}
+    u_x+uu_y&=0,\quad x>0,y\in\R \\
+    u(0,y)=h(y)&:=
+    \begin{cases}
+      1 &,y<0 \\
+      1-y &,0\leq y\leq 1 \\
+      0 &, y>1
+    \end{cases}
+  \end{align*}
+
+  Aus Beispiel~\ref{bsp:6} wissen wir, dass $u(x,y)$ für $s\in\R$ entlang der Geraden $(x,y)=(t,s+h(s)t)$ den konstanten Wert $h(s)$ hat. Ist beispielsweise $s<0$ (und damit $h(s)=1)$, so ist $u(x,y)=1$. Entlang $(x,y)=(t,s+t)$ ist dann $u(x,y)=1$ für alle $0< x, y< x$. Analog lässt sich folgern, dass
+  \[
+  u(x,y)=
+  \begin{cases}
+    1 &,0< x\leq 1,y< x \\
+    \frac{1-y}{1-x} &, 0<x\leq y\leq 1 \\
+    0 &, 0< x\leq1,y>1
+  \end{cases}
+  \]
+  eine stetige und stückweise $C^1$-Lösung auf $x \in (0,1]$ ist. Was ist jedoch für $x>1$?
+
+  Wir wählen $R(u):=u$ und $S(u):=\frac 12 u^2$. Dann ist die Schockrelation zwischen $\Omega_-=[u=1]$ und $\Omega_+=[u=0]$ 
+  \[ \frac{S(1)-S(0)}{R(1)-R(0)}=\frac 12. \]
+  Die Schockkurve $y=\xi(x)$ beginnt im Punkt $(1,1)$ und erfüllt $\xi'(x)=\frac 12$ und $\xi(1)=1$, also $\xi(x)=\frac{x+1}2$. Daher definieren wir  mit $x>1$
+  \[
+  u(x,y):=
+  \begin{cases}
+    1 &, y<\xi(x) \\
+    0 &, y>\xi(x)
+  \end{cases}.
+  \]
+  
+  \begin{figure}[ht!]
+    \centering
+    \begin{pspicture}(-1,-1)(5,4)
+      \psaxes[labels=none,ticks=none]{->}(0,0)(-.5,-.5)(4.5,3.5)
+      \rput[tl](4.5,-.1){$x$}
+      \rput[br](-.1,3.5){$y$}
+      \psline(0,0)(3,3)
+      \psline(0,0.4)(2,2)
+      \psline(0,0.8)(2,2)
+      \psline(0,1.2)(2,2)
+      \psline(0,1.6)(2,2)
+      \psline(0,2)(2,2)
+
+      \rput(3,1){$u=1$}
+      \rput(1.5,3){$u=0$}
+      \rput[tl](3.1,3){$y=\xi(x)$}
+    \end{pspicture}
+    \caption{Schockkurve}
+  \end{figure}
+
+  Die so definierte Funktion ist eine Integrallösung, denn
+  \[
+  \diff x\int\limits_a^bu(x,y)\d y+\frac 12(u(x,b)^2-u(x,a)^2)=0.
+  \]
+\end{bsp}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

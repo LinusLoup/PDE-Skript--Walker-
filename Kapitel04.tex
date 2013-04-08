@@ -1,0 +1,618 @@
+\newchapter{Harmonische Funktionen}
+
+Auch in diesem Kaptitel sei wieder $\Omega$ eine nicht-leere Teilmenge des $\R^n$. Wir betrachten die Laplace-Gleichung
+\[ -\Delta u=f \]
+mit dem Laplace-Operator
+\[ -\Delta:=-\sum_{j=1}^n\partial^2_j. \]
+Diese Gleichung ist eine elliptische Differentialgleichung. 
+
+\begin{defi}
+  \index{harmonische Funktion}
+  \index{Funktion!harmonische}
+  Eine Funktion $u\in C^2(\Omega)$ heißt harmonisch, falls $-\Delta u=0$ in $\Omega$ erfüllt wird.
+\end{defi}
+
+\begin{defi}
+  Es sei $\Omega\subset\R^n$ ein Gebiet (d.h.\ offen und zusammenhängend), und $m\in\N\cup\{\infty\}$. $\Omega$ ist ein $C^m$-Gebiet (kurz: $\Omega\in C^m$) genau dann, wenn gilt, dass $\partial\Omega$ eine $(n-1)$-dimensionale $C^m$-\idx{Untermannigfaltigkeit} des $\R^n$ ist. Siehe dazu Abbildung~\ref{fig:4.1}.
+  \begin{figure}[ht!]
+    \centering
+    \begin{pspicture}(-6,-1.5)(4,3)
+      \psaxes[ticks=none,labels=none]{->}(0,0)(-.5,-1.5)(3.5,2.5)
+      \rput[tl](3.5,-.1){$\R^{n-1}$}
+      \rput[br](-.1,2.5){$\R$}
+
+      % Kreis kartesisch
+      \pscircle(1.5,0){.5cm}
+      \pswedge[fillstyle=solid,fillcolor=lightgray](1.5,0){.5cm}{0}{180}
+      \psdot(1.5,0)
+
+      % Omega
+      \psccurve(-3,0)(-3,1)(-3,2)(-5,2)(-5.5,1.5)(-4.5,0)
+      \pscircle(-3,1){.5cm}
+      \pswedge[fillstyle=solid,fillcolor=lightgray](-3,1){.5cm}{80}{280}
+      \psdot(-3,1)
+      \rput[tr](-4.6,-.1){$\Omega$}
+
+      % Abbildung
+      \pscurve{->}(-.3,.5)(-1.5,1.4)(-2.4,1.2)
+      \rput[bl](-1.5,1.6){$\varphi\in C^m$}
+    \end{pspicture}
+    \caption{Untermannigfaltigkeit}
+    \label{fig:4.1}
+  \end{figure}
+\end{defi}
+
+\begin{defi}
+  Es sei $u\in C^m(\bar\Omega)$. Genau dann ist $u\in C^m(\Omega)$ und alle Ableitungen der Ordnung $\leq m$ lassen sich auf $\bar\Omega$ stetig fortsetzen.
+\end{defi}
+
+\begin{satz}
+  \label{satz:4.1}
+  Es $\Omega\in C^1$ beschränkt und $\nu$ äußere Einheitsnormale an $\partial\Omega$. Außerdem seien $u,v\in C^2(\Omega)\cap C^1(\bar\Omega)$ und $w\in C^1(\Omega,\R^n)\cap C(\bar\Omega,\R^n)$. Dann gilt:
+  \begin{enumerate}[\rm(i)]
+  \item \label{satz:4.1-1} \textbf{Gauß:}
+    \index{Satz von!Gauß}
+    \[
+    \int_\Omega \div(w(x))\d x=\int_{\partial\Omega}w(x)\cdot\nu(x)\d\sigma(x)
+    \]
+  \item \label{satz:4.1-2} \textbf{1. Greensche Formel:}
+    \index{Satz von!Green}
+    \index{Greensche Formeln}
+    \[
+    \int_\Omega v\Delta u\d x+\int_\Omega\nabla u\cdot\nabla v\d x
+    =\int_{\partial\Omega}v\partial_\nu u\d\sigma(x)
+    \]
+    mit $\partial_\nu u=\nabla u\cdot\nu$.
+  \item \label{satz:4.1-3} \textbf{2. Greensche Formel:}
+    \[
+    \int_\Omega (u\Delta v-v\Delta u)\d x
+    = \int_{\partial\Omega}(u\partial_\nu v-v\partial_\nu u)\d\sigma(x)
+    \]
+  \end{enumerate}
+\end{satz}
+
+\begin{proof}
+  \begin{itemize}
+  \item[(\ref{satz:4.1-1})] Analysis III.
+  \item[(\ref{satz:4.1-2})] Wende (\ref{satz:4.1-1}) auf $w=v\nabla u$ an.
+  \item[(\ref{satz:4.1-3})] vertausche $u$ und $v$ in (\ref{satz:4.1-2}). \qedhere
+  \end{itemize}
+\end{proof}
+
+\begin{bem}
+  $u\in C^2(\Omega)\cap C^1(\bar\Omega)$ ist harmonisch und $\Omega$ wie in Satz~\ref{satz:4.1}. Dann ist mit $v=1$
+  \[ \int_{\partial\Omega}\partial_\nu u\d\sigma=0. \]
+\end{bem}
+
+\section{Fundamentallösung}
+
+Sei $K\in\D'(\R^n)$ eine Fundamentallösung von $-\Delta$, also gelte $-\Delta K=\delta$. Dann ist $u=K\ast f$ für alle $f\in\E'(\R^n)$ eine Lösung von $-\Delta u=f$ in $\R^n$.
+
+Betrachten wir die orthogonale Matrix $A\in\R^{n\times n}$ (d.h. $A^TA=1$). Gilt $-\Delta u(x)=0$ mit $x\in\R^n\setminus\{0\}$, so gilt ebenfalls $-\Delta u(Ax)=0$. Die Lösungen $u$ sind also rotationsinvariant. Nun ist es naheliegend rotationssymmetrische Lösungen, also Lösungen für die $u(x)=\varphi(r)$ mit $r=\abs x$ gilt, zu suchen. Wegen $\pdiff{x_j}r=\frac{x_j}{\abs x}$ gilt dann:
+\[  
+  \begin{split}
+    0\overset!=&\Delta u(x)=\sum_{j=1}^n\partial_j^2\varphi(r)
+  =\sum_{j=1}^n\partial_j\left(\varphi'(r)\frac{x_j}r\right) \\
+  =&\sum_{j=1}^n\left(
+    \varphi''(r)\frac{x_j^2}{r^2}+\varphi'(r)\frac 1r-\varphi'(r)\frac{x_j}{r^2}\frac{x_j}r
+  \right) \\
+  =&\varphi''(r)+\frac nr\varphi'(r)-\frac 1r\varphi'(r).
+  \end{split}
+\]
+Also ist
+\begin{align*}
+  &&\varphi''(r)+\frac{n-1}r\varphi'(r)=&0 \\
+  \Longleftrightarrow&& \diff r\ln(\varphi'(r)) =& \frac{1-n}r \\
+  \Longleftrightarrow&& \ln(\varphi'(r))=&(1-n)\ln r+c\qquad \Longleftrightarrow \varphi'(r)=c_0r^{1-n} \\
+  \Longleftrightarrow&& \varphi(r)=&
+  \begin{cases}
+    c_1r^{2-n}+c_2 &,n>2 \\
+    c_1\ln r+c_2 &, n=2
+  \end{cases}.
+\end{align*}
+
+\begin{lemma}
+  \label{lemma:4.3}
+  Ist $u\in C^2(\R^n\setminus\{0\})$ harmonisch und radial-symmetrisch, d.h. $-\Delta u=0$ in $\R^n\setminus\{0\}$ und $u(x)=\varphi(r)$ mit $r=\abs x$, so ist $\varphi$ von der Form
+  \[
+  \varphi(r)=\begin{cases}
+    c_1 r^{2-n}+c_2 &,n>2 \\
+    c_1\ln r+c_2 &, n=2
+  \end{cases}
+  \]
+mit $r>0$. Umgekehrt ist jedes solches $\varphi$ harmonisch auf $\R^n\setminus\{0\}$.
+\end{lemma}
+
+\begin{defi}
+  Es sei $r>0$ und $S_r^{n-1}:=\partial\B_{R^n}(0,r)=\{x\in\R^n\with \abs x=r\}$. Wir definieren $S^{n-1}:=S_1^{n-1}$ und
+  \[
+  \omega_n:=\lambda_{n-1}(S^{n-1})=\vol(S^{n-1})=\frac{2\pi^{\frac n2}}{\Gamma\left(\frac n2\right)}.
+  \]
+  Dabei ist $\Gamma$ die \idx{Gamma-Funktion}, die durch
+  \[
+  \Gamma(x):=\int_0^\infty t^{x-1}e^{-t}\d t,\quad x>0
+  \]
+  definiert ist. Somit ist $\vol(S_r^{n-1})=r^{n-1}\omega_n=r^{n-1}\vol(S^{n-1})$.
+\end{defi}
+
+\begin{defi}[\idx{Newton-Potential}]
+  Das Newton-Potential ist definiert als
+  \[
+  \mathcal{N}_n(x):=\mathcal{N}(x):=\begin{cases}
+    -\frac 1{2\pi}\ln\abs x &, n=2 \\
+    \frac 1{\omega_n(n-2)}\abs x^{2-n} &, n\geq 3
+  \end{cases}.
+  \]
+\end{defi}
+
+\begin{theorem}
+  \label{theorem:4.4}
+  $\mathcal{N}\in\Lloc(\R^n)$ ist Fundamentallösung von $-\Delta$ auf $\R^n$.
+\end{theorem}
+
+\begin{proof}
+  $n=2$: Übung
+
+  $n\geq3$: Für alle $R>0$ ist
+  \[
+  \int_{\B(0,R)}\abs x^{2-n}\d x\underset{\scriptsize\text{Pol-Koord.}}=
+  \omega_n\int_0^Rr^{2-n}r^{n-1}\d r.
+  \]
+  Damit ist $\mathcal{N}\in\Lloc(\R^n)\subset\D'(\R^n)$.
+
+  Sei nun $\varphi\in\D(\R^n)$ mit $\supp(\varphi)\subset\B(0,R)$ und $R>0$. Dann gilt:
+  \begin{align}
+    \label{eq:4.1}
+    \begin{aligned}
+      \<\Delta\abs x^{2-n},\varphi\>
+    \quad   =\quad\,&\int_{\R^n}\abs x^{2-n}\Delta\varphi(x)\d x \\
+      \underset{\scriptsize\text{Lebesgue}}=&
+      \lim_{\epsilon\ra 0}\int_{\epsilon\leq\abs x\leq R}\abs x^{2-n}\Delta\varphi(x)\d x\\
+      \underset{\scriptsize\text{Green}}=\ \, &   \lim_{\epsilon\ra0}\left\{
+        \int_{\epsilon\leq\abs x\leq R}\underbrace{\Delta\abs x^{2-n}}_{=0}\varphi(x)\d x \right. \\
+        & +\int_{\abs x=R}\underbrace{(\abs x^{2-n}\partial_\nu\varphi-\varphi\partial_\nu\abs x^{2-n})}_{=0}\d\sigma \\
+      &  + \left.\int_{\abs x=\epsilon}(\abs x^{2-n}\partial_\nu\varphi-\varphi\partial_\nu\abs x^{2-n})\d\sigma
+      \right\}.
+      \end{aligned}
+  \end{align}
+  Auf $[\abs x=\epsilon]$ ist $\nu(x)=-\frac x{\abs x}=-\frac x\epsilon$ und deshalb
+  \[ \partial_\nu\varphi(x)=\nabla\varphi(x)\cdot\nu(x)=-\frac{x\cdot\nabla\varphi(x)}\epsilon,\quad\abs x=\epsilon. \]
+  Dann ist
+  \[\begin{split}
+    \Abs{\,
+      \int_{\abs x=\epsilon}\abs x^{2-n}\partial_\nu\varphi\d\sigma
+    }\leq&\epsilon^{2-n}\int_{\abs x=\epsilon}\underbrace{\frac{\abs x}\epsilon}_{=1}\abs{\nabla\varphi(x)}\d\sigma \\
+    \leq&\epsilon^{2-n}\norm{\nabla \varphi}_\infty\underbrace{\vol(S^{n-1}_\epsilon)}_{=\omega_n\epsilon^{n-1}} \\
+    =&c\epsilon\xrightarrow[\epsilon\ra0]{}0.
+  \end{split}
+  \eq{eq:4.2}
+\]
+Ferner gilt auf $[\abs x=\epsilon]$:
+\[
+\partial_\nu\abs x^{2-n}=\nabla\abs x^{2-n}\cdot\nu(x)=\frac{(2-n)x}{\abs x^n}\cdot\frac{-x}{\epsilon}=(n-2)\epsilon^{1-n}.
+\]
+Damit können wir folgern, dass
+  \begin{align}
+    \label{eq:4.3}\tag{4.3a}
+    \begin{aligned}
+    \lim_{\epsilon\ra0}\int_{\abs x=\epsilon}-\varphi\partial_\nu\abs
+    x^{2-n}\d\sigma =&\lim_{\epsilon\ra0}(2-n)\epsilon^{1-n}\int_{\abs
+      x=\epsilon}\varphi\d\sigma\\
+       =&\lim_{\epsilon\ra0}(2-n)\omega_n
+    \underbrace{\frac{1}{\vol(S^{n-1}_\epsilon)}\int_{S^{n-1}_\epsilon}\varphi\d\sigma}_{\ra\varphi(0)},
+  \end{aligned}
+  \end{align}
+    denn
+  \begin{align}\tag{4.3b}
+  \begin{aligned}
+    \Abs{\frac{1}{\vol(S^{n-1}_\epsilon)}\int_{S^{n-1}_\epsilon}\varphi\d\sigma-\varphi(0)}
+    =&\Abs{\frac{1}{\vol(S^{n-1}_\epsilon)}\int_{S^{n-1}_\epsilon}\varphi(x)-\varphi(0)\d\sigma} \\
+    \leq& \max_{\abs x\leq\epsilon}\abs{\varphi(x)-\varphi(0)}\xrightarrow[\epsilon\ra0]{}0.
+  \end{aligned}
+\end{align}
+Aus \eqref{eq:4.1}, \eqref{eq:4.2} und (4.3) folgt dann
+\[ \<\Delta\abs x^{2-m},\varphi\>=\<(2-n)\omega_n\delta,\varphi\> \]
+für alle $\varphi\in\D(\R)$.
+\end{proof}
+
+\begin{kor}[Lösung der inhomogenen Laplace-Gleichung]
+  \label{kor:4.5}
+  \begin{enumerate}[\rm(a)]
+  \item \label{kor:4.5-1} Für $f\in\E'(\R^n)$ löst $\mathcal{N}\ast f\in\D'(\R^n)$ die Laplace-Gleichung 
+    \[ -\Delta u=f \] 
+    in $\D'(\R^n)$.
+  \item \label{kor:4.5-2} Es sei $f\in L_1(\R^n)$ mit
+    \[
+    \underbrace{\int_{\R^n}\abs{f(y)}\cdot\abs{\log\abs{y}}\d y<\infty\quad\text{falls }n=2.}_{\text{in }\D'(\R^n)}
+    \]
+    Dann ist $\mathcal{N}\ast f\in\Lloc(\R^n)$ und $-\Delta(\mathcal{N}\ast f)=f$ in $\D'(\R^n)$.
+  \end{enumerate}
+\end{kor}
+
+\begin{proof}
+  \begin{itemize}
+  \item[(\ref{kor:4.5-1})] Theorem~\ref{theorem:3.13} (a).
+  \item[(\ref{kor:4.5-2})] $n=2$: Übung.
+    
+    $n\geq3$: Für $R>0$ sei
+    \[
+    \chi_R(x):=\begin{cases}
+      1 &,\abs x<R \\
+      0 &,\abs x\geq R
+    \end{cases}.
+    \]
+    Dann folgt aus Theorem~\ref{theorem:4.4}, dass $\chi_R\mathcal{N}\in L_1(\R^n)$ und $(1-\chi_R)\mathcal{N}\in L_\infty(\R^n)$. Damit ist
+    \[
+      \mathcal{N}\ast f=\underbrace{(\chi_R\mathcal{N})\ast f}_{
+        \begin{subarray}{c}
+        \in  L_1(\R^n) \\
+          \text{Satz~\ref{satz:3.3}~(\ref{satz:3.3-1})}
+        \end{subarray}}
+      +\underbrace{((1-\chi_R)\mathcal{N})\ast f}_{
+        \begin{subarray}{c}
+        \in  L_\infty(\R^n)\subset\Lloc(\R^n) \\
+          \text{Satz~\ref{satz:3.3}~(\ref{satz:3.3-1})}
+        \end{subarray}}
+      \in\Lloc(\R^n).
+      \]
+    Ferner gilt für alle $\varphi\in\D(\R^n)$:
+\begin{align*}
+	\< -\Delta (N\ast f),\varphi\> \ \ =\ \   & - \int_{\R^n} (\mathcal{N}\ast f)(x) \Delta \varphi (x) \d x \\
+	\stackrel{\scriptsize\text{Fubini}}= & - \int_{\R^n} f(y) \int_{\R^n}\mathcal{N}(x-y) \Delta \varphi(x) \d x \d y \\
+	= \ \ & \int_{\R^n} \mathcal{N} (x) \Delta \varphi (x+y) \d x = \< \underbrace{\Delta \mathcal{N}}_{-\delta},\tau_{-y}\varphi\> = - \varphi (y) \, . 
+\end{align*}
+Insgesamt folgt damit
+\[
+	\< - \Delta (\mathcal{N} \ast f),\varphi\> = \int_{\R^n} f(y) \varphi(y) \d y = \< f,\varphi\> \quad \fa \, \varphi \in \D (\R^n).
+\]
+  \end{itemize}
+\end{proof}
+
+\begin{bem*}
+  Korollar~\ref{kor:4.5} (b) spiegelt Theorem~\ref{theorem:3.13} wieder. Allerdings sind weder $\mathcal{N}\in\E'$ noch $f\in\E'$, sodass Theorem~\ref{theorem:3.13} nicht direkt angewendet werden kann.
+\end{bem*}
+
+\section{Darstellungsformeln und Folgerungen}
+
+\begin{theorem}[Darstellungsformel]
+  \label{theorem:4.6}
+  Beschreibe $\Omega\in C^1$ ein Gebiet und sei $u\in C^2(\bar\Omega)$. Dann ist für alle $x\in\Omega$
+  \[
+  \begin{split}
+    u(x)=& \overbrace{-\int_\Omega\Delta
+      u(y)\mathcal{N}(x-y)\d y}^{\text{Newton-Potential}}\\
+    &+\int_{\partial\Omega}(
+    \underbrace{\mathcal{N}(x-y)\partial_\nu
+      u(y)}_{\text{Einfachschicht-Potential}} -
+    \underbrace{u(y)\partial_\nu\mathcal{N}(x-y)}_{\text{Doppelschicht-Potential}}
+    )\d\sigma(y)
+  \end{split}
+  \]
+\end{theorem}
+
+\begin{proof}
+  Sei $x\in\R$ beliebig und $\epsilon>0$ mit $\overline{\B}(x,\epsilon)\subset\Omega$. Nach Lemma~\ref{lemma:4.3} ist $\Delta_y\mathcal{N}(x-y)=0$ für $y\in\Omega\setminus\overline{\B}(x,\epsilon)$ beliebig. Wegen der Rotationssymmetrie ist außerdem $\mathcal{N}(x-y)=\mathcal{N}(y-x)$. Mit Hilfe der 2. Greenschen-Formel (Satz~\ref{satz:4.1}~(\ref{satz:4.1-3})) und der Feststellung, dass $\partial(\Omega\setminus\overline{\B}(x,\epsilon))=\partial\Omega\cup\partial\B(x,\epsilon)$, erhalten wir
+    \begin{dmath*}
+      \int_{\Omega\setminus\bar{\B}(x,\epsilon)}\mathcal{N}(x-y)\Delta u(y)\d y
+      = \int_{\partial\Omega}(\mathcal{N}(y-x)\partial_\nu u(y)-u(y)\partial_\nu\mathcal{N}(y-x))\d\sigma(y) 
+      +\int_{\partial\B(x,\epsilon)}(\mathcal{N}(y-x)\partial_\nu u(y)-u(y)\partial_\nu\mathcal{N}(y-x))\d\sigma(y).
+    \end{dmath*}
+    Dabei ist $\Delta u\in C(\bar\Omega)$ und $\mathcal{N}\in\Lloc(\R^n)$. Da $\bar\Omega$ kompakt ist, folgt aus dem Satz von Lebesgue
+    \[
+    \int_{\Omega\setminus\B(x,\epsilon)}\mathcal{N}(y-x)\Delta u(y)\d y
+    \xrightarrow{\epsilon\searrow 0}
+    \int_\Omega\mathcal{N}(y-x)\Delta u(y)\d y.
+    \]
+    Für $\abs{x-y}=\epsilon$ gilt:
+    \[
+    \mathcal{N}(y-x)=\left\{
+      \begin{aligned}
+        &c\cdot\epsilon^{2-n}\quad &,n\geq 3 \\
+        &c\cdot\log\epsilon \quad&,n=2
+      \end{aligned}
+      \;
+    \right\}
+    =\mathcal{N}(\epsilon).
+    \]
+    Nun ist
+    \[
+    \Abs{\;
+      \int_{\partial\B(x,\epsilon)}\mathcal{N}(y-x)\partial_\nu u(y)\d\sigma(y)
+    }\leq \norm{\nabla u}_\infty\mathcal{N}(\epsilon)
+    \underbrace{\vol(S^{n-1}_\epsilon)}_{=\omega_n\epsilon^{n-1}}\xrightarrow{\epsilon\searrow0}0.
+    \]
+    \addtocounter{equation}{1}
+    Es ist $\nu(y)=\frac{y-x}\epsilon$ auf $\abs{x-y}=\epsilon$. $\nu(y)$ zeigt also nach Innen. Wir erhalten
+    \begin{align}
+     \begin{aligned}
+      \label{eq:4.4}
+     & \int_{\partial\B(x,\epsilon)}u(y)\partial_\nu\mathcal{N}(x-y)\d\sigma(y)
+      \underset{\parbox{1.45cm}{\centering \scriptsize
+          \text{Def. }$\mathcal{N}$ \\
+          $\partial_\nu\mathcal{N}=\nabla\mathcal{N}\cdot\nu$
+        }}=
+      \frac{\epsilon^{1-n}}{\omega_n}\cdot\int_{\partial\B(x,\epsilon)}u(y)\d\sigma(y) \\
+      = \, &\frac{1}{\vol(S^{n-1}_\epsilon)}\int_{\partial\B(x,\epsilon)}u(y)\d\sigma(y) 
+      \xrightarrow[
+      \begin{subarray}{c}
+        \text{vgl. Beweis zu} \\
+        \text{Theorem~\ref{theorem:4.4}}
+      \end{subarray}
+      ]{\epsilon\searrow0}  u(x).
+      \end{aligned}
+    \end{align}
+    Aus \eqref{eq:4.1}-\eqref{eq:4.4} folgt die Behauptung.
+\end{proof}
+
+\begin{bem}
+  \begin{enumerate}[(a)]
+  \item Es sei $\supp(u)\Subset\Omega$. Dann ist
+    \[
+    u(x)=-\int_\Omega\Delta u(y)\mathcal{N}(x-y)\d y,
+    \]
+    d.h. $u$ ist ein reines Newton Potential. Ist $u$ harmonisch, so ist
+    \[
+    	u(x) = \int_{\partial\Omega}(\mathcal{N}(y-x)\partial_\nu u(y)-u(y)\partial_\nu\mathcal{N}(y-x))\d\sigma(y) .
+    \]
+
+  \item Es könnte der Eindruck entstehen, dass das Problem
+    \begin{align*}
+      -\Delta u&=0\quad\text{in } \Omega \\
+      u\rvert_{\partial\Omega}&= f \\
+      \partial_\nu u\rvert_{\partial\Omega}&=g
+    \end{align*}
+    durch
+    \[
+    \tag{$\ast$}
+    \label{eq:4.star}
+    u(x)=\int_{\partial\Omega}(\mathcal{N}(x-y)g(y)-f(y)\partial_\nu\mathcal{N}(x-y))\d\sigma(y),\quad x\in\Omega
+    \]
+    gelöst werden kann. Dies ist jedoch nicht richtig! Man kann im Allgemeinen nur eine beliebige Randbedingung vorgeben. Zum Beispiel hat das Dirichlet-Problem
+    \[
+          \Big\vert \quad -\Delta u=0,\quad u\rvert_{\partial\Omega}=f
+    \]
+    eine eindeutige Lösung (vgl.\ später). Das heißt, $g$ muss dann gewissen Bedingungen unterliegen.
+  \end{enumerate}
+\end{bem}
+
+\begin{lemma}
+  \label{lemma:4.8}
+  Es sei $f\in C(\Omega), x\in\R, r>0$ und $\overline{\B(x,r)}\subset\Omega$. Dann ist
+  \[
+  \int_{\B(x,r)}f(y)\,dy=\int\limits_0^r\int\limits_{\partial\B(x,s)}f(y)\,d\sigma(y)\d s.
+  \]
+\end{lemma}
+
+\begin{proof}
+  Polarkoordinaten.
+\end{proof}
+
+\begin{theorem}[Mittelwerteigenschaft]
+  \label{theorem:4.9}
+  Sei $u\in C^2(\Omega)$ harmonisch auf $\Omega$, $x\in\Omega, r>0$ und $\overline{\B(x,r)}\subset\Omega$. Dann ist
+  \[
+  u(x)=\underbrace{
+    \frac1{\vol(\partial\B(x,r))}\cdot\int_{\partial\B(x,r)} u(y)\d\sigma(y)
+  }_{\text{Sphärisches Mittel}}
+  =\underbrace{
+    \frac1{\vol(\B(x,r))}\cdot\int_{\B(x,r)}u(y)\d y
+  }_{\text{Kugelmittel}}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  Wir wissen, dass
+  \begin{align*}
+    \vol(\partial\B(x,r))=\omega_nr^{n-1}\\
+    \intertext{und}
+    \vol(\B(x,r))=\frac1n\omega_nr^n
+  \end{align*}
+  ist. Theorem~\ref{theorem:4.6} mit $\Omega=\B(x,r)$ liefert uns
+  \[
+  \eq{eq:4.5}
+  u(x)=\int_{\partial\B(x,r)}\mathcal{N}(x-y)\partial_\nu u(y)-u(y)\partial_\nu\mathcal{N}(x-y)\d\sigma(y).
+  \]
+  Damit erhalten wir
+  \[
+  \eq{eq:4.6}
+  \int_{\partial\B(x,r)}\underbrace{\mathcal{N}(x-y)}_{=\mathcal{N}(r)}\partial_\nu u(y)\d\sigma(y)
+  =\mathcal{N}(r)\cdot\int_{\partial\B(x,r)}\partial_\nu u(y)\d\sigma(y)
+  \stackrel[\scriptsize\text{Gauß}]{\Delta u=0}=0.
+  \]
+  Auf $\partial\B(x,r)$ gilt $\nu(y)=\frac{y-x}{\abs{x-y}}$. Damit zeigt $\nu$ nach Außen.
+
+  Für $n>2$ gilt:
+  \[
+  \eq{eq:4.7}
+  \partial_\nu\mathcal{N}(x-y)=-\frac 1{\omega_n}\abs{y-x}^{1-n}=-\frac{r^{1-n}}{\omega_n},\quad y\in\partial\B(x,r).
+  \]
+  Gleichungen \eqref{eq:4.5}-\eqref{eq:4.7} liefert uns
+  \[
+  \eq{eq:4.8}
+  u(x)=\frac1{\omega_n r^{n-1}}\int_{\partial\B(x,r)}u(y)\d\sigma(y).
+  \]
+  Schließlich erhalten wir
+  \[
+  \begin{split}
+    \int_{\B(x,r)}u(y)\d y\overset{\scriptsize\text{Lemma~\ref{lemma:4.8}}}=&
+    \int_0^r\int_{\partial\B(x,s)}u(y)\d\sigma(y)\d s
+    \overset{\scriptsize\eqref{eq:4.8}}=
+    \int_0^r\omega_ns^{n-1}u(x)\d s \\
+    =\quad\,\, \, &\frac{\omega_nr^n}n u(x),
+  \end{split}
+  \]
+  woraus die Behauptung folgt.
+\end{proof}
+
+\begin{satz}
+  \label{satz:4.10}
+  Sei $u\in C(\Omega)$ und für alle Kugeln $\overline{\B(x,r)}\subset\Omega$ gelte die Mittelwerteigenschaft
+  \[
+  u(x)=\frac{1}{\omega_nr^{n-1}}\cdot\int_{\partial\B(x,r)}u(y)\d\sigma(y).
+  \]
+  Dann ist $u\in C^\infty(\R^n)$ und $u$ harmonisch.
+\end{satz}
+
+\begin{proof}
+  Sei $\varphi\in C_c^\infty(\B(0,1))$ mit $\int_{\B(0,1)}\varphi=1$ und $\varphi(x)=\Psi(\abs x)$ für $\Psi\in C_c^\infty(\R)$ und $\varphi_\epsilon(x)=\epsilon^{-n}\varphi\left(\frac x\epsilon\right)$. Sei außerdem $\Omega_\epsilon:=\{x\in\Omega\with\bar\B(x,\epsilon)\subset\Omega\}$. Mit $x\in\Omega_\epsilon$ ist dann $\supp(\varphi_\epsilon(x-\cdot{}))\Subset\Omega$. Nun ist
+\[
+\begin{split}
+  (u\ast \varphi_\epsilon)(x) = \quad \, \ &\int_{\B(0,\epsilon)}u(x-y) \underbrace{\varphi \left(\frac y\epsilon\right)\epsilon^{-n}}_{= \varphi_\epsilon (y)} \d y 
+    \overset{\bar y=\frac y\epsilon}=\int_{\B(0,1)}u(x-\epsilon y)\varphi(y)\d y \\
+    \overset{\scriptsize\text{Lemma~\ref{lemma:4.8}}}= &\int_0^1\int_{\partial\B(0,s)}u(x-\epsilon y)\underbrace{\varphi(y)}_{=\Psi(s)}\d\sigma(y)ds \\
+    = \quad \, \ &\int_0^1\Psi(s)\underbrace{\int_{\partial \B(0,s)}u(x-\epsilon y)\d\sigma(y)}_{\parbox{4.3cm}{\scriptsize$\overset{z=x-\epsilon y} 
+        =\epsilon^{1-n}\int_{\partial\B(x,\epsilon s)}u(z)\d\sigma(z)$ \\
+       \text{ }  \text{ }\,$ =\epsilon^{1-n}\omega_n(\epsilon s)^{n-1}u(x)
+    $}} \d s \\
+    = \quad \, \ &\omega_n\int_0^1\Psi(s)s^{n-1}\d s \, u(x)
+\end{split}
+\]
+die \idx{triviale Fortsezung} von $u$. Es folgt nun aus
+\[
+\begin{split}
+  1&=\int_{\B(0,1)}\varphi(y)\d y\overset{\scriptsize\text{Lemma~\ref{lemma:4.8}}}
+  =\int_0^1\int_{\partial\B(0,s)}\underbrace{\varphi(y)}_{=\Psi(s)}\d\sigma(y)ds \\
+  &=\int_0^1\Psi(s)\underbrace{\vol(\partial\B(0,s))}_{=\omega_ns^{n-1}}\d s,
+\end{split}
+\] 
+dass $(u\ast\varphi_\epsilon)(x)=u(x)$ mit $x\in\Omega_\epsilon$ und $u\ast\varphi_\epsilon\in C^\infty(\Omega_\epsilon)$ ist. Für $\epsilon>0$ beliebig, ist $u\in C^\infty(\Omega)$.
+
+Wir nehmen nun an, das $u$ nicht harmonisch ist. Somit existieren ein $x\in\Omega$ und ein $r_0>0$ mit $\Delta u(y)>0 \,  \forall \, y\in\B(x,r_0)$. Dann ist
+\[
+u(x)\overset{\scriptsize\text{MWE}}=\frac 1{\omega_n r^{n-1}}\int_{\partial\B(x,r)}u(y)\d\sigma(y)\overset{y=x+rz}=\frac 1{\omega_n}\int_{\partial\B(0,1)}u(x+rz)\d\sigma(z)
+\]
+unabhängig von $r\in(0,r_0)$. Differentation nach $r$ liefert uns
+\[
+\begin{split}
+  0&\quad=\quad \frac 1{\omega_n}\int_{\partial\B(0,1)}\nabla u(x+rz)\cdot
+  z\d\sigma(z) \\
+  &\overset{y=x+rz}= \frac{r^{1-n}}{\omega_n}\int_{\partial\B(x,r)}\nabla
+  u(y)\cdot\frac{y-x}{r}\d\sigma(y) \\
+  &\ \, \overset{\scriptsize\text{Gauß}}= \ \, \frac{r^{1-n}}{\omega_n}\int_{\partial\B(x,r)}\Delta u(y)\d y>0. \qquad\qquad \sharp
+\end{split}
+\]
+Also ist $u$ harmonisch. Daraus folgt die Behauptung.
+\end{proof}
+
+\begin{kor}
+  \label{kor:4.11}
+  Sei $u\in C^2(\Omega)$ harmonisch. Dann ist $u\in C^\infty(\Omega)$.
+\end{kor}
+
+\begin{proof}
+  Aus Theorem~\ref{theorem:4.9} und Satz~\ref{satz:4.10} folgt die Behauptung.
+\end{proof}
+
+\begin{theorem}[\idx{Maximumprinzip}]
+  \label{theorem:4.12}
+  Sei $\Omega\subset\R^n$ ein Gebiet und $u\in C^2(\Omega)$ harmonisch und reellwertig.
+  \begin{enumerate}[\rm(a)]
+  \item Gilt $A:=\sup_{x\in\Omega}u(x)<\infty$, so ist entweder $u(x)<A$ für alle $x\in\Omega$ oder $A\equiv u$
+  \item Sei $u\in C(\bar\Omega)$ und $\Omega$ beschränkt. Dann ist $\max_{\bar\Omega}u=\max_{\partial\Omega}u$. Das heißt, Maximum und Minimum werden bei harmonischen Funktionen immer auf dem Rand angenommen.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}[(a)]
+  \item Sei $\Omega_A=\{x\in\Omega\with u(x)=A\}=u^{-1}[\{A\}]$. Dann ist $\Omega_A$ abgeschlossen in $\Omega$. 
+
+    Wir wählen nun ein $x_0\in\Omega_A$ und ein $r>0$ so, dass für $\bar\B(x_0,r)\subset\Omega$ ist. Aus der Mittelwerteigenschaft folgt $u(y)=A$ für alle $y\in\B(x_0,r)$. Somit ist $\Omega_A$ offen in $\Omega$. Da $\Omega$ zusammenhängend ist, muss $\Omega_A=\Omega$ oder $\Omega_A=\emptyset$ sein. Daraus folgt die Behauptung.
+  \item Übung.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{bem}
+  \begin{enumerate}[(a)]
+  \item Analoges gilt für das Minimum mit $u\mapsto -u$.
+  \item Sei $\Omega$ beschränkt und $u\in C^2(\Omega)\cap C(\bar\Omega)$ eine Lösung von $\Delta u=0$ in $\Omega$ mit $u\rvert_{\partial\Omega}=g$ und $g\geq 0$. Dann ist $u(x)>0$ in $\Omega$, falls $g(x_0)>0$ für $x_0\in\partial\Omega$ ist. 
+    \begin{proof}
+      Sei $\min_{\bar\Omega}u=\min_{\partial\Omega}u\geq0$. Dann ist $u\geq 0$ in $\bar\Omega$. Wir nehmen an, es existiere ein $x_1\in\Omega$ mit $u(x_1)=0$. Dann wäre aber $u\equiv0$ in $\bar\Omega$ nach dem Maximumsprinzip. $\sharp$
+    \end{proof}
+  \end{enumerate}
+\end{bem}
+
+\begin{kor}[Identitätssatz]
+  \label{kor:4.14}
+  Sei $\Omega\subset\R^n$ ein beschränktes Gebiet und $u_j\in C^2(\Omega)\cap C(\bar\Omega), j = 1,2,$ mit
+  \begin{align*}
+    \Delta u_1&=\Delta u_2 \\
+    u_1\rvert_{\partial\Omega}&=u_2\rvert_{\partial\Omega}.
+  \end{align*}
+  Dann ist $u_1\equiv u_2$ in $\bar\Omega$.
+
+  Insbesondere hat $-\Delta u=f$ in $\Omega$ höchstens eine Lösung $u\in C^2(\Omega)\cap C(\bar\Omega)$ mit $u=g$ auf $\partial\Omega$.
+\end{kor}
+
+\begin{proof}
+  Sei $w:=u_1-u_2$. Dann ist 
+  \begin{align*}
+    \Delta w=\Delta u_1&-\Delta u_2=0 \\
+    w\rvert_{\partial\Omega}=u_1\rvert_{\partial\Omega}&-u_2\rvert_{\partial\Omega} = 0
+  \end{align*}
+  und $max_{\bar\Omega}w=\max_{\partial\Omega}w=0$. Analog verfahren wir für $-w$ und erhalten $w\equiv 0$ in $\bar\Omega$.
+\end{proof}
+
+\begin{satz}[Liouville]
+  \label{satz:4.15}
+  Sei $u\in C^2(\R^n)$ beschränkt und harmonisch. Dann ist $u\equiv c= \text{const}$.
+\end{satz}
+
+\begin{proof}
+  Sei $x\in\R^n$ und $R>\abs x$. Dann ist
+  \[
+  \begin{split}
+    \abs{u(x)-u(0)}&\overset{\scriptsize\text{MWE}}=\frac{n}{\omega_nR^n}\Abs{\;\int_{\B(x,R)}u(y)\d y-\int_{\B(0,R)}u(y)\d y} \\
+    &\ \ \leq\ \  \frac{n\norm{u}_\infty}{\omega_nR^n}\left(
+      \;\int_{\B(x,R)\setminus\B(0,R)}1\d y+\int_{\B(0,R)\setminus\B(x,R)}1\d y
+    \right)\\
+    &\ \ \leq\ \  \frac{n\norm{u}_\infty}{\omega_nR^n} \int_{R-\abs x< y<R+\abs x}1\d y
+    =\frac{n\norm{u}_\infty\omega_n}{\omega_nR^n} \int_{R-\abs x}^{R+\abs x}r^{n-1}\d r \\
+    &\ \ =\ \ \frac{\norm u_\infty}{R^n}((R+\abs x)^n-(R-\abs x)^n)\xrightarrow{R\ra\infty}0.
+  \end{split}
+  \]
+  Also ist $u(x)=u(0)$ und somit konstant.
+\end{proof}
+
+\begin{theorem}[Harnacksche Ungleichung]
+  \label{theorem:4.16}
+  Für alle Teilgebiete $\Omega'\Subset\Omega$ existiert ein $c=c(\Omega',\Omega)>0$, für das gilt:
+  \[
+  \sup_{\Omega'}u\leq c\inf_{\Omega'}u
+  \]
+  für alle harmonischen $u\in C^2(\Omega)$ mit $u\geq0$.
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+  \item \label{proof:4.16-1} Sei $\Omega'=\B(x_0,r)\subset\B(x_0,4r)\subset\Omega$. Seien $y_1,y_2\in\B(x_0,r)$. Dann ist $\B(y_1,r)\subset\B(y_2,3r)$. Sei $u\in C^2(\Omega)$ harmonisch mit $u\geq0$. Aus der Mittelwerteigenschaft folgt
+    \[
+    \begin{split}
+      u(y_1)&\ \, =\ \, \frac{n}{\omega_nr^n}\cdot\int_{\B(y_1,r)}u(y)\d y\overset{u\geq0}
+      \leq\frac{n3^n}{\omega_n(3r)^n}\cdot\int_{\B(y_2,3r)}u(y)\d y \\
+      &\overset{\scriptsize\text{MWE}}=3^n\cdot u(y_2).
+    \end{split}
+    \]
+    Also ist
+    \[\sup_{\B(x_0,r)}u\leq 3^n\inf_{\B(x_0,r)}u.\]
+  \item Sei $\Omega'\Subset\Omega$ ein beliebiges Gebiet. Dann existiert ein $r>0$ mit $r<\frac 14\dist(\Omega',\partial\Omega)$. Da $\bar\Omega'$ kompakt ist, gilt für $x_1,\ldots,x_m\in\bar\Omega'$, dass
+    \[
+    \bar\Omega'\subset\bigcup_{j=1}^m\B(x_j,r).
+    \]
+    Da $\Omega'$ zusammenhängend ist, können $y_1$ und $y_2$ durch einen Weg über $m$ Punkte in $\Omega'$ verbunden werden. Deshalb ist mit Hilfe von (\ref{proof:4.16-1}) $u(y_1)\leq 3^{nm}u(y_2)$. Daraus folgt die Behauptung.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{bem}
+  Das Maximumprinzip und die Harnacksche Ungleichung gelten für allgemeine elliptische Differentialoperatoren $L$ der Form
+  \[
+  Lu=\sum_{j,k=1}^na_{jk}\partial_j\partial_ku+\sum_{i=1}^nb_i\partial_iu
+  \]
+  mit $\sum_{i,k}a_{ik}\xi_i\xi_k\geq\alpha\abs\xi^2$ für alle $\xi\in\R^n$.
+\end{bem}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

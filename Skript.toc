@@ -1,0 +1,42 @@
+\select@language {ngerman}
+\contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Typische Fragen}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}Notation und Begriffe}{3}{section.1.3}
+\contentsline {section}{\numberline {1.4}Spezialf\IeC {\"a}lle}{4}{section.1.4}
+\contentsline {chapter}{\numberline {2}Gleichungen 1. Ordnung: Methode der Charakteristiken}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Motivation}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Quasilineare Gleichungen 1. Ordnung}{6}{section.2.2}
+\contentsline {chapter}{\numberline {3}Distributionen}{16}{chapter.3}
+\contentsline {chapter}{\numberline {4}Harmonische Funktionen}{27}{chapter.4}
+\contentsline {section}{\numberline {4.1}Fundamentall\IeC {\"o}sung}{28}{section.4.1}
+\contentsline {section}{\numberline {4.2}Darstellungsformeln und Folgerungen}{32}{section.4.2}
+\contentsline {chapter}{\numberline {5}Dirichletproblem f\IeC {\"u}r die Laplace-Gleichung}{39}{chapter.5}
+\contentsline {section}{\numberline {5.1}Dirichletproblem auf einer Kugel}{43}{section.5.1}
+\contentsline {chapter}{\numberline {6}Sobolevr\IeC {\"a}ume}{46}{chapter.6}
+\contentsline {chapter}{\numberline {7}Hilbertraummethoden und schwache L\IeC {\"o}sungen}{57}{chapter.7}
+\contentsline {section}{\numberline {7.1}Hilbertr\IeC {\"a}ume und die S\IeC {\"a}tze von Riesz und Lax-Milgram}{57}{section.7.1}
+\contentsline {section}{\numberline {7.2}Schwache L\IeC {\"o}sungen des Laplace-Dirichlet-Pro-blems}{64}{section.7.2}
+\contentsline {section}{\numberline {7.3}Lineare elliptische Differentialoperatoren 2. Ordnung}{69}{section.7.3}
+\contentsline {subsection}{\numberline {7.3.1}Dirichletproblem}{70}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {7.3.2}Neumannproblem}{72}{subsection.7.3.2}
+\contentsline {subsection}{\numberline {7.3.3}Variationeller Zugang}{73}{subsection.7.3.3}
+\contentsline {section}{\numberline {7.4}Schwache L\IeC {\"o}sungen f\IeC {\"u}r nichtlineare Probleme}{75}{section.7.4}
+\contentsline {section}{\numberline {7.5}Eigenwertprobleme}{82}{section.7.5}
+\contentsline {subsubsection}{Anwendung auf den Laplace-Operator}{86}{section*.66}
+\contentsline {chapter}{\numberline {8}Fouriertransformation}{91}{chapter.8}
+\contentsline {chapter}{\numberline {9}Wellengleichung}{103}{chapter.9}
+\contentsline {section}{\numberline {9.1}Wellengleichung auf $\Omega =\mathbb {R}^n$}{103}{section.9.1}
+\contentsline {subsubsection}{Die Wellengleichung im 1-dimensionalen Fall}{104}{section*.71}
+\contentsline {subsubsection}{Das Cauchy-Problem f\IeC {\"u}r die 1-dimensionale Wellengleichung}{105}{section*.72}
+\contentsline {subsubsection}{H\IeC {\"o}here Dimensionen}{106}{section*.73}
+\contentsline {subsubsection}{L\IeC {\"o}sung der Wellengleichung im $\mathbb {R}^3$}{107}{section*.74}
+\contentsline {subsubsection}{L\IeC {\"o}sung der Wellengleichung im $\mathbb {R}^2$}{108}{section*.75}
+\contentsline {subsubsection}{Cauchy-Problem f\IeC {\"u}r die inhomogene Wellengleichung}{109}{section*.76}
+\contentsline {section}{\numberline {9.2}Wellengleichung auf beschr\IeC {\"a}nktem Gebiet $\Omega $}{110}{section.9.2}
+\contentsline {subsubsection}{Produktansatz f\IeC {\"u}r "`wellenf\IeC {\"o}rmige"' L\IeC {\"o}sungen}{112}{section*.80}
+\contentsline {chapter}{\numberline {10}W\IeC {\"a}rmeleitungsgleichung}{116}{chapter.10}
+\contentsline {section}{\numberline {10.1}Die W\IeC {\"a}rmeleitungsgleichung auf dem $\mathbb {R}^n$}{116}{section.10.1}
+\contentsline {section}{\numberline {10.2}W\IeC {\"a}rmeleitungsgleichung auf einem Gebiet $\Omega $}{121}{section.10.2}
+\contentsline {chapter}{Literaturverzeichnis}{128}{equation.10.2.10}
+\contentsline {chapter}{Index}{129}{chapter*.83}

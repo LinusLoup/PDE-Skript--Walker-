@@ -1,0 +1,417 @@
+\newchapter{Fouriertransformation}
+
+\textbf{Motivation.} Fouriertransformation überführt eine partielle Differentialgleichung in algebraische Gleichungen (auf $\R^n$). Die Lösung dieser wird dann wieder zurücktransformiert.
+
+\begin{defi}
+  Sei $f\in L_1(\R^n)$, $\xi\cdot x=\sum_{j=1}^n\xi_j\cdot x_j$ mit $\xi,x\in\R^n$. Dann heißt
+  \begin{align*}
+    (\F f)(\xi):=\hat f(\xi)
+    \hiderel:= (2\pi)^{-\frac n2}\int_{\R^n}f(x)e^{-i\xi x}\d x
+    \condition{$\xi\in\R^n$}
+  \end{align*}
+  die \idx{Fouriertransformation} von $f$.
+\end{defi}
+
+\begin{bem*}
+  Aus dem Satz von Lebesgue folgt, dass $\hat f:\R^n\ra \C$ stetig ist.
+\end{bem*}
+
+\begin{satz}
+  \label{satz:8.1}
+  Seien $f,g\in  L_1(\R^n)$. Dann gilt:
+  \begin{enumerate}[\rm(a)]
+  \item \label{satz:8.1-1} Faltungssatz: $\widehat{f\ast g}=(2\pi)^{\frac n2}\hat f\hat g$.
+  \item \label{satz:8.1-2} Für die Translation $(\tau_af)(x):=f(x-a)$ mit $x,a\in\R^n$ gilt: $(\widehat{\tau_af})(\xi)=e^{-ia\cdot\xi}\hat f(\xi)$ mit $\xi,a\in\R^n$.
+  \item \label{satz:8.1-3} $(\widehat{e^{ia\cdot x}f})(\xi)=(\tau_a\hat f)(\xi)$ mit $a,\xi\in\R^n$.
+  \item \label{satz:8.1-4} Sei $(\sigma_tf)(x):=f(tx)$ mit $x\in\R^n$ und $t>0$ eine \idx{Dilatation}. Dann ist
+    \[ \F\circ\sigma_t=t^{-n}\sigma_{\frac 1 t}\circ\F. \]
+  \end{enumerate}
+\end{satz}
+
+\begin{proof}
+  \begin{enumerate}[\rm(a)]
+  \item Wir rechnen einfach nach.
+    \begin{align*}
+      \widehat{f\ast g} (\xi)
+      & \ \ \,  = \, \, \, \, (2\pi)^{-\frac n2}\int_{\R^n}\int_{\R^n}f(x-y)g(y)\d y \,  e^{-i\xi\cdot x}\d x\\
+      &\, \underset{\scriptsize\text{Fubini}}=(2\pi)^{-\frac n2}\int_{\R^n}g(y)\int_{\R^n}f(x-y)e^{-i\xi\cdot x}\d x\d y\\
+      &\underset{z=x-y}=(2\pi)^{-\frac n2}\int_{\R^n}g(y)\int_{\R^n}f(z)e^{-iz\cdot\xi}\d z \, e^{-iy\cdot\xi}\d y \\
+      &\ \ \,  = \, \, \, \,  (2\pi)^{-\frac n2}\hat f(\xi)\hat g(\xi)
+      \condition{$\xi\in\R^n$}
+    \end{align*}
+    \item Übung.
+    \item Übung.
+    \item Auch hier rechnen wir nach, dass gilt
+      \begin{align*}
+        (\widehat{\sigma_tf})(\xi) &\, \  = \text{ } (2\pi)^{-\frac n2}\int_{\R^n}f(tx)e^{-i\xi\cdot x}\d x\\
+     &   \underset{z=tx}=(2\pi)^{-\frac n2}\int_{\R^n}f(z)e^{-i\xi\cdot\frac zt}t^{-n}\d z \\
+       &\ \,  =\, \, \, t^{-n}\hat f\left(\frac \xi t\right)
+        \condition{$\xi\in\R^n, t\geq0$} \, . \qedhere
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+
+\begin{defi}
+  Sei $X\subset\R^n$ offen und $C_0(X):=\{u\in C(X)\with\,  \fa\,  \epsilon>0\, \exists \,  K=\bar K\Subset X, \abs{u(x)}<\epsilon\, \fa\, x\in X\setminus K\}$. Ist $u\in C_0(X)$, so sagen wir "`$u$ verschwindet im Unendlichen"'.
+\end{defi}
+
+\begin{bem}
+  \label{bem:8.2}
+  $C_0(X)$ ist ein abgeschlossener Untervektorraum von 
+  \[ (BUC(X), \norm{\, \cdot\, }_\infty)\, ,\] also selbst ein Banachraum.
+\end{bem}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{theorem}[Riemann-Lebesgue]
+  \label{theorem:8.3}
+$\F \in \mathcal L(L_1(\R^n), C_0(\R^n))$.
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+\item Sei $f \in L_1(\R^n)$, dann folgt mit Lebesgue $\hat f\in C(\R^n)$, denn
+\begin{align*}
+	&\abs{\hat f(\xi)}  \leq (2\pi)^{-\frac n 2} \norm f_{L_1(\R^n)} \quad \fa \, \xi \in \R^n \\
+	\Ra & \norm{\F f}_{BUC(\R^n)}  \leq (2\pi)^{-\frac n 2} \norm f_{L_1(\R^n)} \\
+	\Ra & \F \in \mathcal L(L_1(\R^n), BUC(\R^n))
+\end{align*}
+\item Sei $f \in \D (\R^n)$, dann folgt $ (1-\Delta_x) e^{-\xi x} = (1+\abs \xi^2) e^{-\xi x}$.
+\begin{align*}
+	\Ra : \hat f(\xi) & = \frac{(2\pi)^{\frac n 2}}{1+\abs\xi^2} \int_{\R^n} f(x) \underbrace{(1-\Delta_x) \underbrace{e^{-\xi x}}_{\in\Lloc}}_{\in \Lloc} \d x \\
+	& =  \frac{(2\pi)^{\frac n 2}}{1+\abs\xi^2} \int_{\R^n} (1-\Delta_x)f(x) e^{-\xi x} \d x \\
+	\Ra \abs{\hat f(\xi)} & \leq \frac{(2\pi)^{\frac n 2}}{1+\abs\xi^2} \norm{(1-\Delta_x) f}_{L_1(\R^n)} \xrightarrow{\abs \xi \ra \infty} 0 \text{ gleichmäßig.}
+\end{align*}
+Daraus folgt (per Definition), $\hat f \in C_0(\R^n)$.
+\item Sei $f\in L_1(\R^n)$ beliebig.
+\begin{align*}
+	\stackrel[\scriptsize\text{Satz}~\ref{satz:3.4}]{\D \stackrel{d}\subset L_1}\Ra & \exists \, f_j \in \D (\R^n) : f_j \longrightarrow f \quad \text{in } L_1(\R^n) \\
+	\Ra: \ & \abs{\hat f(\xi)} \leq \underbrace{\abs{\hat f(\xi) -\hat f_j (\xi)}}_{\leq (2\pi)^{\frac n 2} \underbrace{\norm{f-f_j}_{L_1(\R^n)}}_{\xrightarrow{j \ra \infty} 0}} + \underbrace{\abs{\hat f(\xi)}}_{\xrightarrow[\abs\xi \ra \infty]{} 0 \text{ glm.}} \\
+	\Ra \ \,  & \abs{\hat f(\xi)} \xrightarrow{\abs\xi\ra\infty} 0 \text{ gleichmäßig, d.h. }\hat f \in C_0(\R^n)\, . \qedhere
+\end{align*}
+\end{enumerate}
+\end{proof}
+
+\begin{bem*}
+  Die Einsfunktion $\mathds{1}$ kann nicht Fouriertransformation einer $L_1$-Funktion sein.
+\end{bem*}
+
+\begin{defi}
+Für alle $k,m\in \N, \varphi\in C^\infty(\R^n)$ definieren wir
+\begin{align*}
+q_{k,m} (\varphi) &:= \max_{\abs\alpha \leq m} \sup_{x \in \R^n} (1+\abs x^2)^k \abs{\partial^\alpha \varphi (x)} \, , \\
+\mathcal S (\R^n)& := \{\varphi \in C^\infty (\R^n) \with q_{k,m} (\varphi) < \infty \, \fa \, k,m \in \N\}
+\end{align*}
+als den (Schwartzschen) Raum \index{Schwartzer Raum} der schnell fallenden Funktionen. Als Topologie auf $\mathcal S(\R^n)$ definieren wir
+\[
+	\varphi_j \xrightarrow{j\ra \infty} \varphi \quad \text{in } \mathcal S(\R^n) : \Longleftrightarrow q_{k,m} (\varphi_j - \varphi) \xrightarrow{j\ra \infty} 0 \quad \fa \, k,m\in \N \, .
+\]	
+\end{defi}
+
+\begin{bem*}
+$\mathcal S(\R^n)$ ist später  geeigneter Raum für Fouriertransformation.
+\end{bem*}
+
+\begin{bem}
+\label{bem:8.4}
+\begin{enumerate}[(a)]
+\item $\mathcal S (\R^n)$ ist Untervektorraum von $BUC^\infty (\R^n)$. Jedes $q_{k,m}$ ist eine Norm auf $\mathcal S(\R^n)$. ($\mathcal S(\R^n)$ ist kein normierter Vektorraum.)
+\item $\mathcal S(\R^n)$ ist ein vollständiger metrischer Raum, wenn er versehen ist mit der (Topologie-erzeugenden) Metrik
+\[
+	d(\varphi, \psi) = \sum_{k,m=0}^\infty 2^{-(k+m)} \frac{q_{k,m} (\varphi-\psi)}{1+q_{k,m} (\varphi-\psi)} \, .
+\]
+\item Es ist $\D (\R^n) \stackrel{d}\subset \mathcal S(\R^n) \stackrel{d}\subset L_p (\R^n), 1\leq p < \infty$.
+\begin{enumerate}[(i)]
+\item $\varphi_j \ra \varphi$ in $\D(\R^n) \Ra \varphi_j \ra \varphi$ in $\mathcal S(\R^n)$
+\item  $ \varphi_j \ra \varphi$ in $\mathcal S(\R^n) \Ra  \varphi_j \ra \varphi$ in $L_p(\R^n)$
+\end{enumerate}
+\begin{notation}
+$\D(\R^n) \stackrel{d}\hookrightarrow \mathcal S(\R^n) \stackrel{d}\hookrightarrow L_p(\R^n), 1 \leq p < \infty$.
+Ferner gilt $\mathcal S(\R^n) \stackrel{d}\hookrightarrow C_0 (\R^n)$.
+\end{notation}
+\item Wir setzen
+\[
+	r_{k,m} (\varphi) := \max_{\scriptsize\begin{array}{c} \abs \alpha \leq m \\ \abs \beta \leq k \end{array}} \sup_{x \in \R^n} \abs{x^\beta \partial^\alpha \varphi (x)} \, ,
+\]
+daraus folgt für alle $k,m\in \N$
+\[
+	\exists \, c = c(k,m) > 0 : \frac 1 c r_{k,m} (\varphi) \leq q_{k,m}(\varphi) \leq cr_{k,m} (\varphi) \quad \fa \, \varphi \in \mathcal S(\R^n) \, ,
+\]
+d.h. $\{r_{k,m} \with k,m \in \N\}$ erzeugt die Topologie auf $\mathcal S(\R^n)$, d.h. $\varphi_j \ra \varphi$ in $\mathcal S(\R^n) \Longleftrightarrow r_{k,m} (\varphi_j - \varphi) \ra 0 \, \fa \, k,m \in \N$.
+\item $\fa \, \alpha \in \N^n: \partial^\alpha \varphi\in \mathcal S(\R^n)$ und $q_{k,m} (\partial^\alpha \varphi) \leq q_{k,m+\abs \alpha} (\varphi) \, \fa \, \varphi \in \mathcal S(\R^n)$.
+\end{enumerate}
+\begin{proof}
+(a)-(e) Übung.
+\end{proof}
+\end{bem}
+
+\begin{notation}
+$D_j := \frac 1 i \partial_j , 1 \leq j \leq n$.
+\end{notation}
+
+\begin{satz}
+\label{satz:8.5}
+Sei $\varphi \in \mathcal S(\R^n), \alpha \in \N^n, \xi \in \R^n$. Dann gilt:
+\begin{enumerate}[\rm(a)]
+\item $(\widehat{ x^\alpha \varphi})(\xi) = (-1)^{\abs\alpha} D^\alpha \hat \varphi (\xi)$.
+\item $(\widehat{D^{\alpha} \varphi})(\xi) = \xi^\alpha \hat\varphi(\xi)$.
+\item $\F\in \mathcal L(\mathcal S(\R^n))$, d.h. $\F:\mathcal S(\R^n) \ra \mathcal S(\R^n)$ linear und $\F\varphi_j \ra \F\varphi$ in $\mathcal S(\R^n) \, \fa \, \varphi_j \ra \varphi$ in $\mathcal S(\R^n)$.
+\end{enumerate}
+\end{satz}
+
+\begin{proof}
+\begin{enumerate}[(a)]
+\item Es ist $D_\xi^\alpha e^{-i\xi x } = (-1)^{\abs\alpha} x^\alpha e^{-i \xi x}$ und $\abs{x^\alpha} \leq \abs x^{\abs\alpha}$.
+\begin{align*}
+	\Ra: \abs{D_\xi^\alpha e^{-i\xi x} \varphi (x)} &\leq \abs x^{\abs\alpha} (1+\abs^2)^n \abs{\varphi(x)} \frac 1{(1+\abs x^2)^n} \\
+	&\leq \underbrace{q_{n+\abs\alpha, 0}(\varphi)}_{<\infty, \varphi \in \mathcal S} \frac 1{(1+\abs x^2)^n} \in L_1(\R^n)
+\end{align*}
+Es folgt die Differenzierbarkeit unter dem Parameterintegral und damit $\hat \varphi \in C^\infty (\R^n), D_\xi^\alpha \hat \varphi = (-1)^{\abs\alpha} (\widehat{x^\alpha \varphi})$.
+\item Im vorletzten Schritt wenden wir Fubini und partielle Integration an, wobei jedes Randintegral verschwindet, da $\varphi$ schnellfallend ist.
+\begin{dmath*}
+	\xi^\alpha \hat\varphi(\xi) = (2\pi)^{-\frac n2} \int_{\R^n} \varphi(x) \xi^\alpha e^{-i \xi x} \d x
+	= (2\pi)^{-\frac n2} \int_{\R^n} \varphi(x) (-1)^{\abs\alpha} D_x^\alpha e^{-i\xi x} \d x 
+	= (2\pi)^{-\frac n2} \int_{\R^n} D_x^\alpha \varphi(x) e^{-i\xi x} \d x = (\widehat{D^\alpha \varphi})(\xi)
+\end{dmath*}
+\item Sei $\varphi \in \mathcal S(\R^n)$:
+\begin{align*}
+	\xi^\beta D^\alpha \hat \varphi(x) &\stackrel{\scriptsize\text{(a)}}= (-1)^{\abs{\alpha}} \xi^\beta (\widehat{x^\alpha \varphi})(\xi)
+	\stackrel{\scriptsize\text{(b)}}= (-1)^{\abs\alpha} (\widehat{D^\beta (x^\alpha \varphi)})(\xi) \\
+\Ra \abs{\xi^\beta D^\alpha \hat\varphi (\xi)} & \leq (2\pi)^{-\frac n 2} \int_{\R^n} \abs{D^\beta (x^\alpha \varphi(x))}(1+\abs x^2)^n \frac{\d x}{(1+\abs x^2)^n} \\
+& \leq c q_{n+\abs\alpha,\abs\beta}(\varphi) \underbrace{\int_{\R^n} \frac{\d x}{(1+\abs x^2)^n}}_{< \infty} \\
+& \leq cq_{n+m,k}(\varphi) \qquad \fa \, \abs\alpha \leq m, \abs\beta \leq k , \xi \in \R^n \\
+\Ra r_{k,m} (\hat\varphi) & \leq c q_{n+m,k}(\varphi) \qquad \fa \, \varphi \in \mathcal S(\R^n) \, \fa \, k,m\in\N \, ,
+\end{align*}
+mit Bemerkung~\ref{bem:8.4} (d) folgt dann die Behauptung.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+\label{lemma:8.6}
+$e^{-\frac{\abs{\cdot }^2}2}$ ist Eigenfunktion von $\F$ mit Eigenwert $1$, d.h.
+\[
+	\F\left(e^{-\frac{\abs{\cdot }^2}2}\right) = e^{-\frac{\abs{\cdot }^2}2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Es gilt $e^{-\frac{\abs{\cdot }^2}2} \in \mathcal S(\R^n)$.
+\begin{dmath*}
+	\F\left(e^{-\frac{\abs{\cdot }^2}2}\right) (\xi) = (2\pi)^{-\frac n2} \int_{\R^n} e^{-\frac{\abs{x }^2}2} e^{-i\xi x} \d x 
+	= (2\pi)^{-\frac n2} \int_{\R^n} \prod_{j=1}^n e^{-\frac{x_j^2}2} e^{-i\xi_j x_j} \d (x_1,\ldots, x_n)
+	= \prod_{j=1}^n \left[ (2\pi)^{-\frac n2} \int_\R e^{-\frac{x_j^2}2} e^{-i\xi_j x_j} \d x_j \right].
+\end{dmath*}
+Sei $n=1. \varphi (x) := x^{-\frac{x^2}2}, x \in \R$
+\begin{align}\label{eq:8.1}
+	\Ra \varphi'(x) = -x \varphi(x) \Ra D\varphi (x) = - \frac 1 i x \varphi (x) \, .
+\end{align}
+Dann ist
+\begin{align*}
+	\frac 1 i \hat\varphi' &= D\hat\varphi \stackrel{\scriptsize\text{Satz}~\ref{satz:8.5}\text{(a)}}= - (\widehat{x\varphi})  \stackrel{\scriptsize\eqref{eq:8.1}}= i (\widehat{D\varphi})  \stackrel{\scriptsize\text{Satz}~\ref{satz:8.5}\text{(b)}}= i \xi \widehat\varphi \\
+	\Ra \hat\varphi' &= -\xi\hat\varphi \Ra \hat\varphi (\xi) = c e^{-\frac\xi 2} \\
+	c &= \hat\varphi(0) = (2\pi) \int_{\R} e^{-\frac{x^2}2} \d x = 1 \qedhere
+\end{align*}
+\end{proof}
+
+\begin{theorem}
+  \label{theorem:8.7}
+  Es sei $\F\in\L(\mathcal S(\R^n))$ bijektiv und für alle $\varphi\in \mathcal S(\R^n)$ gelte:
+  \begin{dmath*}
+    (\F^{-1}\varphi)(x)
+    =(2\pi)^{-\frac n2}\cdot\int_{\R^n}\varphi(\xi)e^{i\xi x}\d\xi
+    =\hat\varphi(-x)\hiderel=(\F\varphi)(-x)\, .
+  \end{dmath*}
+  Speziell gilt: $\F^{-1}\in\L(\mathcal S(\R^n))$.
+\end{theorem}
+
+\begin{proof}
+  \begin{dmath*}
+    \int_{\R^n}e^{i\cdot\xi x}\hat\varphi(\xi)\d\xi
+    =(2\pi)^{-\frac n2}\int_{\R^n}e^{i\xi x}\int_{\R^n}\varphi(y)e^{-i\xi y}\d y\d\xi
+  \end{dmath*}
+  Beachte: $[(y,\xi)\mapsto e^{i\xi(x-y)}\varphi(y)]\notin L_1(\R^n\times\R^n)$. Fubini darf deshalb nicht angewendet werden.
+
+  Wir verwenden deshalb folgenden Trick: $\fa \,\varphi,\phi\in \mathcal S(\R^n)$ und $x\in\R^n$ gelte
+  \begin{dmath*}
+    [(y,\xi)\mapsto e^{i\cdot\xi(x-y)}\varphi(y)\phi(\xi)]\in L_1(\R^n\times\R^n)\, .
+  \end{dmath*}
+  Damit ergibt sich
+  \begin{dmath}
+    \label{eq:8.2}
+    \int_{\R^n}e^{i\xi x}\hat\varphi(\xi)\phi(\xi)\d\xi
+    \underset{\scriptsize\text{ Fubini }}=(2\pi)^{-\frac n2}\int_{\R^n\times\R^n}e^{i\xi(x-y)}\varphi(y)\phi(\xi)\d(y,\xi)
+    \underset{\scriptsize\text{ Fubini }}=\int_{\R^n}\varphi(y)\hat\phi(y-x)\d y
+    \underset{z:=y-x}=\int_{\R^n}\varphi(z+x)\hat\phi(z)\d z\, .
+  \end{dmath}
+  Für alle $\epsilon>0$ und $x\in\R^n$ erhalten wir
+  \begin{dmath*}
+    \int_{\R^n}e^{i\xi\cdot x}\hat\varphi(\xi)\phi(\epsilon\xi)\d\xi
+    \underset{\scriptsize\text{Satz~\ref{satz:8.1}(\ref{satz:8.1-4})}}{\overset{\scriptsize\eqref{eq:8.2}}=}
+    \int_{\R^n}\varphi(x+\epsilon y)\hat\phi(y)\d y\, .
+  \end{dmath*}
+  Lassen wir nun $\epsilon$ gegen $0$ gehen, so ergibt sich mit Hilfe des Satzes von Lebesgue
+  \begin{dmath*}
+    \phi(0)\cdot\int_{\R^n}e^{i\xi x}\hat\varphi(\xi)\d \xi=\varphi(x)\int_{\R^n}\hat\phi(y)\d y\, .
+  \end{dmath*}
+ Betrachte $\phi := e^{-\frac{\abs{\cdot}^2}2} \in \mathcal S(\R^n)$, dann ist wegen Lemma~\ref{lemma:8.6} $\hat\phi = \phi$ und mit Fubini
+ \[
+ 	\int_{\R^n} \phi(y) \d y = (2\pi)^{\frac n 2} \, .
+ \]
+ \begin{align*}
+ 	\Ra &\int_{\R^n} e^{-i\xi x} \hat\varphi (\xi) \d\xi  = (2\pi)^{\frac n2} \varphi(x) \\
+	\Ra&\, \varphi(x)  = (2\pi)^{-\frac n2} \int_{\R^n} e^{i \xi x} \hat\varphi(\xi) \d \xi = (\F \hat\varphi)(-x) \, , \quad x \in \R^n \\
+	\Ra &\!\!: \varphi  = \breve{\hat\varphi} \quad \fa \, \varphi \in \mathcal S(\R^n) \, ,
+ \end{align*}
+ d.h. Fouriertransformation und Spiegelung kommutieren. Setze $\widetilde{\F} \varphi:= \breve{\hat\varphi}$, dann folgt ${\F} \widetilde{\F} = \id_{\mathcal S(\R^n)},\widetilde{\F} \F = \id_{\mathcal S(\R^n)}$. 
+ \[
+ 	\Ra \widetilde{\F} = \F^{-1}. \qedhere
+\]
+\end{proof}
+
+\begin{kor}[Parsevalsche Formeln]
+  \label{kor:8.8}
+  Für alle $\varphi,\phi\in \mathcal S(\R^n)$ gilt:
+  \begin{enumerate}[\rm(i)]
+  \item \[ \int_{\R^n}\hat\varphi(\xi)\phi(\xi)\d\xi=\int_{\R^n}\varphi(\xi)\hat\phi(\xi)\d\xi \]
+
+  \item \[ \int_{\R^n}\varphi(\xi)\bar\phi(\xi)\d\xi=\int_{\R^n}\hat\varphi(\xi)\bar{\hat\phi}(\xi)\d\xi \]
+    Speziell gilt: $\norm\varphi_{L_2(\R^n)}=\norm{\hat\varphi}_{L_2(\R^n)}$
+  \end{enumerate}
+\end{kor}
+
+\begin{proof}
+  \begin{enumerate}[\rm(i)]
+  \item \eqref{eq:8.2} im Beweis zu Theorem~\ref{theorem:8.7} mit $x=0$.
+  \item Wir rechnen nach unter Verwendung von (i)
+    \begin{dmath*}
+      \int_{\R^n}\varphi\bar\phi\d x
+      =\int_{\R^n}\varphi(\widehat{\F^{-1}\bar\phi})\d x
+      =\int_{\R^n}\hat\varphi\F^{-1}\bar\phi\d x
+      =\int_{\R^n}\hat\varphi\bar{\hat\phi}\d x \, . 
+    \end{dmath*}
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Plancherel]
+  \label{theorem:8.9}
+  Die Fouriertransformation $\F$ auf $\mathcal S(\R^n)$ besitzt eine eindeutige Fortsetzung zu einem isometrischen Isomorphismus $\widetilde\F:L_2(\R^n)\ra L_2(\R^n)$, d.h.\ $\F:L_2(\R^n)\ra L_2(\R^n)$ ist linear, bijektiv und es gilt
+  \begin{dmath*}
+    (\widetilde\F f\vert \widetilde\F g)_{L_2(\R^n)}=(f\vert g)_{L_2(\R^n)}
+    \condition{für alle $f,g\in L_2(\R^n)$}
+  \end{dmath*}
+  und $\widetilde\F\rvert_{S(\R^n)}=\F$. $($Notation: $\F:=\widetilde{\F}.)$
+\end{theorem}
+
+\begin{proof}
+  Es sei $f\in L_2(\R^n)$ beliebig. Dann existiert ein $f_j\in \mathcal S(\R^n)$ mit $f_j\ra f$ in $L_2(\R^n)$. Korollar~\ref{kor:8.8} liefert uns dann
+  \[ \norm{\hat f_j}_2=\norm{f_j}_{2}\, , \]
+ also ist $f_j$ eine Cauchy-Folge in $L_2(\R^n)$. Daraus folgt, es muss ein $g\in L_2(\R^n)$ existieren, mit $f_j\ra g$ in $L_2(\R^n)$. Wir setzen $\F f:=g$.
+
+  Man kann nachrechnen, dass $(f\mapsto\widetilde\F f=g):L_2\ra L_2$ ein isometrischer Isomorphismus ist. Speziell ist $g$ unabhängig von der Folge $(f_j)$.
+\end{proof}
+
+\begin{bem*}
+Also folgt aus Theorem~\ref{theorem:8.9}, dass die Fouriertransformation bijektiv ist und invertierbar (bis auf Spiegelung).
+\end{bem*}
+
+\begin{defi}
+  $\mathcal S'(\R^n):=\L(\mathcal S(\R^n),\K)$ ist der Raum der temperierten Distributionen, d.h.\ $T\in \mathcal S'(\R^n)$ gilt genau dann, wenn $T:\mathcal S(\R^n)\ra\K$ linear ist, und $\<T,\varphi_j\>_{\mathcal S}=T(\varphi_j)\ra T(\varphi)=\<T,\varphi\>_{\mathcal S}$ für alle Folgen $\varphi_j\ra\varphi$ in $\mathcal S(\R^n)$.
+\end{defi}
+
+\begin{bem}
+  \label{bem:8.10}
+  \begin{enumerate}[\rm(a)]
+  \item $\mathcal S'(\R^n)\subset\D'(\R^n)$
+    \begin{proof}
+      Sei $T\in \mathcal S'(\R^n)$. Bemerkung~\ref{bem:8.4} (c) liefert dann $\D(\R^n)\hookrightarrow \mathcal S(\R^n)$. Damit ist $T\rvert_\D:\D(\R^n)\ra\K$ linear.
+
+      Sei $\varphi_j\ra\varphi$ in $\D(\R^n)$. Dann geht $\varphi_j\ra\varphi$ in $\mathcal S(\R^n)$, und für $T\in \mathcal S'$ geht $T(\varphi_j)\ra T(\varphi)$ in $\K$.
+    \end{proof}
+
+  \item Seien $f\in L_p(\R^n)$ mit $1\leq p<\infty$ und 
+    \begin{align}
+      \label{eq:8.3}
+      \<f,\varphi\>_{\mathcal S}:=\int_{\R^n}f(x)\varphi(x)\d x
+      \condition{$\varphi\in \mathcal S(\R^n)$}\, .
+    \end{align}
+    Dann folgt, $\< f, \cdot \>_{\mathcal S} \in \mathcal S' (\R^n)$. 
+    \begin{proof}
+    Übung.
+    \end{proof}
+    Sei $g \in L_p(\R^n)$, dann ist
+    \[
+    	\< f, \cdot \>_{\mathcal S} = \< g, \cdot \>_{\mathcal S} \stackrel[\D \subset \mathcal S]{\scriptsize\text{Theorem}~\ref{theorem:3.6}}\Longleftrightarrow f=g \, .
+    \]
+    Also: Wegen \eqref{eq:8.3} kann $L_p(\R^n)$ als Unterraum von $\mathcal S'(\R^n)$ aufgefasst werden. Insbesondere gilt $\D(\R^n) \subset \mathcal S(\R^n) \subset L_p(\R^n) \subset \mathcal S'(\R^n)$.
+  \end{enumerate}
+\end{bem}
+Korollar~\ref{kor:8.8} (i) motiviert zu folgender Definition.
+
+\begin{defi}
+  Für $T\in \mathcal S'(\R^n)$ ist
+  \[ \<\hat T,\varphi\>_{\mathcal S}:= \<T,\hat\varphi\>_{\mathcal S} \]
+  für alle $\varphi\in \mathcal S(\R^n)$ die Fouriertransformierte von $T$.
+\end{defi}
+
+\begin{bem}
+  \label{bem:8.11}
+  Es sei $T\in \mathcal S'(\R^n)$. Dann ist ebenfalls $\hat T\in\mathcal S'(\R^n)$ und stimmt mit der ursprünglichen Fouriertransformation überein, wenn gilt 
+  \[
+  	T\in L_1(\R^n)\cup L_2(\R^n)\cup \mathcal S(\R^n) \, .
+\]
+\end{bem}
+
+\begin{defi}
+  Für $T\in\mathcal S'(\R^n)$ ist
+  \begin{align*}
+    \<\breve T,\varphi\>_{\mathcal S}:=\<T,\breve\varphi\>_{\mathcal S}
+    \condition{$\varphi\in \mathcal S(\R^n)$}
+  \end{align*}
+  die \idx{Spiegelung}. Wegen $(\varphi\mapsto\breve\varphi)\in\L(\mathcal S)$ ist $\breve T\in \mathcal S'(\R^n)$.
+\end{defi}
+
+\begin{theorem}
+  \label{theorem:8.12}
+  Es sei $\F:\mathcal S'(\R^n)\ra\mathcal  S'(\R^n)$. Dann ist $T\mapsto\hat T$ linear, bijektiv und es gilt $\F^{-1}T=(\F T)\breve{\hspace{1mm}}=\F\breve T$ für alle $T\in\mathcal  S'(\R^n)$.
+\end{theorem}
+
+\begin{proof}
+ Es sei $\F_\ast T := \F \breve T$ mit $T \in \mathcal S'$. Dann folgt aus der Definition, dass $\F_\ast: \mathcal S'(\R^n) \ra \mathcal S'(\R^n)$ linear ist und es gilt
+ \begin{align*}
+ 	\<\F_\ast \F T, \varphi\>_{\mathcal S} = \<\F T, \breve{\hat\varphi}\>_{\mathcal S} = \< T, \hat{\breve{\hat\varphi}} \>_{\mathcal S} \stackrel{\scriptsize\text{Theorem}~\ref{theorem:8.7}}= \<T, \varphi\>_{\mathcal S} \quad \fa \, \varphi \in \mathcal S(\R^n) \, .
+ \end{align*}
+ Damit folgt per Definition $\F_\ast \F = \id_{\mathcal S'(\R^n)}$. Analog gilt dies auch für $\F \F_\ast = \id_{\mathcal S'(\R^n)}$. Daraus folgt $\F_\ast = \F^{-1}$.
+\end{proof}
+
+\begin{bsp}
+  \label{bsp:8.13}
+  Wir betrachten die Dirac-Delta-Distribution $\<\delta, \varphi\>_{\mathcal S} := \varphi (0)$, $\varphi \in \mathcal S(\R^n)$, dann gilt $\delta \in \mathcal S'(\R^n)$ (Übung!) und es gilt
+  \begin{align*}
+  	\< \hat\delta, &\varphi \>_{\mathcal S}  = \< \delta, \hat\varphi\>_{\mathcal S} =\hat\varphi (0) = (2\pi)^{-\frac n2} \int_{\R^n} \varphi(x) \d x \\
+	 \stackrel[\scriptsize\text{Bem.}~\ref{bem:8.10} \text{(b)}]{\mathds{1}\in L_\infty (\R^n)}= & \< (2\pi)^{-\frac n2} \mathds{1}, \varphi\>_{\mathcal S} \qquad \fa \, \varphi \in \mathcal S(\R^n) \,.
+  \end{align*}
+  Dann folgt per Definition $\hat\delta = (2\pi)^{-\frac n2} \mathds{1} \in \Lloc (\R^n) \cap L_\infty (\R^n) \subset \mathcal S'(\R^n)$, d.h. $\hat\delta$ ist eine reguläre Distribution.
+  
+  Andererseits ist mit Theorem~\ref{theorem:8.12}
+  \begin{align*}
+  	\delta = \F (\F^{-1} \delta) = \F\Big( \hat{\breve\delta}\Big) = \F(\hat\delta) = (2\pi)^{-\frac n2} \F \mathds{1} \, , 
+  \end{align*}
+  d.h. $\hat{\mathds{1}} = (2\pi)^{-\frac n2}\delta$.
+\end{bsp}
+
+\begin{defi}
+Es sei $a \in \mathcal O_M := \mathcal O_M(\R^n)$
+\begin{align*}
+	:\Longleftrightarrow \, & a \in C^\infty (\R^n), \, \fa \, \alpha\in\N^n \, \exists \, c_\alpha, m_\alpha > 0: \\ & \abs{\partial^\alpha a(x)} \leq c_\alpha (1+\abs x^2)^{m_\alpha} , \, x \in \R^n, 
+\end{align*}
+d.h. $a$ ist langsam wachsend. Die Elemente von $\mathcal O_M$ heißen Multiplikationsoperatoren.
+\end{defi}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

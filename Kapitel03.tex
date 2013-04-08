@@ -1,0 +1,559 @@
+\newchapter{Distributionen}
+
+Für dieses Kapitel treffen wir zwei Generalvoraussetzungen. Sofern nicht anders definiert, sei die nicht-leere Menge $\Omega\subset\R^n$ offen, und der Körper $\K$ stehe für einen Körper der Menge $\{\R, \C\}$.
+
+\begin{defi}
+  \begin{enumerate}[(a)]
+  \item $K\Subset\Omega:\Lra\bar K\subset\Omega$ kompakt.
+  \item Sei $f:\Omega\ra\K$. Dann heißt die Menge 
+    \[ \supp(f):=\overline{\{x\in\Omega\with f(x)\neq 0\}} \]
+    \idx{Träger} von $f$.
+    \begin{figure}[ht!]
+      \centering
+      \begin{pspicture}(-3,-1)(3,3)
+        \psccurve(-1,0)(-2.5,1.5)(-1,2)(1,1.5)(3,0)(2,-1)(0,-.5)
+        \rput[tl](2.1,-1){$\Omega$}
+        \psccurve(-.5,0)(-1.5,1)(2,0)(0,-.2)
+        \rput(.3,.5){$\supp(f)$}
+      \end{pspicture}
+      \caption{Träger}
+    \end{figure}
+  \item Mit  $m\in\N$ definieren wir die Funktionen mit kompakten Träger als
+    \begin{align*}
+      C_c^m(\Omega)&:=\{f\in C^m(\Omega)\with\supp(f)\Subset\Omega\}, \\
+      C_c(\Omega)&:=C_c^0(\Omega).
+    \end{align*}
+    
+  \item Es sei $Y$ metrischer Raum mit $X\subset Y$. Wir schreiben dann $X\overset{d}\subset Y$, wenn $X$ \idx{dicht} in $Y$ liegt. In diesem Fall ist $\bar X=Y$.
+  \item Für $1\leq p\leq\infty$ definieren wir die \idx{Lebesgue-Räume} als
+    \[ L_p(\Omega):=(L_p(\Omega),\norm{\,\cdot\,}_p). \]
+  \item Mit $k\in\N$ sei 
+    \[ 
+    BC^k(\Omega):=\left(
+    \{f\in C^k(\Omega)\with\norm{f}_{BC^k}<\infty\},\norm{\,\cdot\,}_{BC^k}
+    \right),
+    \]
+    wobei 
+    \[ 
+    \norm f_{BC^k}:=\max_{\abs\alpha\leq k}\norm{\partial^\alpha f}_\infty
+    =\max_{\abs\alpha\leq k}\sup_{x\in\Omega}\abs{\partial^\alpha f(x)},
+    \]
+    d.h. alle partiellen Ableitungen in jedem Punkt $x \in \Omega$ sind endlich.
+  \item Wie oben sei $k \in \N$, dann ist $$ BUC^k(\Omega):=\{f\in BC^k(\Omega)\with\partial^\alpha f
+    \;\text{glm.\ stetig }\fa\,\abs\alpha\leq k\}.$$
+  \end{enumerate}
+   $L_p(\Omega)$, $BC^k(\Omega)$ und $BUC^k(\Omega)$ sind Banachräume.
+\end{defi}
+
+\begin{lemma}
+  \label{lemma:3.1}
+  Für $1\leq p\leq\infty$ gilt:
+  \[ C_c(\R^n)\overset{d}\subset L_p(\R^n) \]
+\end{lemma}
+
+\begin{proof}
+  Analysis III
+\end{proof}
+
+\begin{defi}
+  Sei $\varphi\in C^\infty(\R^n)$ mit $\varphi\geq0$, sowie $\supp(\varphi)\subset\bar\B_{\R^n}(0,1)$ und 
+  \[\int_{\R^n}\varphi \d x=1.\]
+  Dann sei für alle $\epsilon>0$
+  \[ \varphi_\epsilon(x):=\epsilon^{-n}
+  \varphi\left(\frac x\epsilon\right), \quad x\in\R^n.\]
+ Die Menge $\{\varphi_\epsilon\with\epsilon>0\}$ heißt \idx{Mollifier} (\idx{glättender Kern}).  
+\end{defi}
+
+\begin{bem} Es sei
+  \[
+  \varphi(x):=
+  \begin{cases}
+    0&,\abs x\geq 1 \\
+    C_0e^{-\frac 1{1-\abs x^2}}&,\abs x<1
+  \end{cases}
+  \]
+  mit
+  \[
+  C_0=\left(\;
+    \int_{\B_n}e^{-\frac 1{1-\abs y^2}}\d y
+  \right)^{-1}.
+  \]
+  $\{\varphi_\epsilon\with\epsilon>0\}$ ist ein Mollifier.
+\end{bem}
+
+\begin{proof}
+  Nachrechnen.
+\end{proof}
+
+\begin{defi}
+  Es seien $f,g:\R^n\ra\K$ messbar und
+  \[ ( f\ast g)(x) :=\int_{\R^n}f(x-y)g(y)\d y \]
+  für fast alle $x\in\R^n$, so dass das Integral existiert. Die daraus entstehende Funktion $f\ast g:\R^n\ra\K$ heißt \idx{Faltung} von $g$ und $f$.
+\end{defi}
+
+\begin{erinnerung}
+  $E,F,G$ seien normierte Vektorräume und $T:E\times F\ra G$ sei eine bilineare und stetige Abbildung. Somit existert ein $c_T>0$ mit
+  \[
+  \norm{T(x,y)}_G\leq c_T\norm x_E\cdot\norm y_F,\quad x\in E,y\in F.
+  \]
+  Dann induziert $\norm T:=\inf{c_T}$ eine Norm auf $G$. 
+\end{erinnerung}
+
+\begin{satz}
+  \label{satz:3.3}
+  Seien $L_p:=L_p(\R^n)$, $BC^k:=BC^k(\R^n)$ und $BUC^k:=BUC^k(\R^n)$. Dann gelten folgende Aussagen:
+  
+  \begin{enumerate}[\rm(i)]
+  \item \label{satz:3.3-1} Die Faltung ist bilinear und stetig als Abbildung
+    \begin{itemize}
+    \item $L_p\times L_q\ra L_r ,1\leq p,q,r\leq\infty$ mit $\frac 1p+\frac 1q=1+\frac 1r$,
+    \item $L_1\times BC^k\ra BC^k, k\in\N$,
+    \item $L_1\times BUC^k\ra BUC^k, k\in\N$,
+    \end{itemize}
+    jeweils mit Norm $1\, ($z.B. $\norm{f\ast g}_r\leq\norm{f}_p\norm{g}_q)$
+
+  \item $f\ast g=g\ast f$, falls sinnvoll.
+  \item $\partial^\alpha(f\ast g)=f\ast(\partial^\alpha g)\,\fa\,\alpha\in\N^n, f\in\L_1, g\in BC^{\abs\alpha}$.
+  \item \label{satz:3.3-4} $\supp(f\ast g)\subset\supp(f)+\supp(g):=\{x+y\with x\in\supp(f),y\in\supp(g)\}$, falls $f$ oder $g$ einen kompakten Träger hat und $f\ast g$ existiert.
+  \item \label{satz:3.3-5} ist $\{\varphi_\epsilon\with \epsilon>0\}$ Mollifier und $f\in L_p$ mit $1\leq p\leq\infty$, so gilt
+    \[
+    \varphi_\epsilon\ast f\xrightarrow[\epsilon\ra 0^+]{}f\text{ in }L_p.
+    \]
+  \end{enumerate}
+\end{satz}
+
+\begin{proof}
+  %\hspace{.7em}
+ % \begin{itemize}
+  (\ref{satz:3.3-1})-(\ref{satz:3.3-4}) Übung. \newline
+  (\ref{satz:3.3-5}) Sei $f\in L_p$. Dann folgt o.B.d.A. aus Lemma~\ref{lemma:3.1} $f\in C_c(\R^n)$.
+    \begin{align*}
+      \boxed{\begin{aligned}
+          \delta>0 & \underset{\scriptsize\text{Lemma~\ref{lemma:3.1}}}\Ra
+          \exists \, g\in C_c(\R^n): \norm{f-g}_p<\frac \delta 2 \\
+          \Ra\norm{\varphi_\epsilon\ast f-f}_p & \stackrel[\triangle\scriptsize\text{-Ungl.}]{}\leq 
+          \underbrace{\norm{\varphi_\epsilon\ast f-\varphi_\epsilon\ast g}_p}
+          _{\underset{\scriptsize\eqref{satz:3.3-1}}\leq \norm{\varphi_\epsilon}_1\cdot\norm{f-g}_p}
+          +\norm{\varphi_\epsilon\ast g-g}_p+\underbrace{\norm{g-f}_p}
+          _{\leq\frac\delta 2} \\
+          \int_{\R^n}\varphi_\epsilon(x&)  \d x  =\int_{\R^n}\epsilon^{-n}\cdot\varphi\left(\frac x\epsilon\right)\d x =\int_{\R^n}\varphi \d x=1
+        \end{aligned}}
+    \end{align*}
+  %\end{itemize}
+  $\varphi_\epsilon\ast f\underset{\scriptsize(\ref{satz:3.3-1}),(\ref{satz:3.3-4})}\in C_c(\R^n)$, setze $(\tau_a f)(x):=f(x-a), x,a\in\R^n$, dann:
+  \begin{align*}
+    f(x)-\varphi_\epsilon\ast f(x)\quad \,\,\,\,=\quad \,\,\,\,&\int_{\R^n}\left(
+      f(x)-f(x-y)
+    \right)\varphi_\epsilon(y)\d y \\
+    \stackrel[z:=\frac x\epsilon]{\scriptsize\textnormal{Transf.-Satz}}=
+    &\int_{\R^n}\left(
+      f(x)-f(x-\epsilon z)
+    \right)\varphi(z)\d z \\
+    = \quad \,\,\,\, &\int_{\bar\B^n}\left(
+      f(x)-(\tau_{\epsilon z}f)(x)
+    \right)f(z)\d z
+    \end{align*}
+  \[
+  \Ra\quad \abs{f(x)-\varphi_\epsilon\ast f(x)}\leq
+  \sup_{\abs z\leq 1}\abs{f(x)-\tau_{\epsilon z}f(x)}:=h_\epsilon(x)\eq{eq:3.1}
+  \]
+  \begin{itemize}
+  \item $f\in C_c(\R^n)\Ra\, \exists \, K=\bar K\Subset\R^n:\supp(\tau_{\epsilon z}f(\cdot))\subset K\;\fa \, 0<\epsilon\leq 1$, $\abs z\leq 1$
+    \[
+    \Ra\quad\fa\, x\in K^c:h_\epsilon(x)=0\eq{eq:3.2}
+    \]
+  \item $k\vert_K$ ist gleichmäßig stetig $\Ra$ $h_\epsilon\vert_K\xrightarrow[\epsilon\ra 0]{}0$ gleichmäßig
+    \begin{align*}
+      \Ra\ \, \, \,  &(h_\epsilon\vert_K)^p\xrightarrow[\epsilon\ra 0]{} 0 \;\text{gleichmäßig} \\
+      \underset{\scriptsize\eqref{eq:3.1},\eqref{eq:3.2}}\Ra&\;\norm{\varphi_\epsilon\ast f-f}_p\xrightarrow[\epsilon\ra0^+]{}0
+    \end{align*}
+  \end{itemize}
+  und damit folgt die Behauptung.
+\end{proof}
+
+\begin{defi}
+  \begin{itemize}
+  \item $\D(\Omega):=C_c^\infty=\{\varphi\in\C^\infty(\Omega)\with\supp(\varphi)\Subset\Omega\}$ heißt der Raum der Testfunktionen.
+  \item $\D(\Omega)$ wird mit der induktiven Limes-Topologie versehen. $\varphi_j\xrightarrow[j\ra\infty]{}0$ in $\D(\Omega):\Lra\exists \, K=\bar K\Subset\Omega$ mit $\supp(\varphi_j)\subset K\, \fa \,j$ und $\fa\,\alpha\in\N^n$:
+    \[ \sup_{x\in K}\abs{\partial^\alpha\varphi_j(x)}\xrightarrow[j\ra\infty]{}0. \]
+  \item $\varphi_j\ra\varphi$ in $\D(\Omega):\Lra\varphi_j-\varphi\ra0$ in $\D(\Omega)$.
+  \end{itemize}
+\end{defi}
+
+\begin{satz}\label{satz:3.4}
+  Es sei $1\leq p\leq\infty$.
+  \[ \Ra \D(\R^n)\overset{d}\subset L_p(\R^n) \]
+\end{satz}
+
+\begin{proof}
+  Es sei $g\in L_p$ und $ \chi\in\D(\R^n)$ mit $ 0\leq\chi\leq 1, \chi\vert_{\bar\B^n}=1$, weiter definieren wir $g_\epsilon:=\chi(\epsilon)\cdot g\in L_p(\R^n)$, wobei $ \supp(g_\epsilon)\Subset\R^n$.
+  \begin{align*}
+    \Ra\quad \norm{g-g_\epsilon}_p=&\norm{g-g_\epsilon}_{L_p([\abs x>\frac 12])}
+    \leq2\cdot\norm g_{L_p([\abs x>\frac 12])} \\
+    =&2\cdot\left(
+      \int_{[\abs x>\frac 1\epsilon]}\abs{g(x)}^p\d x
+    \right)^{\frac 1p}\xrightarrow[\epsilon\ra0]{}0.
+  \end{align*}
+  Sei $\delta>0$ beliebig $\Ra\exists\,\epsilon_0>0:\norm{g-g_{\epsilon_0}}_p<\frac\delta2$. Sei $\{\varphi_\xi\with\xi>0\}$ Mollifier 
+  $$\underset{\scriptsize\text{Satz}\ref{satz:3.3}}\Ra\varphi_\xi\ast g_{\epsilon_0}\in\D(\R^n) \text{ und }\varphi_\xi\ast g_{\epsilon_0}\xrightarrow[\xi\ra0^+]{}g_{\epsilon_0} \text{ in } L_p,$$
+   d.h. $\exists\,\xi_0>0: \norm{\varphi_{\xi_0}\ast g_{\epsilon_0}-g_{\epsilon_0}}_p<\frac\delta2$
+  \[ \Ra\quad\norm{\varphi_{\xi_0}\ast g_{\epsilon_0}-g}_p<\delta \]
+  wegen der $\triangle$-Ungleichung.
+\end{proof}
+
+\begin{defi}
+  \[\Lloc(\Omega):=\{f:\Omega\ra\K\text{ messbar}\with\; f\vert_K\in L_1(K)\, \fa\, K=\bar K\Subset\Omega\}\]
+\end{defi}
+
+\begin{bem}
+  \label{bem:3.5}
+  $f\in\Lloc(\Omega)$, $g\in\D(\R^n)\Ra f\ast g\in BUC^\infty(\R^n)$.
+\end{bem}
+
+\begin{theorem}
+  \label{theorem:3.6}
+  Es sei $f\in\Lloc(\Omega)$ mit $\int_\Omega f\varphi\d x=0\;\fa\,\varphi\in\D(\Omega)$
+  \[ \Ra\quad f=0\quad(\text{fast überall}) \]
+\end{theorem}
+
+\begin{proof}
+  Das Resultat ist lokal $\Ra\supp(f)\Subset\Omega$
+  \begin{itemize}
+  \item[$\Ra$] o.B.d.A $f\in L_1(\R^n)$, also $\Omega=\R^n$.
+  \item Es sei $\{\varphi_\epsilon\with \epsilon>0\}$ Mollifier $\underset{\scriptsize \text{Satz}\, \ref{satz:3.3}\eqref{satz:3.3-5}}\Ra\varphi_\epsilon\ast f\longrightarrow f$ in $L_1(\R^n)$ für $\epsilon\ra 0^+. \,\fa\, x\in\R^n$, $\epsilon>0$ sei $\Psi_x(y):=\varphi_\epsilon(x-y)$ $\Ra\Psi_x\in\D(\R^n)$.
+  \end{itemize}
+   \begin{align*}
+   	\Ra (\varphi_\epsilon\ast f)(x)&=\int_{\R^n}\varphi_\epsilon(x-y)f(y)\d y\overset{\scriptsize\text{Vor.}}=0 \\
+	 &\underset{\scriptsize \text{Satz}\, \ref{satz:3.3}\eqref{satz:3.3-5}}\Ra  \quad  f=0,
+\end{align*}
+was zu zeigen war.
+\end{proof}
+
+\begin{defi}
+  \index{Distribution}
+  Eine lineare Abbildung $T:\D(\Omega)\ra\K$ ist stetig 
+  \[
+  	:\Longleftrightarrow T(\varphi_j)\xrightarrow[j\ra\infty]{}0
+\]
+in $\K$ für alle Folgen $\varphi_j\ra 0$ in $\D(\Omega).$
+  \begin{itemize}
+  \item $\D'(\Omega):=\{T:\D(\Omega)\ra\K\with T\text{ stetig, linear}\}$ heißt der \idx{Raum der Distributionen}.
+  \item $\D'(\Omega)$ versehen wir mit $w^*$-Topologie, d.h. $T_j\xrightarrow{w^*}T$ in $\D'(\Omega):\Lra T_j(\varphi)\xrightarrow[j\ra\infty]{} T(\varphi)$ für alle $\varphi\in\D(\Omega)$.
+  \end{itemize}
+\end{defi}
+
+\begin{notation}
+  $
+  \< T,\varphi \>:=\< T,\varphi\>_{\D(\Omega)}:=T(\varphi),
+   T\in\D'(\Omega), \varphi\in\D(\Omega).
+  $
+\end{notation}
+
+\begin{bsp}
+  \begin{enumerate}[(a)]
+  \item \textbf{\underline{reguläre Distributionen:}} \index{Distribution!reguläre} 
+    \[
+    \fa \,f\in \Lloc(\Omega):\<T_f,\varphi\>:=\int_\Omega f\varphi\d x
+   , \quad\varphi\in\D(\Omega)\]
+    \begin{itemize}
+    \item[$\Ra$] $T_f:\D(\Omega)\ra\K$ linear.
+    \end{itemize}
+    Sei $\varphi_j\ra0$ in $\D(\Omega)\Ra\exists \,K\Subset\Omega:\supp(\varphi_j)\subset K\;\fa \, j$
+    \[
+      \Ra\quad\abs{\<T_f,\varphi_j\>}=\Abs{\int_K f\varphi_j\d x}
+      \leq\sup_{x\in K}\abs{\varphi_j(x)}\cdot\norm{f}_{L_1(K)}
+    \]
+    $\Ra T_f:\D(\Omega)\ra\K$ ist stetig, d.h. $T_f\in\D'(\Omega)$. Aus Theorem~\ref{theorem:3.6} folgt $$
+    	(T_f=T_g\Longrightarrow f=g)\;\fa\, f,g\in\Lloc(\Omega).
+$$ 
+Also ist $(f\mapsto T_f):\Lloc(\Omega)\ra\D'(\Omega)$
+injektiv, d.h. $f\in\Lloc(\Omega)$ lässt sich mit der Distribution $T_f\in\D'(\Omega)$ identifizieren und als reguläre Distribution bezeichnen:
+    \[ \Lloc(\Omega)\subset\D'(\Omega). \]
+    Alle anderen Distributionen heißen singulär. \index{Distribution!singuläre}
+  \item \textbf{\underline{\idx{Dirac-Distribution}:}} Sei $x_0\in\R^n$, dann ist
+    \[ \<\delta_{x_0},\varphi\>:=\varphi(x_0), \quad\varphi\in\D(\Omega)\subset\D(\R^n) \]
+    $\Ra\delta_{x_0}\in\D'(\Omega)$, denn ... (muss noch ausgerechnet werden...)
+
+    \textbf{Anmerkung:} $\exists \, f\in\Lloc(\Omega): T_f=\delta_{x_0}$
+    \begin{itemize}
+    \item[$\Ra$] $\fa\,  \varphi\in\D(\Omega)\subset\D(\R^n)$ mit $\supp(\varphi)\subset X:=\R^n\setminus\{x_0\}$:
+      \[ \<T_f,\varphi\>=\<\delta_{x_0},\varphi\>=\varphi(x_0)=0 \]
+    \item[$\Ra$] $f\vert_X=0\, (\text{fast überall})\Ra f=0 \Ra f \neg$ injektiv. \hspace*{\fill}$\sharp$
+    \end{itemize}
+    Somit ist $\delta_{x_0}$ singulär (speziell: $\Lloc(\Omega)\subsetneq\D'(\Omega)$).
+
+    \textbf{Notation:} $\delta:=\delta_0$ (d.h. $x_0=0$).
+
+  \item $\{\varphi_\epsilon\with\epsilon>0\}$ Mollifier $\Ra\varphi_\epsilon\xrightarrow[\epsilon\ra0]{w^*}\delta$ in $\D'(\R^n)$
+    \begin{proof}
+      $\varphi_\epsilon\in\Lloc(\R^n)\subset\D'(\R^n)$. Sei $\Psi\in\D(\R^n)$.
+      \begin{align*}
+        \<\varphi_\epsilon,\Psi\> &\ = \
+        \int_{\R^n}\underbrace{\varphi_\epsilon(x)}
+        _{=\epsilon^{-n}\varphi\left(\frac x\epsilon\right)}
+        \Psi(x)\d x \\
+        &\underset{y=\frac x\epsilon}
+        =\int_{\R^n}\varphi(y)\Psi(\epsilon y)\d y
+        \xrightarrow[\epsilon\ra0]{\scriptsize\text{(Lebesgue)}}
+        \Psi(0)\underbrace{\int\limits_{\R^n}\varphi dx}_{=1} \\
+        &\ =\ \<\delta,\Psi\>
+      \end{align*}
+      Damit folgt die Behauptung.
+    \end{proof}
+  \end{enumerate}
+\end{bsp}
+
+\begin{bemdef}
+  \begin{enumerate}[(a)]
+  \item \textbf{\underline{Multiplikation:}} Es seien $a\in C^\infty(\Omega)$, $\varphi\in\D(\Omega)\Ra a\varphi\in\D(\Omega)$ und $f\in\Lloc\Ra af\in\Lloc(\Omega)$
+    \[
+    \<af,\varphi\>=\int_\Omega (af)\varphi dx=\int\limits_\Omega f(a\varphi)\d x
+    =\<f,a\varphi\>
+    \]
+    \begin{defi} Sei
+      $T\in\D'(\Omega)$, $a\in C^\infty(\Omega)$:
+      \[ \<aT,\varphi\>:=\<T, a\varphi\>,\quad\varphi\in\D(\Omega) \]
+      $\Ra aT\in\D'(\Omega)$ (punktweise Multiplikation).
+    \end{defi}
+
+  \item \textbf{\underline{Differentation:}} Sei $\alpha\in\N^n$, $\varphi\in\D(\Omega)\Ra\partial^\alpha\varphi\in\D(\Omega)$, sei weiter $f\in C^{\abs\alpha}\Ra\partial^\alpha f\in C(\Omega)\subset\Lloc(\Omega)$.
+    \begin{align*}
+      \<\partial^\alpha f,\varphi\>=&\int_\Omega\partial^\alpha f\varphi\d x
+      \underset{\parbox{1.7cm}{\scriptsize\centering\text{part. Int.} \\
+          supp$\,(\varphi)\Subset\Omega$}}=(-1)^{\abs\alpha}\int_\Omega f\partial^\alpha\varphi\d x \\
+      =&(-1)^{\abs\alpha}\<f,\partial^\alpha\varphi\>
+    \end{align*}
+    \begin{defi}
+     Es sei  $T\in\D'(\Omega)$, $\alpha\in\N^n$, wir definieren
+      \begin{align*} \<\partial^\alpha T,\varphi\>&:=(-1)^{\abs\alpha}\<T,\partial^\alpha\varphi\>,\quad\varphi\in\D(\Omega) \\
+      & \\
+    &  \underset{\scriptsize\text{Übung}}\Ra\partial^\alpha T \in \D'(\Omega).
+    \end{align*}
+      \textbf{Beachte:} Für $f\in C^{\abs\alpha}(\Omega)$ stimmt $\partial^\alpha T_f$ (distributionelle Ableitung) mit $\partial^\alpha f$ (klassische Ableitung) überein.
+    \end{defi}
+  \end{enumerate}
+\end{bemdef}
+
+\begin{bem}
+  \label{bem:3.9}
+  \begin{enumerate}[(a)]
+  \item $\fa\,  T\in\D'(\Omega)$, $1\leq j,k\leq n: \partial_k\partial_j T=\partial_j\partial_k T$
+  \item $\varphi_j\ra\varphi$ in $\D(\Omega)\Ra\;\fa\,\alpha\in\N^n: \partial^\alpha\varphi_j\ra\partial^\alpha\varphi$ in $\D(\Omega)$
+  \item $T_j\xrightarrow{w^*}T$ in $\D'(\Omega)\Ra\;\fa\,\alpha\in\N^n:\partial^\alpha T_j\xrightarrow{w^*}\partial^\alpha T$ in $\D'(\Omega)$
+    \begin{proof}
+      Übung.
+    \end{proof}
+  \end{enumerate}
+\end{bem}
+
+\begin{bsp}
+  \begin{enumerate}[(a)]
+  \item Es seien $x_0\in\R^n, \varphi\in\D(\Omega),\alpha\in\N^n$. Da ein $f \in \Lloc (\Omega)$ existiert, so dass $T_f = \delta_{x_0}$, gilt:
+    \begin{itemize}
+    \item $\<\partial^\alpha\delta_{x_0},\varphi\>=(-1)^{\abs\alpha}\<\delta_{x_0},\partial^\alpha\varphi\>=(-1)^{\abs\alpha}\partial^\alpha\varphi(x_0)$
+    \item $a\in C^\infty(\R^n):\<a\delta_{x_0},\varphi\>=:\<\delta_{x_0},a\varphi\>=a(x_0)\varphi(x_0)$
+    \end{itemize}
+  \item Wir betrachten
+    \[
+    \Theta(x):=
+    \begin{cases}
+      1&,x\geq0 \\
+      0&,x<0
+    \end{cases}
+    \qquad\text{(Heavyside-Funktion)}
+    \]
+    $\Ra\Theta\in\Lloc(\R)$ mit $\partial\Theta=\delta$ (im distributionellen Sinn).
+    \begin{proof}
+      Sei $\varphi\in\D(\R)$:
+      \[
+      \<\partial\Theta,\varphi\>=-\<\Theta,\varphi'\>
+      =-\int_0^\infty\varphi'(x)\d x=\varphi(0)
+      =\<\delta,\varphi\>,
+      \]
+      d.h. $\partial\Theta=\delta$.
+    \end{proof}
+  \item Es seien $x_0,x_1,\ldots,x_n\in\Omega\subset\R, u\in C^1(\Omega\setminus\{x_0,\ldots,x_n\})$, weiter sei $\partial_{\text{klass}}u\in\Lloc(\Omega)$.
+    \begin{align*}
+    \Ra \fa\, j\in\{0,\ldots,n\}: u(x_j\pm 0):=\lim_{h\ra 0^+}u(x_j\pm h)  
+    \end{align*}
+    existieren und es gilt
+    \[
+    	\partial u=\partial_{\text{klass}}u + \sum\limits_{j=0}^n[u](x_j)\delta_{x_j}
+    \]
+     mit $[u](x):=u(x+0)-u(x-0)$ (Sprung).
+
+    \begin{proof}
+      Sei o.B.d.A. $n=0$ ($n\geq 1$ analog).
+ Sei $x_0<x<y$ ($[x_0,y]\subset\Omega$).
+      \begin{align*}
+        \Ra \! \quad \qquad& u(x)=u(y)-\int_x^y\partial_{\text{klass}} u(z)\d z \\
+        \stackrel[x\searrow x_0]
+        {\begin{array}{c}
+            \scriptsize  \text{Lebesgue} \\
+             \scriptsize \partial_{\text{klass}}u\in\Lloc 
+            \end{array}}{\Ra} 
+        & u(x_0+0)\;\text{existiert, analog } 
+        u(x_0-0) \text{ mit } y > x > x_0\\
+        \Ra \! \quad \qquad &  u\in\Lloc(\Omega)
+      \end{align*}
+      
+      Sei $\varphi\in\D(\Omega), 0<\epsilon\ll 1$ (mit $(x_0-\epsilon,x_0+\epsilon)\subset\Omega$), dann ist
+      \begin{align*}
+        \<\partial u,\varphi\>=\quad \, &-\int_\Omega u\varphi'\d x
+        =-\int_{\Omega\setminus(x_0-\epsilon,x_0+\epsilon)}u\varphi'\d x
+        -\underbrace{\int_{x_0-\epsilon}^{x_0+\epsilon}u\varphi'\d x}
+        _{\xrightarrow[\text{Lebesgue}]{\epsilon\ra0}0} \\
+        \underset{\scriptsize\text{part. Int.}}=&\int_{\Omega\setminus(x_0-\epsilon,x_0+\epsilon)}
+        \partial_{\text{klass}}u\varphi\d x+u(x_0+\epsilon)\varphi(x_0+\epsilon)\\
+        & -u(x_0-\epsilon)\varphi(x_0-\epsilon) \\
+        \xrightarrow[\scriptsize\text{Lebesgue}]{\epsilon\ra0}&\int_\Omega\partial_{\text{klass}}u\varphi\d x+[u](x_0)\varphi(x_0) \\
+        =\quad \,&\<\partial_{\text{klass}}u,\varphi\>+\<[u](x_0)\delta_{x_0},\varphi\>,
+      \end{align*}
+      woraus die Behauptung für $n=0$ folgt.
+    \end{proof}
+  \end{enumerate}
+\end{bsp}
+
+\begin{bemdef}
+  \label{bem:3.11}
+  \begin{enumerate}[(a)]
+  \item \textbf{\underline{\idx{Translation}:}} Wir definieren $(\tau_af)(x):=f(x-a)$, $x,a\in\R^n, f\in\Lloc(\R^n)$, damit gilt
+    \begin{align*}
+    \fa\, \varphi\in\D(\R^n):\<\tau_af,\varphi\>=
+    &\int_{\R^n}f(x-a)\varphi(x)\d x \\
+    =&\int_{\R^n}f(x)\varphi(x+a)\d x=\<f,\tau_{-a}\varphi\>.
+    \end{align*}
+    \begin{defi}
+     Es sei $T\in\D'(\R^n), a\in\R^n$, dann ist
+      \[ \<\tau_aT,\varphi\>:=\<T,\tau_{-a}\varphi\>,\quad\varphi\in\D(\R^n) \]
+      $\Ra \tau_aT\in\D'(\R^n)$ (Translation).
+    \end{defi}
+
+  \item \textbf{\underline{\idx{Spiegelung}:}} Sei $\check f(x):=f(-x), x\in\R^n, f\in\Lloc(\R^n)$
+    \[ \Ra\quad\<\check f,\varphi\>=\<f,\check\varphi\>,\quad\varphi\in\D(\R^n) \]
+    \begin{defi}
+      $T\in\D'(\Omega): \<\check T,\varphi\>:=\<T,\check\varphi\>,  \varphi\in\D(\R^n)$.
+    \end{defi}
+
+  \item \textbf{\underline{\idx{Faltung}:}} Es sei $f\in\Lloc(\R^n), \varphi\in\D(\R^n), x\in\R^n$
+    \[ \Ra\quad\tau_x\check\varphi=\varphi(x-\cdot)\in\D(\R^n). \]
+    \[( f\ast \varphi)(x)=\int_{\R^n}f(y)\varphi(x-y)\d y=\<f,\tau_x\check\varphi\> \]
+    \begin{defi}
+      Es seien $T\in\D'(\R^n), x\in\R^n, \varphi\in\D(\R^n)$, dann definieren wir
+      \[ 
+     ( T\ast \varphi)(x):=\<T,\tau_x\check\varphi\>\underset{\scriptsize\text{(a),(b)}}
+      =\<(\tau_{-x}T\check),\varphi\>
+      \]
+    \end{defi}
+    Man kann zeigen dass $T\ast\varphi\in C^\infty(\R^n) \, \fa \, T \in \D'(\Omega), \, \fa \, \varphi \in \D(\Omega)$ und $\partial^\alpha(T\ast\varphi)=(\partial^\alpha T)\ast\varphi=T\ast(\partial^\alpha\varphi), \alpha\in\N^n$.
+  \item Für $\varphi\in\D(\R^n)$ gilt dann 
+    \[
+  (  \delta\ast\varphi)(x)=\<\delta,\tau_x\check\varphi\>=(\tau_x\check\varphi)(0)=\varphi(x)\quad\fa \,x\in\R^n,
+    \]
+    d.h. $\delta\ast\varphi=\varphi$.
+  \item Der Träger einer Distribution $T\in\D'(\R^n)$ ist definiert als:
+    \index{Distribution!Träger}
+    \begin{align*}
+      \supp(T):=&\text{ Komplement der größten offenen Teilmenge des $\R^n$,} \\
+      &\text{ auf dem $T$ verschwindet.}
+  \end{align*}
+  Das heißt, es gilt:
+  \[
+  \<T,\varphi\>=0\quad\fa\,\varphi\in\D(\R^n)\text{ mit }\supp(\varphi)
+  \subset(\supp(T))^c.
+  \]
+  \[
+    \E'(\R^n):=\{ T\in\D'(\R^n)\with \supp(T)\Subset\R^n \} 
+  \]
+      sind die Distributionen mit kompakten Träger.
+  \begin{bsp*}
+    \begin{itemize}
+    \item $\supp(\delta_{x_0})=\{x_0\}\Ra\delta_{x_0}\in\E'(\R^n)$
+    \item $\D(\R^n)\subset\E'(\R^n)$
+    \end{itemize}
+  \end{bsp*}
+\item \textbf{\underline{Erweiterung der Faltung auf Distributionen:}}
+  \index{Distribution!Faltung}
+  Man kann zeigen: \newline
+   Für $T\in\E'(\R^n)$ und $S\in\D'(\R^n)$ lässt sich $T\ast S=S\ast T\in\D'(\R^n)$ definieren mit folgenden Eigenschaften:
+  \begin{enumerate}[\rm(i)]
+  \item $\partial^\alpha(T\ast S)=(\partial^\alpha T)\ast S=T\ast(\partial^\alpha S)$ für alle $\alpha\in\N^n$,
+  \item $\delta\ast S=S$,
+  \item $\partial^\alpha S=(\partial^\alpha\delta)\ast S, \alpha\in\N^n$,
+  \item die so definierte Faltung erweitert die ursprüngliche Faltung zwischen $T \in \D'( \R^n)$ und $\varphi \in \D(\R^n)$,
+  \item $\ast$ ist bilinear.
+  \end{enumerate}
+\end{enumerate}
+\end{bemdef}
+% -------- 21.04.2011 -------------------------
+Wir betrachten die Differentialgleichung 
+\[
+\sum_{\abs\alpha\leq m}a_\alpha\cdot\partial^\alpha u=f \text{ in } \D'(\R^n).
+\]
+
+\begin{defi}
+  $K\in\D'(\R^n)$ heißt \idx{Fundamentallösung} von
+  \[
+  A:=\sum_{\abs\alpha\leq m}a_\alpha\cdot\partial^\alpha
+  \]
+  mit $a_\alpha\in\C$, falls $AK=\delta$.
+\end{defi}
+
+\begin{bem}
+  \label{bem:3.12}
+  \begin{enumerate}[(a)]
+  \item Fundamentallösungen sind im Allgemeinen nicht eindeutig.
+    \begin{proof}
+      Falls $T\in\D'(\R^n)$ mit $AT=0$ ist, so gilt für eine Fundamentallösung $K\in\D'(\R^n)$:
+      \[
+      A(T+K)=AK=\delta \, . \qedhere
+      \]
+    \end{proof} 
+
+    \item \textbf{\idx{Malgrange-Ehrenpreis}:} Jeder Differentialoperator mit konstanten Koeffizienten besitzt eine Fundamentallösung.
+  \end{enumerate}
+\end{bem}
+
+\begin{theorem}
+  \label{theorem:3.13}
+  Es sei
+  \[ A:=\sum_{\abs\alpha\leq m}a_\alpha\partial^\alpha \]
+  mit $a_\alpha\in\C$ und sei $K\in\D'(\R^n)$ eine Fundamentallösung von $A$. Es sei weiter $f\in\D'(\R^n)$ sowie $f\in\E'(\R^n)$ oder $K\in\E'(\R^n)$. Dann gilt:
+  \begin{enumerate}[\rm (a)]
+  \item $u:=K\ast f\in\D'(\R^n)$ löst $Au=f$ in $\D'(\R^n)$. Diese Lösung wird als "`distributionelle Lösung"' bezeichnet.
+  \item $u=K\ast f$ ist die eindeutige Lösung von $Au=f$ in der Klasse aller Distributionen, die mit $K$ faltbar sind.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}[(a)]
+  \item Wegen Bemerkung~\ref{bem:3.11} ist $u=K\ast f\in\D'(\R^n)$ wohldefiniert. Bemerkung~\ref{bem:3.11} liefert ebenfalls
+    \[ Au=A(K\ast f)=(AK)\ast f=\delta\ast f=f. \]
+  \item Seien $u=K\ast f$ und $v\in\D'(\R^n)$ faltbar mit $K$ und $Av=f$. Mit $w:=u-v$ erhalten wir
+    \[ Aw\underset{A\;\scriptsize\text{linear}}=Au-Av=f-f=0. \]
+    Also ist
+    \[ w=\delta\ast w=(AK)\ast w=A(K\ast w)=K\ast \underbrace{Aw}_{=0}=0, \]
+    damit folgt $u = v$.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{bsp}[Fundamentallösung des Laplace-Operators für $n=1$]
+  \index{Fundamentallösung!Laplace-Operator}
+  $(x\mapsto -x\Theta(x))\in\Lloc(\R)$ ist Fundamentallösung von $-\partial^2_x$.
+
+\begin{proof}
+  Für alle $\varphi\in\D(\R)$ gilt:
+  \begin{align*}
+    \<-\partial^2_x(-x\Theta),\varphi\>=&\<x\Theta,\varphi''\> \\
+    =&\int_0^\infty x\varphi''(x)\d x=\underbrace{x\varphi'(x)\bigg|_0^\infty}_{=0}-\int_0^\infty\varphi'(x)\d x \\
+    =&\varphi(0)=\< \delta,\varphi\>,
+  \end{align*}
+  also ist $-\partial^2_x (-x \Theta) = \delta$.
+\end{proof}
+\end{bsp}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

@@ -1,0 +1,377 @@
+% ------- 03.05.2011 ------------------------------
+\newchapter{Dirichletproblem für die Laplace-Gleichung}
+
+Wir treffen wieder eine Generalvoraussetzung: $\emptyset\neq\Omega\subset\R^n$ sei ein $C^\infty$-Gebiet.
+
+Dann betrachten wir das Problem
+\[
+\tag{DP}
+\label{eq:5.DP}
+\left\lvert\quad
+\begin{split}
+  -\Delta u=f &&\text{in }\Omega \\
+  u=g && \text{auf }\partial\Omega
+\end{split}
+\right.
+\]
+wobei $f:\Omega\ra\K$ und $g:\partial\Omega\ra\K$ gegeben sind.
+
+%\begin{figure}[ht!]
+%  \centering
+%  
+%  \caption{Dirichletproblem}
+%\end{figure}
+
+\begin{bem}
+  \begin{enumerate}[(a)]
+  \item Ist $\Omega$ beschränkt, so hat \eqref{eq:5.DP} nach Korollar~\ref{kor:4.14} höchstens eine Lösung $u\in C^2(\Omega)\cap C(\bar\Omega)$. Jedoch bestitzt \eqref{eq:5.DP} nicht immer eine (klassische) Lösung.
+  \item         \begin{figure}[h!]
+      \centering
+      \begin{pspicture}(-2,-0.6)(2,1.3)
+      		\psccurve(-2,0)(-1,0.7)(0.8,1.5)(2,-0.5)(0,-0.5)
+		\rput(-0.2,0.4){$\Omega$}
+		\rput(-1.8,0.8){$\partial\Omega$}
+		\psdot[dotsize=3pt](1.725,0.79)
+		\psline{->}(1.725,0.79)(2.37,1.25)
+		\rput(2.45,0.75){$\nu(x)$}
+		\rput(1.55,0.6){$x$}
+      \end{pspicture}
+      \caption{Neumannproblem}
+ \end{figure}
+ Das Neumannproblem für die Laplace-Gleichung
+    \[
+    \label{eq:5.NP}
+    \tag{NP}
+    \left\lvert\quad
+    \begin{split}
+      -\Delta u&=f &&\text{in }\Omega \\
+      \partial_\nu u&=g &&\text{auf }\partial\Omega
+    \end{split}
+    \right.
+    \]
+    hat entweder keine oder unendlich viele Lösungen, denn ist $u$ Lösung, dann ist auch $u+c$ Lösung für alle $c\in\K$. Ist $\Omega$ beschränkt und $u\in C^2(\bar\Omega)$ eine Lösung, so ist
+    \[
+    \int_\Omega f\d x=-\int_\Omega\Delta u\d x\overset{\scriptsize\text{Gauß}}=-\int_{\partial\Omega}\partial_\nu u\d\sigma(x)=-\int_{\partial\Omega}g\d\sigma(x).
+    \]
+   \item Abstrakte Lösungen für \eqref{eq:5.DP} und \eqref{eq:5.NP} folgen in Kapitel 7.
+  \end{enumerate}
+\end{bem}
+
+\begin{bem}
+  \label{bem:5.2}
+  \begin{enumerate}[(a)]
+  \item Um \eqref{eq:5.DP} zu lösen, genügt es die beiden Teilprobleme
+    \begin{align}
+      \tag{A}\label{eq:5.A}
+      -\Delta v&=f &&\text{in }\Omega, v\rvert_{\partial\Omega}=0 \\
+      \tag{B}\label{eq:5.B}
+      -\Delta w&=0 &&\text{in }\Omega, w\rvert_{\partial\Omega}=g
+    \end{align}
+    zu lösen. Dann ist $u:=v+w$.
+  \item Die Probleme \eqref{eq:5.A} und \eqref{eq:5.B} sind im wesentlichen äquivalent. Exemplarisch gilt:
+    \begin{itemize}
+    \item Wenn \eqref{eq:5.A} lösbar und $\tilde g\in C^2(\bar\Omega)$ existiert mit $\tilde g\rvert_{\partial\Omega}=g$, so löse $-\Delta v=-\Delta\tilde g$ mit $v\rvert_{\partial\Omega}=0$. Setze $w:=\tilde g-v$. Dann ist $-\Delta w=0$ in $\Omega$ mit $w\rvert_{\partial\Omega}=g$.
+    \item Wenn \eqref{eq:5.B} lösbar und $\bar\Omega$ kompakt ist, so wähle für $f\in C(\bar\Omega)$ eine Forsetzung $\tilde f\in C_c(\R^n)$. Dann erfüllt nach Korollar~\ref{kor:4.5} $\tilde v:=\mathcal{N}\ast\tilde f\in C(\R^n)$ die Gleichung $-\Delta\tilde v=\tilde f$. Lösen wir nun $-\Delta w=0$ in $\Omega$ mit $w\rvert_{\partial\Omega}=\tilde v\rvert_{\partial\Omega}$ und setzen $v:=\tilde v-w$, so erhalten wir
+      \[
+      -\Delta v=f\quad\text{in }\Omega\, ,\qquad v\rvert_{\partial\Omega}=0\, .
+      \]
+    \end{itemize}
+  \end{enumerate}
+\end{bem}
+
+Im Folgenden ist $\mathcal{N}$ immer das \idx{Newtonpotential}.
+
+\begin{defi}
+  Eine Funktion $G:\Omega\times\bar\Omega\ra\R$ heißt \idx{Greensche Funktion} für $\Omega$, falls
+  \begin{enumerate}[(i)]
+  \item Für alle $x\in\Omega$ ist $G(x,\cdot)-\mathcal{N}(x-\cdot)\in C(\bar\Omega)\cap C^2(\Omega)$ harmonisch.
+  \item $G(x,y)=0$ für alle $x\in\Omega$ und $y\in\partial\Omega$.
+  \end{enumerate}
+\end{defi}
+
+\begin{bem}
+  \label{bem:5.3}
+  \begin{enumerate}[(a)]
+  \item \label{bem:5.3-1} Es ist $\mathcal{N}(x-\cdot)\in C^\infty(\R^n\setminus\{0\})$. Für alle $x\in\Omega$ sei $\Psi(x,\cdot):=G(x,\cdot)-\mathcal{N}(x-\cdot)\in C^2(\Omega)\cap C(\bar\Omega)$. Die Funktion $\Psi$ löst
+    \[
+    \left\lvert\quad
+    \begin{split}
+      -\Delta_y\Psi(x,\cdot)&=0&&\text{in }\Omega \\
+      \Psi(x,\cdot)&=-\mathcal{N}(x-\cdot) && \text{auf } \partial\Omega.
+    \end{split}
+    \right.
+    \]
+  \item \label{bem:5.3-2} Für alle $x\in\Omega$ per Definition und Lemma~\ref{lemma:4.3} $-\Delta_yG(x,y)=0$ für alle $y\in\Omega\setminus\{x\}$, und $G(x,\cdot)$ hat an der Stelle $y=x$ dieselbe Singularität wie $\mathcal{N}(x-\cdot)$.
+  \item  \label{bem:5.3-3} Ist $\Omega$ beschränkt, so gibt es höchstens eine Greensche Funktion.
+    \begin{proof}
+      (a) und Korollar~\ref{kor:4.14} (Identitätssatz).
+    \end{proof}
+  \item \label{bem:5.3-4} Falls $\Omega$ nicht beschränkt ist, so ist (c) im Allgemeinen falsch (z.B. bei $\Omega=\R^{n-1}\times(0,\infty)$.
+  \item \label{bem:5.3-5} Wenn $\Omega$ beschränkt (und $C^\infty$) ist, so existiert eine (eindeutige) Greensche Funktion (ohne Beweis). Jedoch ist es oft schwierig, diese Greensche Funktion zu finden. Ausnahme ist $\Omega=\B(0,r)$.
+  \end{enumerate}
+\end{bem}
+
+\begin{satz}[Symmetrie]
+  \label{satz:5.4}
+  Sei $G$ eine Greensche Funtkion für $\Omega$. Dann ist
+  \[ G(x,y)=G(y,x) \]
+  für alle $x,y\in\Omega$.
+\end{satz}
+
+\begin{proof}
+  Seien $x_1,x_2\in\Omega$ mit $x_1\neq x_2$ und $B_j:=\B(x_j,\epsilon)$ mit $\epsilon>0$ und $B_1\cap B_2=\emptyset$. Weiter sei $\Omega'=\Omega\setminus(B_1\cup B_2)$. Dann ist $G(x_j,\cdot)\in C(\bar\Omega')\cap C^2(\Omega')$ und $-\Delta_yG(x_j,y)=0$ mit $y\in\Omega'$. Satz~\ref{satz:4.1} liefert uns 
+  \begin{align}
+    \label{eq:5.1}
+    \begin{aligned}
+    &0=\int_{\partial\Omega'}\Big(
+      \underbrace{G(x_1,y)}_{=0,\;y\in\partial\Omega}\partial_{\nu(y)}G(x_2,y)
+      -\underbrace{G(x_2,y)}_{=0,\;y\in\partial\Omega}\partial_{\nu(y)}G(x_1,y)
+    \Big)\d\sigma(y) \\
+    =&\left(
+      \int\limits_{\partial B_1}+\int\limits_{\partial B_2}
+    \right) \!
+    (
+      G(x_1,y)\partial_{\nu(y)}G(x_2,y)-G(x_2,y)\partial_{\nu(y)}G(x_1,y)
+   )\!\d\sigma(y).
+    \end{aligned}
+  \end{align}
+Dabei ist $G(x_2,\cdot)\in C^1(\B(x_1,\epsilon))$ und aus Bemerkung~\ref{bem:5.3}~(\ref{bem:5.3-2}) folgt für $n\geq3$, dass $\abs{G(x_1,y)}=\epsilon^{2-n}$ ist. Der Fall $n=2$ ist Übung.
+
+Dann ist
+\begin{dmath}
+  \label{eq:5.2}
+  \Abs{\; 
+    \int_{\partial B_1}G(x_1,y)\partial_\nu G(x_2,y)\d\sigma(y)
+  }\leq
+  c\epsilon^{2-n}\overbrace{\max_{y\in\B(x_1,\epsilon_0)}\abs{\nabla_yG(x_2,y)}}^{\leq
+    c} \underbrace{\vol(\partial B_1)}_{=\omega_n\epsilon^{n-1}}
+  \leq c\epsilon\xrightarrow{\epsilon\ra0}0 \, .
+\end{dmath}
+Weiter folgt
+\begin{dmath}
+  \label{eq:5.3}
+ \ \ \quad \lim_{\epsilon\ra0}-\int_{\partial\B_1}G(x_2,y)\partial_\nu\underbrace{G(x_1,y)}_{\parbox{1.2cm}{\scriptsize$
+    G(x_1,y)-\mathcal{N}(x_1,y)$ \\$+\mathcal{N}(x_1,y)
+ $}} \d\sigma(y)
+  =\lim_{\epsilon\ra0}-\int_{\partial\B_1}G(x_2,y)\partial_\nu\mathcal{N}(x_1,y)\d\sigma(y)
+  =\lim_{\epsilon\ra0}-\frac{1}{\vol(\B(x_1,\epsilon))}\int_{\partial\B(x_1,\epsilon)}G(x_2,y)\d\sigma(y)
+  =-G(x_2,x_1)\, .
+\end{dmath}
+Analog gelten \eqref{eq:5.2} und \eqref{eq:5.3} auch für das Integral über $\B_2$. Schließlich folgt mit \eqref{eq:5.1}
+\[
+0=-G(x_2,x_1)+G(x_1,x_2) \, .\qedhere
+\]
+\end{proof}
+
+\begin{bem}
+  \label{bem:5.5}
+  \begin{enumerate}[(a)]
+  \item Aufgrund von Satz~\ref{satz:5.4} definiert man $G(x,y):=0$, falls $x\in\partial\Omega$ oder $y\in\partial\Omega$. Damit ist $G:\bar\Omega\times\bar\Omega\ra\R$ symmetrisch.
+  \item $G(\cdot,y)-\mathcal{N}(\cdot-y)\in C^2(\Omega)\cap C(\bar\Omega)$ ist harmonisch.
+  \end{enumerate}
+\end{bem}
+
+\begin{lemma}
+  \label{lemma:5.6}
+  Seien $\Omega$ und $\tilde\Omega$ zwei beschränkte $C^\infty$-Gebiete mit entsprechenden Greenschen Funktionen $G$ und $\tilde G$. Ferner sei $\tilde\Omega\subset\Omega$. Dann ist
+  \[ 0\leq \tilde G(x,y)\leq G(x,y) \]
+  für $x,y\in\tilde\Omega$.
+\end{lemma}
+
+\begin{proof}
+  Sei $y_0\in\Omega$. Dann ist $\lim_{x\ra y_0}\mathcal{N}(x-y_0)=\infty$ und $G(\cdot,y_0)-\mathcal{N}(\cdot-y_0)\in C(\bar\Omega)$. Es existiert ein $\epsilon>0$ mit 
+  \[ G(x,y_0)>0\quad\text{für alle }x\in\B(y_0,\epsilon)\, . \tag{$\ast$} \]
+  Wir definieren $\omega:=\Omega\setminus\bar\B(y_0,\epsilon)$. Dann ist per Definition ($\ast$) $G(\cdot,y_0)\geq0$ auf $\partial\omega$ und $-\Delta_xG(\cdot,y_0)=0$ in $\omega$ (Bemerkung \ref{bem:5.5} (b)). Das Maximumprinzip (Theorem~\ref{theorem:4.12}) liefert $G(\cdot,y_0)\geq0$ in $\omega$ und damit $G(x,y_0)\geq0$ für alle $x,y_0\in\Omega$.
+  
+  Sei nun 
+  \[ \Phi(x,y):=G(x,y)-\tilde G(x,y)=(G(x,y)-\mathcal{N}(x-y))-(\tilde G(x,y)-\mathcal{N}(x-y)) \]
+  für $x,y\in\tilde\Omega$. Wir halten $x\in\tilde\Omega$ fest. Dann ist $\Phi(x, \cdot)$ harmonisch in $\tilde\Omega$. Für alle $y\in\partial\tilde\Omega$ gilt 
+  \[
+\Phi(x,y)=\underbrace{G(x,y)}_{\geq0}-\underbrace{\tilde G(x,y)}_{=0}\geq0 \, .
+\]
+Das Maximum-Prinzip liefert dann
+\[
+\Phi(x,\cdot)\geq0\quad\text{in}\;\tilde\Omega \, .\qedhere
+\]
+\end{proof}
+
+\begin{theorem}[Lösung des Dirichletproblems]
+  \label{theorem:5.7}
+  Sei $\Omega\subset\R^n$ ein beschränktes Gebiet mit Greenscher Funktion $G$. Für $f\in C(\bar\Omega)$ setze 
+  \[ v(x):=\int_\Omega G(x,y)f(y)\d y \]
+  für $x\in\Omega$. Dann ist $v\in C^1(\bar\Omega)$. 
+
+  Gilt sogar $f\in C^\alpha(\bar\Omega)$ mit $\alpha\in (0,1)$, so ist $v\in C^2(\Omega)\cap C^1(\bar\Omega)$ die eindeutige klassische Lösung von
+  \[
+  -\Delta v=f\text{ in }\Omega\, ,\quad v\rvert_{\partial\Omega}=0\, .
+  \]
+\end{theorem}
+
+\begin{proof}
+  Di Benedetto, Gilbarg-Trudinger.
+\end{proof}
+
+\begin{theorem}[\idx{Poisson-Formel}]
+  \label{theorem:5.8}
+  Sei $\Omega$ ein $C^\infty$-Gebiet mit Greenscher Funktion $G$. Für $g\in C(\partial\Omega)$ setzen wir
+  \[
+  w(x):=-\int_{\partial\Omega}\partial_{\nu(y)}G(x,y)g(y)\d\sigma(y)
+  \]
+  für $x\in\Omega$. Dann löst $w\in C^2(\Omega)\cap C(\bar\Omega)$ das Problem
+  \[
+    -\Delta w=0\quad\text{in }\Omega \, , \quad w\rvert_{\partial\Omega}=g \, .
+  \]
+  Der Ausdruck $\partial_{\nu(y)}G(x,y)$ heißt \idx{Poisson-Kern}.
+\end{theorem}
+
+\begin{proof}
+ Di Benedetto, Gilbarg-Trudinger.
+\end{proof}
+
+% ---------------- 05.05.2011 --------------------
+
+\section{Dirichletproblem auf einer Kugel}
+
+Im folgenden Abschnitt sei immer $R>0$ und $\Omega:=\B(0,R)$. Wir definieren für $y\in\R^n$ die Ausdrücke
+\begin{align*}
+  \bar y&:=\frac {R^2} {\abs{y}^2}y\, ,  \quad y\neq 0 \, ,\\
+  \bar y&:=\infty\, ,\qquad \ y=0\, .
+\end{align*}
+
+\begin{figure}[ht!]
+  \centering
+  \begin{pspicture}(-4,-2.2)(4,3)
+    \pscircle(0,0){2cm}
+    \psdot(0,0)
+    \psline(0,0)(2.5,2.5)
+    \psdot(.8,.8)
+    \psdot(2,2)
+    \rput[tl](.9,.7){$y$}
+    \rput[tl](2.1,1.9){$\bar y$}
+    \rput[tl](1.5,-1.4){$\B(0,R)$}
+  \end{pspicture}
+  \caption{Kugel im $\R^n$ mit $y$ und $\bar y$ für $R^2 > \abs{y}^2$.}
+\end{figure}
+\begin{satz}
+  \label{satz:5.9} Sei $n\geq 3$ und
+  \[
+  G_R(x,y)=\mathcal{N}(x-y)-\left(
+    \frac{R}{\abs{y}}
+  \right)^{n-2}\mathcal{N}(x-\bar y)\, ,\qquad x,y\in\B(0,R)\, .
+  \]
+  Dann ist $G_R$ die $($eindeutige$)$ Greensche Funktion für $\Omega=\B(0,R)$.
+\end{satz}
+
+\begin{proof}
+  Für $x,y\in\R^n$ gilt:
+  \begin{align*}
+    \abs{y}^2\abs{x-\bar y}^2&=\abs{y}^2(\abs x^2-2\frac{R^2}{\abs y^2}xy+\frac{R^4}{\abs y^4}\abs y^2) \\
+    &=\abs y^2\abs x^2-2R^2xy+R^4,
+    \intertext{also}
+    \eq{eq:5.9-1}
+    &\abs y\abs{x-\bar y}=\abs x\abs{y-\bar x}\, .
+  \end{align*}
+  Wir definieren
+  
+  \begin{align}
+  \begin{aligned}
+    \label{eq:5.9-2}
+    \Psi(x,y)&:=G_R(x,y)-\mathcal{N}(x-y) \\
+    &\ =-\left(\frac R {\abs
+        y}\right)^{n-2}
+    \underbrace{\mathcal{N}(x-\bar y)}_{\underset{\text{Def.}} =c\abs{x-\bar y}^{2-n}} \\
+   & \overset{\scriptsize\eqref{eq:5.9-1}}=-\left(\frac R{\abs x}\right)^{n-2}\mathcal{N}(y-\bar x)\, .
+  \end{aligned}
+  \end{align}
+  Sei weiter $x\in\B(0,R)$. Dann ist $\abs{\bar x}>R$ und wegen Gleichung \eqref{eq:5.9-2} ist $\Psi(x,\cdot)\in C^2(\bar\B(0,R))$ mit $\Delta_y\Psi(x,y)=0$ und $y\in\B(0,R)$. 
+
+  Sei nun $y\in\partial\B(0,R)$. Dann ist $\abs y=R$ und $\bar y=y$. Aus der Definition von $G_R$ folgt, dass $\Psi(x,y)=0$ ist für alle $x\in\B(0,R)$ und $y\in\partial\B(0,R)$.
+\end{proof}
+
+\begin{bem}
+  \label{bem:5.10} Für $n=2$ ist die Greensche Funktion für $\Omega=\B(0,R)$ definiert durch
+  \[
+  G_R(x,y)=
+  \begin{cases}
+    \frac 1{2\pi}\log\abs y &,x=0 \\
+    \frac 1{2\pi}\left(
+      \log\abs{x-y}-\log\Abs{\frac R{\abs s}x-\frac{\abs x}Ry}
+    \right) &,x\neq 0
+  \end{cases}.
+  \]
+\end{bem}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{satz}
+  \label{satz:5.11} Sei $n\geq2$. Dann gilt für den Poissonkern auf $\B(0,R)$:
+  \[
+  P(x,y):=\partial_{\nu(y)}G_R(x,y)=\frac{\abs x^2-R^2}{\omega_nR}\cdot\frac 1{\abs{x-y}^n}
+  \]
+  für $x\in\B(0,R)$ und $y\in\partial\B(0,R)$.
+\end{satz}
+
+\begin{proof}
+  $n=2$: Übung.
+
+  $n\geq3$: Seien $x\in\B(0,R)$ und $y\in\partial\B(0,R)$. Dann ist $\nu(y)=\frac yR$ und $\bar y=y$.
+
+  Nun ist
+  \[
+  \begin{split}
+  &  \partial_{\nu(y)}G_R(x,y)=\frac yR\cdot\nabla_yG_R(x,y) \\
+    =&\frac yR\nabla_y\left(
+      \frac 1{\omega_n(n-2)}\abs{x-y}^{2-n}-\left(
+        \frac R{\abs x}
+      \right)^{n-2}
+      \frac 1{\omega_n(n-2)}\abs{y-\bar x}^{2-n}
+    \right) \\
+    =&\frac 1{\omega_nR}y\left(
+      \frac{x-y}{\abs{x-y}^n}+\left(
+        \frac R{\abs x}
+      \right)^{n-2}
+    \right)
+    \cdot \frac{y-\bar x}{\abs{y-\abs x}^n} \\
+    =&\frac 1{\omega_nR}\cdot\frac 1{\abs{x-y}^n}\underbrace{y\cdot\left(
+        x-y+\frac{\abs x^2}{R^2}(x-\bar x)
+      \right)}_{\underset{\abs y=R}=\abs x^2-R^2} \\
+    =&\frac{\abs x^2-R^2}{\omega_nR\abs{x-y}^n}. \qedhere
+  \end{split}
+  \]
+\end{proof}
+
+\begin{theorem}[Laplace-Dirichlet-Problem auf $\Omega=\B(0,R)$]
+  \label{theorem:5.12} Seien $n\geq2, R>0$ und $\Omega=\B(0,R)$.
+  \begin{enumerate}[\rm (a)]
+  \item Für $\alpha\in(0,1)$ und $f\in C^\alpha(\bar\B(0,R))$ setze
+    \[ v(x):=\int_{\B(0,R)}G_R(x,y)f(y)\d y \]
+    für $x\in\B(0,R)$, wobei $G_R$ wie in Satz~\ref{satz:5.9} bzw. Bemerkung~\ref{bem:5.10}. Dann löst $v\in C^2(\B(0,R))\cap C(\bar\B(0,R))$ die Gleichung $-\Delta v=f$ in $\B(0,R)$ mit $v\rvert_{\partial\B(0,R)}=0$.
+  \item Für $g\in C(\partial\B(0,R))$ sei
+    \[ w(x):=\frac{R^2-\abs x^2}{\omega_nR}\int_{\partial\B(0,R)}\frac{g(y)}{\abs{x-y}^n}\d \sigma(y) \]
+      für $x\in\B(0,R)$. Dann löst $w\in C^2(\B(0,R))\cap C(\bar\B(0,R))$ die Gleichung $-\Delta w=0$ in $\B(0,R)$ mit $w\rvert_{\partial\B(0,R)}=g$.
+  \end{enumerate}  
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}[(a)]
+  \item Theorem~\ref{theorem:5.7}, Satz~\ref{satz:5.9}, Bemerkung~\ref{bem:5.10}.
+  \item Theorem~\ref{theorem:5.8}, Satz~\ref{satz:5.11}.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{bem}
+  \label{bem:5.13}
+  \begin{enumerate}[(a)]
+  \item $v$ und $w$ sind eindeutig. (vgl. Korollar~\ref{kor:4.14})
+  \item Da $w$ harmonisch ist, ist $w\in C^\infty(\B(0,R))$. (vgl. Korollar~\ref{kor:4.11})
+  \item $u:=v+w$ löst $-\Delta u=f$ in $\B(0,R)$ mit $u\rvert_{\partial\B(0,R)}=g$.
+  \end{enumerate}
+\end{bem}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

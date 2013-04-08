@@ -1,0 +1,551 @@
+\newchapter{Wärmeleitungsgleichung}
+
+\section{Die Wärmeleitungsgleichung auf dem $\R^n$}
+
+Wir betrachten das folgende Problem.
+\begin{align}
+\label{eq:10.1}
+	\left.
+	\begin{aligned}
+		\partial_t u - \Delta_x u & = 0 \, , \qquad \ \, t > 0 , x \in \R^n \\
+		u(0,x) & = \varphi (x) \, , \quad x \in \R^n
+	\end{aligned}
+	\, \right\}
+\end{align}
+mit $\varphi: \R^n \rightarrow \C$ (Anfangsverteilung) gegeben und $u :(0,\infty) \times \R^n \rightarrow \C$ (Verteilung von bspw. Wärme oder Individuen im Raum) gesucht.
+
+Die Wärmeleitungsgleichung ist ein Prototyp einer parabolischen Gleichung. Wir nehmen an $\varphi \in \mathcal S(\R^n), u $ sei Lösung von \eqref{eq:10.1} mit $u(t,\cdot) \in \mathcal S(\R^n)$ mit $\partial_t \hat u(t,\cdot ) = \widehat{\partial_t u} (t,\cdot)$.
+
+Man wende nun Fouriertransformation auf \eqref{eq:10.1} an.
+\begin{align*}
+	\Ra \, & \partial_t u + \abs\xi^2 \hat u = 0 \, , \quad \hat u (0,\cdot) = \hat \varphi \\
+	\intertext{Dies ist eine gewöhnliche Differentialgleichung mit $\xi$ als Parameter.}
+	\Ra \, & \hat u (t, \xi) = e^{-t\abs{\xi}^2}\hat\varphi (\xi) \, , t \geq 0, \xi \in \R^n \\
+	\intertext{mit $e^{-t\abs{\, \cdot\, }^2} \in \mathcal O_M \, \fa \, t \geq 0$}
+	\Ra \, & u(t,\cdot) = \F^{-1} \Big( \underbrace{e^{-t\abs{\, \cdot \, }^2}}_{=\F (\F^{-1} e^{-t \abs{\, \cdot \, }^2})} \hat \varphi \Big) \\
+	&\hspace{0.7em} \stackrel[\scriptsize\text{Satz}~\ref{satz:8.1}]{\scriptsize\text{Faltungssatz}}= \underbrace{(2\pi)^{-\frac n2} \F^{-1} \Big(e^{-t\abs{\, \cdot\, }^2}\Big)}_{=: K_t(\cdot)} \ast \varphi
+\end{align*}
+$K_t$ heißt \idx{Gaußkern} (\idx{Wärmeleitungskern}), wobei
+\[
+	K_t \stackrel{\parbox{1.5cm}{\centering\scriptsize Thm.~\ref{theorem:8.7}, Satz~\ref{satz:8.1}, Lemma~\ref{lemma:8.6}}}= (4\pi t)^{-\frac n2} e^{-\frac{\abs{\cdot }^2}{4t}} , \quad t > 0 \, .
+\]
+Dann ist $u(t,\cdot) = K_t \ast \varphi, t > 0, K_t \in \mathcal S(\R^n) \, \fa \, t > 0$. Die Existenz und Eindeutigkeit folgt, wenn $\varphi$ schnellfallend.
+
+\begin{lemma}
+\label{lemma:10.1}
+\begin{enumerate}[\rm(i)]
+\item $\fa \, t > 0, 1\leq p \leq \infty: \norm{K_t}_{L_p(\R^n)} = p^{-\frac n2} (4\pi t)^{\frac n2 (\frac 1p -1)}$.
+\item $\fa \, t > 0, 1 \leq q,r\leq \infty: (f \mapsto K_t \ast f) \in \mathcal L(L_q(\R^n), L_r(\R^n))$ und 
+\[
+	\norm{K_t \ast }_{\mathcal L(L_q,L_r)} \leq c(q,r) t^{-\frac n2 (\frac 1q-\frac 1r)}
+\]
+mit $c(q,q) = 1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+\item Wir rechnen nach mit Transformation
+\begin{align*}
+	z := \sqrt{\frac{p}{2t}}x & \Ra \d x = \left( \frac p{2t}\right)^{-\frac n2} \d z\, . \\
+	\norm{K_t}_{L_p(\R^n)}^p & = (4\pi t)^{-\frac{np}2} \int_{\R^n} e^{-\frac{p\abs{x}^2}{4t}} \d x \\
+	& = (4\pi t)^{-\frac{np}2} \left(\frac p{2t}\right)^{-\frac n2} \underbrace{\int_{\R^n} e^{\frac{\abs z^2}2} \d z}_{\parbox{2.8cm}{\scriptsize $= (2\pi)^{\frac n2} \F(e^{-\frac{\abs\cdot^2}2} )(0)$ \\ $= (2\pi)^{\frac n2}$ (Lem.~\ref{lemma:8.6})}}
+\end{align*}
+\item Die Behauptung folgt aus (i) und Young (Lemma~\ref{lemma:3.1}).\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+\label{theorem:10.2}
+Sei $1\leq p < \infty, \varphi \in \L_p(\R^n),  u(t,x) := (K_t\ast \varphi)(x), t > 0, x \in \R^n$. Dann folgt $($per Definition$)$
+\begin{enumerate}[\rm(i)]
+	\item $u \in C^\infty((0,\infty)\times\R^n)$ ist Lösung von $\partial_t u - \Delta_x u = 0 ,  t > 0, x \in \R^n$,
+	 \item $ u(t,\cdot) \xrightarrow{t\rightarrow 0^+} \varphi \text{ in } L_p(\R^n)$.
+	 \item$ \varphi \in BC(\R^n) \cap L_p(\R^n) \Ra u \in C([0,\infty)\times \R^n),  u(0,\cdot) = \varphi$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Erinnerung:
+\[
+	(f\ast g) (x) = \int_{\R^n} f(x-y) g(y) \d y \, .
+\]
+\begin{enumerate}[(i)]
+\item Sei $[(t,x) \mapsto K_t(x) ] \in C^\infty ((0,\infty)\times \R^n)$. Dann folgt wegen der Differenzierbarkeit von Parameterintegralen, dass $u \in C^\infty ((0,\infty)\times \R^n)$. Nachrechnen: $ (\partial_t - \Delta_x) K_t(x) = 0, t>0, x \in \R^n$.
+\[
+	\Ra \, (\partial_t - \Delta_x)u \stackrel{\scriptsize\text{vgl. Kapitel 3}}= ((\partial_t-\Delta_x)K_t)\ast \varphi = 0 
+\]
+\item Aus Lemma~\ref{lemma:10.1} folgt
+\[
+	\int_{\R^n} K_t (x) = 1 \, , \quad t > 0 \, .
+\]
+Also ist
+\begin{align*}
+	& \norm{u(t,\cdot) - \varphi}_{L_p(\R^n)} \\
+	  =\hspace{0.75em} & \Norm{\int_{\R^n} (\varphi (x-y ) - \varphi (x)) (4\pi t)^{-\frac n2} e^{-\frac{\abs y}{4t}} \d y}_{L_p(\R^n)} \\
+	\stackrel{z := \frac y{\sqrt t}}= & \Norm{\int_{\R^n} (\varphi (x-\sqrt t z) - \varphi(x)) e^{-\frac{\abs z^2}4} \d z (4\pi)^{-\frac n2}}_{L_p(\R^n)}  \\
+	\leq \hspace{0.65em}& c \int_{\R^n} \underbrace{\norm{\varphi (\cdot - \sqrt t z)-\varphi(\cdot)}_{L_p(\R^n)}}_{\xrightarrow{t\rightarrow 0} 0} e^{-\frac{\abs z^2}4} \d z \xrightarrow[t \rightarrow 0^+]{\scriptsize\text{Lebesgue}} 0 \, , 
+\end{align*}
+weil wir eine $L_1$-Majorante gibt: $\abs{\,\cdot\,} \leq 2 \norm \varphi_{L_p(\R^n)} e^{-\frac{\abs\cdot^2}4} \in L_1(\R^n)$.
+\item Sei $\varphi \in BC(\R^n)$. Mit derselben Transformation wie in (ii) folgt
+\begin{dmath*}
+	u(t,x) = \int_{\R^n} \varphi(x-y) (4\pi t)^{-\frac n2} e^{-\frac{\abs y^2}{4t}} \d y 
+	= \int_{\R^n} \underbrace{\varphi(x-\sqrt t z) e^{-\frac{\abs z^2}4}}_{\abs{\, \cdot\,} \leq \norm\varphi_\infty e^{-\frac{\abs z^2}4} \in L_1(\R^n)} \d z (4 \pi)^{-\frac n2}\\ 
+	\xrightarrow[t\rightarrow 0^+]{\scriptsize\text{Lebesgue}} \int_{\R^n}\varphi(x) e^{-\frac{\abs z^2}4} \d z (4\pi)^{-\frac n2} = \varphi(x) \text{ (wegen Lemma~\ref{lemma:8.6})},
+\end{dmath*}
+d.h. $u$ kann in $t=0$ stetig fortgesetzt werden. \qedhere
+\end{enumerate}
+\end{proof}
+
+Damit hat man die Wärmeleitungsgleichung auf $\R^n$ gelöst.
+
+\begin{bem}
+\label{bem:10.3}
+\[
+	u(t,x) = (K_t \ast \varphi)(x) = (4\pi t)^{-\frac n2} \int_{\R^n} \varphi(y) e^{-\frac{\abs{x-y}^2}{4t}} \d y
+\]
+\begin{enumerate}[(a)]
+\item Regularisierung: $u(0,\cdot) := \varphi \in L_p(\R^n) \Ra u \in C^\infty ((0,\infty)\times \R^n)$ (Regularisierungsgewinn).
+\item Unendliche Ausbreitungsgeschwindigkeit:
+\[
+	u(0,\cdot) = \varphi \text{ mit }\varphi \geq 0, \varphi\not\equiv 0 \Ra u(t,x) >0 \, \fa \, t> 0\, \fa \, x \in \R^n,
+\]
+d.h. die Temperatur ist zu jeder Zeit $t>0$ an jedem Ort $x \in\R^n$ strikt positiv im Gegensatz zur Wellengleichung.
+\item Die Temperatur $u$ wird im Raumpunkt $x \in \R^n$ von den Anfangswerten in allen (noch so weit entfernten) Punkten $y$ beeinflusst (obwohl der Einfluss exponentiell abnimmt mit zunehmender Distanz).
+\item Maximumsprinzip: $\inf \varphi \leq u(t,x) \leq \sup \varphi, t > 0, x \in \R^n$.
+\item Eindeutigkeit: Das Anfangswertproblem \eqref{eq:10.1} besitzt höchstens eine Lösung $u$ mit
+\[
+	\abs{u(t,x)} \leq  M e^{\alpha\abs x^2} , \quad t > 0, x \in \R^n
+\]
+mit $\alpha, M > 0$.
+
+Speziell: $\varphi \in BC(\R^n) \stackrel{\scriptsize\text{(d)}}\Ra$ Lösung von Theorem~\ref{theorem:10.2} ist eindeutig.
+\end{enumerate}
+\begin{proof}
+Jost.
+\end{proof}
+\end{bem}
+
+\begin{satz}
+\label{satz:10.4}
+Sei $1\leq p < \infty, \varphi \in L_p(\R^n)\cap L_\infty (\R^n)$ und $u(t,\cdot) := K_t \ast \varphi, t >0$. Dann folgt
+\[
+	\exists c \in \K : u(t,x) \xrightarrow{t\rightarrow \infty} c \quad \fa \, x \in \R^n ,
+\]
+wobei $c = 0$ ist, falls $\supp \varphi \Subset \R^n$.
+\end{satz}
+
+\begin{proof}
+Sei $\mathscr S := \supp \varphi \Subset \R^n$. Dann ist
+\begin{align*}
+u(t,x) & = (4\pi t)^{-\frac n2} \int_{\R^n} \varphi (y) e^{-\frac{\abs{x-y}^2}{4t}} \d y  = \int_{\mathscr S} \varphi (y) e^{-\frac{\abs{x-y}^2}{4t}} \d y  \\
+\Ra \abs{u(t,x)} & \leq \underbrace{(4\pi t)^{-\frac n2} e^{-\frac{\operatorname{dist} (x,S)^2}{4t}}}_{\xrightarrow{t\rightarrow\infty} 0} \underbrace{\int_{\mathscr S} \abs{\varphi (y)} \d y}_{< \infty} \, .
+\end{align*}
+Für $\varphi$ allgemein gilt
+\[
+	\abs{u(t,x)-u(t-z)} \leq \norm \varphi_\infty \underbrace{(4\pi t)^{-\frac n2} \int_{\R^n} \Abs{e^{-\frac{\abs{x-y}^2}{4t}} e^{-\frac{\abs{z-y}^2}{4t}} }}_{\xrightarrow{t\rightarrow \infty} 0 \quad \fa \, x,z \in \R^n} \d y \, .
+\]
+\end{proof}
+
+\begin{theorem}
+\label{theorem:10.5}
+Es sei $1\leq p < \infty, U(t) \ast \varphi := K_t \ast \varphi , t > 0$ und $U(0)  \varphi:=\varphi$. Dann gilt:
+\begin{enumerate}[\rm(i)]
+\item $\fa \, t \geq 0 : U(t) \in \mathcal L(L_p(\R^n)), \norm{U(t)}_{\mathcal L(L_p)} \leq 1$, d.h. $U$ ist eine Kontraktion, und $U(0) = \id_{L_p}$.
+\item $\fa \, t,s \geq 0: U(t+s) = U(t)U(s)$ $($kommutieren!$)$.
+\item $\fa \, \varphi \in L_p(\R^n): U(t) \varphi \xrightarrow{t\ra 0^+} \varphi$ in $L_p(\R^n)$, d.h. $U$ ist stark stetig.
+\end{enumerate}
+Das heißt zusammen, $\{U(t) \with t \geq 0\}$ ist eine stark stetige Kontraktionsgruppe auf $L_p(\R^n)$.
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+\item Lemma~\ref{lemma:10.1}.
+\item Übung (nachrechnen).
+\item Theorem~\ref{theorem:10.2} (ii).\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{kor}
+\label{kor:10.6}
+Sei $1\leq p < \infty, \varphi \in L_p(\R^n)$, dann folgt 
+\[
+	U(\cdot) \varphi \in C([0,\infty),L_p(\R^n)) \, .
+\]
+\end{kor}
+
+\begin{proof}
+Es sei o.B.d.A. $t > 0$ ($t = 0$ folgt direkt aus Theorem~\ref{theorem:10.5} (iii)), dann ist
+\[
+	\fa \, t,h > 0 : U(t+h)\varphi = U(h)U(t) \varphi \xrightarrow[\scriptsize\text{Thm.\ref{theorem:10.5} (iii)}]{h \ra 0^+\scriptsize\text{ in } L_p} U(t) \varphi \, .
+\]
+Sei $0 < h < t$, dann folgt
+\begin{align*}
+	\norm{U(t-h)\varphi - U(t) \varphi}_{L_p(\R^n)} & \stackrel{\scriptsize\text{Thm.\ref{theorem:10.5}(ii)}}= \norm{U(t-h)(\varphi-U(h) \varphi)}_{L_p(\R^n)} \\
+	& \hspace{0.2em} \stackrel{\scriptsize\text{Thm.\ref{theorem:10.5}(i)}}\leq\hspace{0.05em} \norm{\varphi-U(h) \varphi}_{L_p (\R^n)} \xrightarrow[\scriptsize\text{Thm.\ref{theorem:10.5} (iii)}]{h \ra 0^+} 0\, .
+\end{align*}
+\end{proof}
+
+\begin{bem}[inhomogener Fall]
+\label{bem:10.7}
+Wir betrachten 
+\begin{align*}
+	\partial_t u - \Delta_x u & = f(t,x) \, , \quad t > 0, x \in \R^n \\
+	u(0,x) & = \varphi (x) \\
+	\stackrel[\scriptsize\text{trafo}]{\scriptsize\text{Fourier-}}\Ra \partial_t \hat u + \abs \xi^2 \hat u & = \hat f(t,\cdot) \\
+	\hat u(0,\cdot) & = \hat \varphi \, .
+\end{align*}
+Dann folgt nach Lösen der gewöhnlichen DGL mit Parameter $\xi$ und dem Anfangswert von $\F^{-1}$
+\[
+	u(t,\cdot) = K_t \ast \varphi +\int_0^t K_{t-s} \ast f(s,\cdot) \d s
+\]
+mit der Notation aus Theorem~\ref{theorem:10.5}:
+\[
+	u(t) = U(t) \varphi + \int_0^t U(t-s) f(s) \d s \, , \quad t \geq 0
+\]
+heißt Variation-der-Konstanten-Formel\index{Variation der Konstanten}.
+\end{bem}
+
+\section{Wärmeleitungsgleichung auf einem Gebiet $\Omega$}
+
+Als Generalveraussetzung fordern wir, dass $\Omega\subset \R^n$ ein $C^\infty$-Gebiet ist.
+Wir betrachten zunächst das Cauchy-Problem für die Wärmeleitungsgleichung
+\begin{align}
+\label{eq:10.2}\left.
+\begin{aligned}
+	\partial_t u -\Delta_x u & = 0 \, , \qquad t > 0 , x \in \Omega \\
+	u(t,x) &= 0 \, , \qquad t > 0, x \in \partial \Omega \\
+	u(0,x) & = u^0 (x) \, , \quad x \in \Omega
+\end{aligned}
+\quad \right|
+\end{align}
+Abstrakte Formulierung (vgl. Wellengleichung):
+\[
+	A : \mathring W^2_2(\Omega) \longrightarrow L_2(\Omega) \, , \quad w \mapsto -\Delta_x w
+\]
+Dann ist \eqref{eq:10.2} äquivalent zu
+\[
+	\dot u + Au = 0 \, , \quad t > 0\, , \qquad u (0 ) = u^0 \text{ in } L_2(\Omega)
+\]
+und dabei handelt es sich um eine gewöhnliche Differentialgleichung im Hilbertraum.
+
+\begin{vor}
+\begin{enumerate}[(a)]
+\item $H$ ist ein $\C$-Hilbertraum mit  $\dim H = \infty$, Skalarprodukt $( \cdot | \cdot  )$ und Norm $\norm{\,\cdot \,}$.
+\item $\operatorname{Dom}(A)$ ist Unterraum von $H, A \in \mathcal L(\dom(A),H)\cap \mathcal A(H), A^\ast = A$.
+\item Es existiert eine ONB $\{\varphi_j\}$ von $H$ bestehend aus Eigenvektoren von $A$ mit Eigenwerten $\lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_j \xrightarrow[j \ra \infty]{} \infty$.
+\end{enumerate}
+\end{vor}
+Diese Voraussetzungen sind mit dem oberen Operator bei \eqref{eq:10.2} erfüllt. Wir betrachten das Cauchy-Problem
+\[
+	\dot u + A u = 0 \, , \quad t > 0 \, , \qquad u(0) = u^0 \text{ in } H
+\]
+mit $u^0 \in H$ gegeben und $u:(0,\infty) \ra \dom(A)$ gesucht.
+
+Idee: Produktsatz $u(t) = w(t) v, w(t) \in \C, v \in \dom (A)$. (Im eindimensionalen ist die Idee analog zur Wellengleichung.)
+
+\begin{notation}
+$H_A^s$ ist wie in Kapitel 9 definiert. Weiterhin definieren wir
+\[
+	H^\infty_A := \bigcap_{s\geq 0} H_A^s
+\]
+und $f \in C^{\infty}(J,H^\infty_A) :\Longleftrightarrow f \in C^\infty(J,H^s_A)\, \fa \, s \geq 0$. 
+\end{notation}
+
+\begin{theorem}
+\label{theorem:10.8}
+Es gelten die Voraussetzungen von oben. Dann gilt,
+	$\fa \, u^0 \in H \, \exists! \, \text{Lösung } u \in C^\infty ((0,\infty),H^\infty_A) \cap C([0,\infty),H)$ von
+\begin{align}
+\label{eq:CP}
+	\dot u +Au = 0 \, , \quad  t>0\, , \qquad u(0) = u^0  . \tag{CP}
+\end{align}
+Sie wird gegeben durch die Reihe
+\begin{align}
+\label{eq:10.3}
+	u(t) = \sum_j e^{-\lambda_j t} (u^0|\varphi_j) \varphi_j \, , \quad t \geq 0 \, .
+\end{align}
+\end{theorem}
+
+\begin{bem*}Regularisierung bzgl. $x$:
+$$u^0 \in H = H^0_A \Ra \, \fa \, t > 0: u(t) \in \bigcap_{s\ge 0} H^s_A \, .$$
+\end{bem*}
+
+\begin{proof}
+Sei $u^0 \in H$ beliebig, definiere $u$ wie in \eqref{eq:10.3}. Dann folgt
+\[
+	u(0) = \sum_j (u^0|\varphi_j)\varphi_j \stackrel{\scriptsize\text{ONB}}= u^0.
+\]
+Aus $\lambda_j \nearrow \infty$ folgt o.B.d.A. $\lambda_j > 0 \, \fa \, j$. Für $t \geq \epsilon > 0, s  > 0$ gilt
+\begin{align*}
+	\sum_j \lambda_j^{2s} e^{-\lambda_j t}\abs{(u^0|\varphi_j)}^2 & \leq \sum_j \underbrace{\lambda_j^{2s} e^{-\lambda_j \epsilon}}_{\leq c_s} \abs{(u^0|\varphi_j)}^2 \\
+	& \leq  c_s \sum_j\abs{(u^0|\varphi_j)}^2 \stackrel{\scriptsize\text{ONB}}= c_s \norm{u^0}^2 < \infty \, .
+\end{align*}
+Aus Weierstraß und der ONB folgt: Die Reihe $u(t)$ konvergiert absolut und lokal gleichmäßig bzgl. $t \geq \epsilon > 0$ in $H^s_A ,\, \fa \, s >0$.
+
+Die Summanden sind stetig in $t$:
+\[
+	\Ra u \in C((0,\infty),H_A^s) \quad \fa \, s \geq 0 \, .
+\]
+Mit $s = 0$ ist dies analog: $C([0,\infty),H)$. Analog oben: Die gliedweise differenzierte Reihe
+\[
+	\sum_j (-\lambda_j) e^{-\lambda_jt} (u^0|\varphi_j)\varphi_j
+\]
+konvergiert absolut und lokal gleichmäßig bzgl. $t\geq \epsilon > 0$ in $H^s_A$. 
+
+Mit dem Satz über die gliedweise Differentiation von Reihen ist $u \in C^1((0,\infty),H^s_A)$ und
+\[
+	\dot u (t) = \sum_j (-\lambda_j) e^{-\lambda_jt} (u^0|\varphi_j)\varphi_j\, , \quad t>0 \, \fa \, s \geq 0
+\]
+folgt induktiv $u \in C^\infty ((0,\infty),H^s_A) \, \fa \, s \geq 0$ und damit  $u \in C^\infty ((0,\infty),H^\infty_A)$.
+
+Ferner: $u (t) \in H^1_A = \dom (A) , t > 0$ (vgl. Korollar~\ref{kor:9.12}) und
+\[
+	Au(t) = \sum_j e^{\lambda_j t}(u^0|\varphi_j)\underbrace{A\varphi_j}_{=\lambda_j \varphi_j} =-\dot u(t) \, , \quad t >0 \, .
+\]
+Daraus folgt per Definition die Existenz und Regularität. Zur Eindeutigkeit: Es sei $\dot w + Aw = 0, t >0, w(0) = 0$ mit $w = u-v$, wobei $u, v$ zwei Lösungen von \eqref{eq:CP} sind. Dann folgt
+\[
+	0 = (\dot w(t)|\varphi_j) + (Aw(t)|\varphi_j) \stackrel[\lambda_j \in \R]{A = A^\ast}= (\dot w(t)+ \lambda_j w(t)|\varphi_j) \quad \fa \, j \, .
+\]
+Setze $\alpha_j (\cdot) := (w(\cdot)|\varphi_j) \in C^1((0,\infty),\C)$.
+\[
+	\Ra : \, \dot \alpha_j + \lambda_j \alpha_j = 0 \, , \qquad t > 0 \, , \quad\alpha_j(0) = 0 \stackrel{\scriptsize\text{gew. DGL}}\Ra \alpha_j \equiv 0 \, ,
+\]
+jedoch ist
+\[
+	w(t) \stackrel{\scriptsize\text{ONB}}= \sum_j \underbrace{(w(t)|\varphi_j)}_{\alpha_j(t)=0} \varphi_j = 0\, .
+\]
+\end{proof}
+
+\begin{kor}
+\label{kor:10.9}
+Sei $\Omega \subset \R^n$ ein beschränktes $C^\infty$-Gebiet. Dann folgt, für alle $u^0 \in L_2(\Omega)\, \exists ! \, u \in C^\infty((0,\infty),\mathring W^2_2(\Omega)) \cap C([0,\infty),L_2(\Omega))$ für die Wärme-leitungsgleichung
+\begin{align*}
+	\partial_t u -\Delta_x u & = 0 \, , \qquad t > 0 , x \in \Omega \\
+	u(t,x) &= 0 \, , \qquad t > 0, x \in \partial \Omega \\
+	u(0,x) & = u^0 (x) \, , \quad x \in \Omega \, .
+\end{align*}
+\end{kor}
+
+\begin{proof}
+Theorem~\ref{theorem:10.8}, Beispiel~\ref{bsp:9.10} (a), Theorem~\ref{theorem:7.37}, Bemerkung~\ref{bem:7.38}.
+\end{proof}
+
+\begin{bem*}
+Es gilt $u \in C^\infty((0,\infty),C^\infty(\bar\Omega))$.
+\end{bem*}
+
+\begin{bem}
+\label{bem:10.10}
+Eine analoge Aussage gilt für die Neumannrandbedingungen
+\[
+	\partial_\nu u (t,x) = 0 \, , \quad t > 0, x \in \partial\Omega
+\]
+bzw. für allgemeine gleichmäßige elliptische Differentialpoeratoren zweiter Ordnung
+\[
+	\partial_t u - \sum_{j,k=1}^n a_{jk}(x) \partial_j\partial_k u + \sum_{j=1}^n b_j \partial_j u + c(x) u = 0
+\]
+mit $a_{jk} (x) = a_{kj} (x) \geq \alpha > 0 \, \fa \, x \in \bar \Omega$.
+\end{bem}
+
+\begin{theorem}
+\label{theorem:10.11}
+Es gelten die Voraussetzungen von oben. Sei
+\[
+	e^{-tA} u^0 := u(t) = \sum_j e^{-\lambda_j t} (u^0|\varphi_j)\varphi_j \, , \quad t \geq 0 , u^0 \in H
+\]
+die eindeutige Lösung von \eqref{eq:CP} $\dot u + Au = 0, t>0, u^0 = u(0)$. Dann ist $\{e^{-tA} \with t\geq 0\}$ eine starkstetige Halbgruppe auf $H$, d.h. es gelten
+\begin{enumerate}[\rm(i)]
+\item $\fa \, t \geq 0: e^{-tA} \in \mathcal L(H), e^{-0A} = id_H$.
+\item $\fa \, t,s \geq 0: e^{-sA} e^{-tA} = e^{-(t+s)A}$.
+\item $\fa \, u^0 \in H: e^{-tA} u^0 \xrightarrow{t\ra 0^+} u^0$ in $H$.
+\end{enumerate}
+Ferner gelten folgende Eigenschaften:
+\begin{enumerate}[\rm(iv)]
+\item $\norm{e^{-tA}}_{\mathcal L(H)} \leq e^{-\lambda_1 t} , t \geq 0$.
+\item[\rm(v)] $(t\mapsto e^{-tA} u^0) \in C^\infty ((0,\infty), H) \, \fa \, u^0 \in H$ $($d.h. die Halbgruppe ist analytisch$)$ mit 
+\[
+	\frac\d{\d t} e^{-tA} u^0 = -A e^{-tA} u^0 .
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+\item Es ist klar, dass $e^{-tA}: \ra H$ linear ist $\fa \, t\geq 0$.
+\begin{align*}
+	\norm{e^{-tA} u^0}^2 & \stackrel{\scriptsize\text{ONB}}=\sum_j e^{-2\lambda_j t} \abs{(u^0|\varphi_j)}^2 
+	 \leq e^{-2\lambda_j t} \underbrace{\sum_j \abs{(u^0|\varphi_j)}^2}_{=\norm{u^0}^2} 
+\end{align*}
+\[
+	\Ra e^{-tA} \in \mathcal L(H)\, , \quad \norm{e^{-tA}}_{\mathcal L(H)} \leq e^{-\lambda_1 t} , \quad t \geq 0
+\]
+Und damit ist klar, dass $e^{-0A} u^0 = u^0$ ist.
+\item Wir rechnen einfach nach.
+\begin{dmath*}
+	e^{-sA} e^{-tA} u^0 = \sum_j e^{-\lambda_j s} (\underbrace{e^{-tA} u^0}_{=\sum_k e^{-\lambda_k t} (u^0|\varphi_k)\varphi_k} |\varphi_j)\varphi_j 
+	= \sum_{j,k} e^{-\lambda_j s}e^{-\lambda_k t} (u^0 | \varphi_k) \underbrace{(\varphi_k |\varphi_j)}_{=\delta_{jk}} \varphi_j \\
+	\stackrel{\scriptsize\text{ONB}}= \sum_j e^{-\lambda_j (s+t)} (u^0|\varphi_j)\varphi_j
+	= e^{-(t+s)A} u^0
+\end{dmath*}
+\item Vgl. Theorem~\ref{theorem:10.8}.
+\item Siehe (i).
+\item Theorem~\ref{theorem:10.8}.\qedhere
+\end{enumerate}
+\end{proof}
+
+Halbgruppen: Wir betrachten $\dot u + A u = 0, t>0, u(0)= u^0$ als gewöhnliche DGL in Banachraum $E$ mit $A\in\mathcal L(\dom(A),E), \dom(A)$ Unterraum von $E, u^0\in E$ gegeben und $u:(0,\infty) \ra \dom(A)$ ist gesucht.
+\[
+	\ddot w + \mathbb{A} w = 0 \, , \quad u := \begin{pmatrix} w \\ \dot w \end{pmatrix}  \Ra \dot u + A u = 0
+\]
+
+\begin{kor}
+\label{kor:10.12}
+Es gilt $\dom(A) = H^1_A$ und
+\[
+	Ax = \sum_j \lambda_j (x|\varphi_j)\varphi_j \quad  \fa \, x \in \dom(A) \, .
+\]
+\end{kor}
+
+\begin{proof}
+Aus dem Beweis von Theorem~\ref{theorem:10.11} folgt $H^1_A \subset \dom(A)$. Es sei $x \in \dom (A)$, dann ist $Ax \in H$.
+\begin{align}
+	\label{eq:10.4}
+	\stackrel{\scriptsize\text{ONB}}\Ra \, & Ax = \sum_j (Ax|\varphi_j)\varphi_j \stackrel[A=A^\ast]{}= \sum_{j} \lambda_j (x|\varphi_j)\varphi_j \\
+	\stackrel{\scriptsize\text{ONB}}\Ra \, & \norm x^2_{H^1_A} = \norm x^2 + \sum_j \abs{\lambda_j}^2\abs{(x|\varphi_j)}^2 \stackrel[\scriptsize\eqref{eq:10.4}]{}= \norm x^2 + \norm{Ax}^2 < \infty \,  , \notag
+\end{align}
+d.h. $x \in H^1_A$.
+\end{proof}
+
+\begin{theorem}
+\label{theorem:10.13}
+Es seien die Voraussetzungen von oben erfüllt. Dann gilt, $\fa \, (u^0,u^1)\in H^1_A \times H^{\frac 12 }_A \, \exists!$ Lösung $u$ des Anfangswertproblems
+\[
+	\ddot u + A u = 0 \, , \quad t > 0 \, , \qquad u(0) = u^0 \, , \quad \dot u (0) = u^1
+\]
+und es gilt
+\[
+	u \in C(\R^+,H^1_A) \cap C^1(\R^+,H_A^{\frac 12})\cap C^2(\R^+,H) \, .
+\]
+Sie wird gegeben durch
+\[
+	u(t) = \sum_j w_j(t) \varphi_j \, , \quad t \geq 0 \ (\text{oder } t \in \R)
+\]
+mit $\ddot w_j + \lambda_j w_j = 0, w_j(0) = (u^0|\varphi_j),\dot w_j(0) = (u^1|\varphi_j), j \in \N$.
+\end{theorem}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+\item \underline{Existenz und Regularität:} Setze
+\begin{align*}
+	u(t) & := \sum_j w_j(t) \varphi_j \, , \quad
+	u_1(t)  := \sum_j \dot w_j(t) \varphi_j \, , \quad
+	u_2(t)  := \sum_j \ddot w_j(t) \varphi_j\, .
+\end{align*}
+Die Konvergenz wegen der ONB genau dann, wenn
+\[
+	\sum_j \abs{w_j(t)}^2 < \infty \, , \quad \sum_j \abs{\dot w_j(t)}^2 <\infty \, , \quad \sum_j \abs{\ddot w_j(t)}^2 <\infty \, . 
+\]
+Es sei o.B.d.A. $\lambda_j \geq 1 \, \fa \, j$, dann folgt
+\begin{align}\label{eq:10.5}
+	\Ra w_j (t) & = (u^0|\varphi_j) \cos (t\sqrt{\lambda_j}) + (u^1 |\varphi_j) \frac 1{\sqrt{\lambda_j}} \sin(t\sqrt{\lambda_j}) \notag \\
+	\abs{w_j(t)}^2 & \leq 2 \abs{(u^0|\varphi_j)}^2 + 2 \frac 1{\lambda_j} \abs{(u^1|\varphi_j)}^2 \\
+	\Ra \sum_j \abs{w_j(t)}^2 & \stackrel[\lambda_j\geq 1]{}\leq 2\norm{u^0}^2 + 2 \norm{u^1}^2 < \infty \quad \fa \, t \notag \, .
+\end{align}
+Also folgt mit Weierstraß, dass $\sum_j w_j(\cdot) \varphi_j$ konvergiert absolut und gleichmäßig bzgl. $t$ in $H$. Aus $w_j(\cdot) \varphi \in C(\R, H)$ folgt wegen der gleichmäßigen Konvergenz, dass
+\[
+	u  = \sum_j w_j(\cdot) \varphi \in C(\R,H) \, .
+\]
+Mit $(u(t)|\varphi_j) = w_j(t) \, \fa \, j,t$ folgt
+\begin{align*}
+	\norm{u(t)}^2_{H_A^1} & \, \,\,  =\, \, \,  \norm{u(t)}^2 + \sum_j \abs{\lambda_j}^2 \abs{w_j(t)}^2 \\
+	&\stackrel[\scriptsize\eqref{eq:10.5}]{}\leq \norm{u(t)}^2 + 2\norm{u^0}^2_{H_A^1} + 2\norm{u^1}^2_{H_A^{\frac 12}} < \infty \quad \fa \, t
+\end{align*}
+und damit ist mit Weierstraß $u \in C(\R,H^1_A)$. Dann ist
+\[
+	u(0) = \sum_j w_j(0) \varphi_j = \sum_j (u^0|\varphi_j)\varphi_j \stackrel[\scriptsize\text{ONB}]{}= u^0 \, .
+\]
+Analog: $u_1 \in C(\R,H^{\frac 12}_A), u_1(0) = u^1$ und $u_2\in C(\R,H)$. Da $H^1_A \hookrightarrow H_A^{\frac 12}$, folgt 
+\begin{align*}
+	u = \sum_j w_j(\cdot) \varphi_j \in C^1(\R,H^{\frac 12}_A) \text{ und} \\
+	\dot u = \left( \sum_j w_j \varphi_j\right)^\cdot = \sum_j \dot w_j \varphi_j = u_1
+\end{align*}
+mit dem Satz über gliedweise Differentiation von Reihen. Analog: $u \in C^2(\R,H)$ und $\ddot u = u_2$. Ferner gilt
+\[
+	u(t)  \in H^1_A \stackrel[\scriptsize\text{Kor.}\ref{kor:10.12}]{}= \dom (A)
+\]
+und $A \in \mathcal L(\dom (A),H)$. Damit ist
+\begin{align*}
+	Au(t) &= A \sum_j w_j (t) \varphi_j = \sum_j w_j(t) \lambda_j \varphi_j \\
+	&=-\sum_j \ddot w_j(t) \varphi_j = -\ddot u(t) \, , \quad t \in \R \, .
+\end{align*}
+Also ist
+\begin{align}
+\label{eq:10.6}
+	\ddot u + Au = 0, u(0) = u^0, \dot u(0) = u^1.
+\end{align}
+\item \underline{Eindeutigkeit:} Es seien $u,v$ Lösungen von \eqref{eq:10.6}, dann löst $w:=u-v$ das Problem
+\begin{align}
+\label{eq:10.7}
+	& \ddot w + Aw = 0 \, , \qquad w(0) = 0 \, , \quad \dot w (0) = 0 \notag \\
+	\Ra \,\, \,  & 0 = (\ddot w(t)|\varphi_j) + (Aw(t)|\varphi_j) \stackrel[A=A^\ast]{}= (\ddot w(t)  + \lambda_j w(t) |\varphi_j ) \, .
+\end{align}
+Setze $\alpha_j := (w_j(\cdot)|\varphi_j) \in C^2(\R,\C)$, d.h. $\ddot \alpha_j = (\ddot w_j |\varphi_j)$.
+\begin{align*}
+	\stackrel[\scriptsize\eqref{eq:10.7}]{}\Ra \hspace{1.4em}& \ddot \alpha_j + \lambda_j \alpha_j = 0 \, , \qquad \alpha_j(0) = 0 \, , \quad \dot \alpha_j (0 ) = 0 \\
+	\stackrel[\scriptsize\text{Eind.g.DGL}]{}\Ra \, \, & \alpha_j \equiv 0 \, ,
+\end{align*}
+jedoch gilt $w(t) \stackrel[\scriptsize\text{ONB}]{}= \sum_j \alpha_j(t) \varphi_j = 0, $  also ist $u=v$.\qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{kor}
+\label{kor:10.14}
+Es sei $\Omega \subset \R^n$ ein beschränktes $C^\infty$-Gebiet. Dann folgt, $\fa \, (u^0,u^1) \in \mathring W^2_2(\Omega) \times \mathring W^1_2(\Omega)$ besitzt
+\[
+	\left.
+	\begin{aligned}
+		\partial^2_t u - \Delta_x u & = 0 \, , \quad t > 0, x \in \Omega \\
+		u(t,x) & = 0 \, , \quad t > 0, x \in \partial \Omega \\
+		u(0,x) & = u^0(x) \, , \quad x \in \Omega \\
+		\partial_t u(0,x) & =u^1(x) \, , \quad x \in \Omega
+	\end{aligned}
+	\quad  \right|
+\]
+eine eindeutige Lösung $u \in C(\R^+,\mathring W^2_2(\Omega))\cap C^1(\R^+,\mathring W^1_2(\Omega))\cap C^2(\R^+,L_2(\Omega))$.
+\end{kor}
+
+\begin{proof}
+Es sei $H:=L_2(\Omega), \dom(A) := \mathring W^2_2 (\Omega), Aw := -\Delta_x w$, dann folgt aus Bemerkung~\ref{bem:10.10} (a), Theorem~\ref{theorem:10.13}, Theorem~\ref{theorem:7.37} und Bemerkung~\ref{bem:7.38}: Es genügt zu zeigen, dass $H^{\frac 12}_A \dot = \mathring W^1_2(\Omega)$ bzgl. der ONB $\{\varphi_j\}$ in $L_2(\Omega)$ mit Eigenwerten $0< \lambda_1 < \lambda_2 \leq \ldots \leq \lambda_j \ra \infty$. Man beachte
+\begin{align}
+\label{eq:10.9}
+	\Phi_j := \frac 1{\sqrt{1+\lambda_j}}\varphi_j \Ra \{\Phi_j\} \text{ ONB von } \mathring W^1_2 (\Omega) \, .
+\end{align}
+Vergleiche Beweis zu Theorem~\ref{theorem:7.37}: Es folgt mit Gauß
+\begin{align}
+\label{eq:10.10}
+	\begin{aligned}
+	(w |\varphi_j)_{\mathring W^1_2} & = (1+\lambda_j) (w|\varphi_j)_{L_2} \\
+	& = (w|\varphi_j)_{L_2} + (\nabla w |\nabla \varphi_j)_{L_2} \quad \fa \, w \in \mathring W^1_2(\Omega) \, .
+	\end{aligned}
+\end{align}
+Sei $w \in \mathring W^1_2(\Omega) = \dom(A) \stackrel{\scriptsize\text{Kor.\ref{kor:10.12}}}= H^1_A \hookrightarrow \mathring W^1_2 (\Omega) \cap H^{\frac 1 2}_A$.
+\begin{align*}
+	\norm w^2_{\mathring W^1_2} \stackrel[\scriptsize\text{Parseval}]{\scriptsize\eqref{eq:10.9}}= \sum_j \abs{(w|\Phi_j)_{\mathring W^1_2}}^2 
+	\stackrel[\scriptsize\text{Def.}\Phi_j]{\scriptsize\eqref{eq:10.10}}= \sum_j (1+\lambda_j) \abs{(w |\varphi_j)_{L_2}}^2 \stackrel[\scriptsize\text{Parseval}]{}= \norm w^2_{H^{\frac 12}_A}
+\end{align*}	
+\begin{align}
+\label{eq:10.11}
+	\Ra (\dom(A), \norm{\, \cdot \,}_{\mathring W^1_2}) \, \dot = \, (\dom(A), \norm{\, \cdot \,}_{H^{\frac 12}_A})
+\end{align}
+Sei $w \in \mathring W^1_2(\Omega)$ beliebig, $\mathring W^2_2 = \dom(A) \stackrel{\scriptsize d}\subset \mathring W^1_2$
+\begin{align*}
+	\Ra \hspace{1.1em}& \, \exists \, w_j \in \dom (A): w_j \longrightarrow w \text{ in } \mathring W^1_2 \hookrightarrow L_2 = H \\
+	\stackrel{\scriptsize\eqref{eq:10.11}}\Ra \hspace{0.9em} & (w_j ) \text{ ist Cauchy-Folge in } H^{\frac 12 }_A \\
+	\stackrel[H_A^{\frac 12 }\scriptsize\text{vollst.}]{\scriptsize\text{Thm.}\ref{theorem:10.11}}\Ra & \, \exists \, z \in H^{\frac 12}_A : w_j \longrightarrow z \text{ in } H_A^{\frac 12} \hookrightarrow H=L_2 \\
+	\Ra  \hspace{1em}& w = z \in H^{\frac 12}_A \, , 
+\end{align*}
+d.h. $\mathring W^1_2(\Omega) \subset H_A^{\frac 12}$, analog $H^{\frac 12}_A \subset \mathring W^1_2(\Omega)$ und mit \eqref{eq:10.11} folgt die Behauptung für "`$\dot =$"'.
+\end{proof}
+
+

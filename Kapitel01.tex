@@ -1,0 +1,176 @@
+\newchapter{Einleitung}
+\label{sec:Einleitung}
+
+\section{Motivation}
+
+\begin{align*}
+  u(t,x)\in\R: \, & \text{\underline{\idx{Dichte}} (z.B. Wärme)} \\
+  t: \, & \underline{\text{Zeit}}, x\in\Omega\subset\R^n: \underline{\text{Raumvariable}} \\
+  J(t,x)\in\R^n:\, &\text{\underline{\idx{Fluss}}} \\
+  f(t,x)\in\R : \, &\text{\underline{\idx{Quelle}} (\underline{\idx{Senke}})}
+\end{align*}
+\begin{figure}[h!]
+  \begin{center}
+  %\PSforPDF{
+    \begin{pspicture}(-1.5,-1.5)(2,2)
+      % Omega
+      \psccurve(-2,1)(0,2)(2,1)(2,-1)(1,-2)(-.5,-.5)
+      \rput[bl](-1,-1){$\Omega$}
+
+      % Umgebung von x
+      \pscircle(0,1){.4} \psdot(0,1) \rput[tl](.1,1){$x$}
+      \rput[r](-.5,1){$V$}
+
+      % Normalenvektor
+      \psline{->}(0,1.4)(0,1.9) \rput[tl](.1,1.7){$\nu$}
+
+      % Vektorfeld J
+      \psline{->}(.2,.6)(.6,.2) \psline{->}(.5,1)(.9,.6)
+      \psline{->}(.7,.1)(1,-.3) \psline{->}(1,.5)(1.4,-.1)
+      \psline{->}(1.45,-.2)(1.6,-.7) \rput[bl](1.2,.4){$J$}
+    \end{pspicture}
+    %}
+  \end{center}
+  \caption{Vergleichsgebiet $V$ mit Fluss $J$}
+  \label{abbildung:1}
+\end{figure}
+
+Sei $V\subset\Omega$ \idx{Vergleichsgebiet} mit Rand $\partial V$ und äußerer Einheitsnormale $\nu(x)\in\R^n, x\in\partial\Omega$ wie in Abbildung~\ref{abbildung:1} dargestellt, sowie $\tau$ die Oberfläche von $V$.
+
+\begin{description}  
+\item[\idx{Bilanzgleichung}:] 
+
+  \[
+  \underbrace{
+    \diff{t} \underbrace{\int\limits_V u(t,x)\d x}_{\text{Änderungsrate in $V$}}
+  }_{=\int\limits_V \partial_t u\d x}
+  =
+  \underbrace{
+    - \underbrace{\int\limits_{\partial V} J\cdot\nu\d\tau}_{\text{Fluss nach Draußen}}
+  }_{\underset{\scriptsize\text{Gauß}}{=} -\int\limits_V\div J\d x}
+  +\underbrace{\int\limits_V f(t,x)\d x}_{\parbox{3.3cm}{\scriptsize was im Gebiet entsteht/ \\  verloren geht}}
+  \]
+  wobei $\div J:=\nabla\cdot J=\sum\limits_{j=1}^n\partial_jJ^j$
+  mit $J=(J^1,\ldots,J^n)\in\R^n$ und $\partial_j:=\pdiff{x_j}$. Also gilt:
+  \[ \int\limits_V\partial_t u\d x+\int\limits_V\div J\d x=\int\limits_V f\d x \]
+  \[
+  \underset{V\subset\Omega \scriptsize\text{ bel.}}\Ra \text{\underline{\idx{Kontinuitätsgleichung:}}} \quad  \partial_tu+\div J=f
+  \]
+  für $(t,x)\in(0,\infty)\times\Omega$.
+\end{description}
+
+Je nach physikalischer (biologischer, $\ldots$) Situation besteht ein Zusammenhang zwischen dem Fluss $J$ und der Dichte $u$.
+
+\begin{enumerate}[(i)]
+\item \underline{\textbf{\idx{Transportgleichung}:}} $J=ub, b\in\R^n$
+\[ \Ra \boxed{\partial_t u+b\cdot \nabla u=f}\quad (n=1: u_t+bu_x=f)\]
+\item \underline{\textbf{\idx{Wärmeleitungsgleichung}:}} Fluss ist proportional zu Dichtegefälle, d.h. $J=-d\nabla u$ ($d>0$: Geschwindigkeit).
+
+Laplace-Operator: $\Delta := \div\cdot\nabla = \sum\limits_{j=1}^n\partial_j^2$
+\begin{align*}
+ \Ra\; & \boxed{\partial_tu-d\Delta u=f} \\
+  & \partial_tu-d\sum\limits_{j=1}^n\partial_j^2 u=f\quad (n=1: u_t-du_{xx}=f)
+\end{align*}
+\item \underline{\textbf{(nicht viskose) \idx{Burgersgleichung}:}} $n=1, J=\frac 1 2 u^2$
+\[ \Ra \boxed{u_t+uu_x=f} \]
+
+\item \underline{\textbf{\idx{Laplace-Gleichung}:}} Stationäre beziehungsweise zeitunabhängige Lös\-ung\-en der Wär\-me\-lei\-tungs\-glei\-chung
+\[ \Ra \boxed{-\Delta u=f} \]
+\end{enumerate}
+
+Andere Typen, die nicht auf der Kontinuitätsgleichung beruhen sind:
+
+\begin{enumerate}
+\item[(v)] \underline{\textbf{\idx{Wellengleichung}:}}
+\[ \boxed{\partial_t^2u-c\Delta u=f} \]
+Hierbei ist $c>0$ die Geschwindigkeit.
+
+\item[(vi)] \underline{\textbf{\idx{Navier-Stokes}:}}
+\[ \boxed{\partial_tu-\Delta u+\sum\limits_{j=1}^nu^j\partial_j u=f-\nabla p} \]
+ mit $u=(u^1,\ldots,u^n)$.
+\end{enumerate}
+
+\section{Typische Fragen}
+
+\begin{enumerate}[1.]
+\item Wohldefiniertheit (lokale/globale Existenz, Eindeutigkeit, Abhängigkeit bzgl. Daten)
+\item Regularität
+\item Darstellungsformeln (z.B. explizite Berechnungen)
+\item Qualitatives Verhalten
+\item Approximation
+\item[$\vdots$]
+\end{enumerate}
+
+\begin{bem}
+  \begin{enumerate}[(a)]
+  \item \underline{Eindeutigkeit} benötigt meist zusätzliche
+    \underline{Bedingungen}; z.B.
+    \begin{itemize}
+    \item \underline{\textbf{\idx{Anfangsbedingung}:}} (z.B. für $t=0$)
+      \[ \boxed{ u(0,x) \overset{!}= u^0(x),\;x\in\Omega} \] wobei $u^0$
+      gegeben ist.
+    \item \underline{\textbf{\idx{Randbedingungen}:}} (wie sieht $u$ auf
+      $\partial\Omega$ aus?)
+      \begin{itemize}
+      \item \underline{\idx{Dirichlet-Randbedingung}:}
+        \index{Randbedingung!Dirichlet}
+        \[ \boxed{u(t,x)=g(x),\;x\in\partial\Omega} \]
+      \item \underline{\idx{Neumann-Randbedingung}:}
+        \index{Randbedingung!Neumann}
+        \[ \boxed{\partial_\nu u=\nabla u\cdot\nu=g(x),\;
+          x\in\partial\Omega} \]
+          wobei $\nu$ der Einheitsnormalenvektor von $\partial \Omega$ ist.
+      \end{itemize}
+    \end{itemize}
+
+  \item Lösungen existieren nicht immer "`klassich"' (d.h. $u\in C^k$)
+    $\Ra$ klassische Lösung/schwache Lösung/distributionelle Lösung.
+  \end{enumerate}
+\end{bem}
+
+\section{Notation und Begriffe}
+
+\begin{itemize}
+
+\item \underline{\textbf{\idx{Multiindex}:}} $\alpha=(\alpha_1,\ldots,\alpha_n)\in\N^n$
+\begin{align*}
+  \abs{\alpha} := & \alpha_1+\ldots+\alpha_n \\
+  \alpha! := & (\alpha_1)!\cdots (\alpha_n)! \\
+  x^\alpha := & x_1^{\alpha_1}\ldots x_n^{\alpha_n} \\
+  \partial^\alpha f := & \frac{\partial^{\alpha_1}}{\partial x_1^{\alpha_1}} \frac{\partial^{\alpha_2}}{\partial x_2^{\alpha_2}} \ldots \frac{\partial^{\alpha_n}}{\partial x_n^{\alpha_n}} \quad  \text{für } f\in C^{\abs\alpha} \\
+\end{align*}
+$\alpha,\beta\in\N^n:(\alpha\geq\beta: \Lra \alpha_j\geq\beta_j\fa j=1,\ldots,n)$
+
+\item \underline{\textbf{\idx{Leibniz}:}} Sei $X\subset\R^n$ offen, $f,g\in C^k(X)$, $\alpha\in\N^n$, $\abs\alpha <k$, dann gilt
+\[ \partial^\alpha(fg)=\sum\limits_{\beta\leq\alpha} \binom{\alpha}{\beta}\partial^{\alpha-\beta}f \, \partial^\beta g \]
+mit $\binom{\alpha}{\beta}:=\frac{\alpha!}{\beta!(\alpha-\beta)!}$.
+
+\item Eine partielle Differentialgleichung ist von der Form
+  \[ F\left(x, (\partial^\alpha u(x))_{0\leq\abs\alpha\leq k}\right)=0, \]
+  wobei $X\subset\R^n$ offen,
+  \[ F:X\times(\R^m\times\cdots\times\R^m)\ra\R^l \]
+  gegeben und $u:X\ra\R^m$ ist.
+  \begin{itemize}
+  \item $k$: \textbf{\idx{Ordnung}} der Gleichung
+  \item $l=1$: eine Gleichung
+  \item $l>1$: System von Gleichungen 
+  \end{itemize}
+\end{itemize}
+
+\section{Spezialfälle}
+\begin{enumerate}[(a)]
+\item \index{Gleichung!lineare} \underline{\textbf{lineare PDGl:}}
+  \[ \sum\limits_{\abs\alpha\leq k}a_\alpha(x)\partial^\alpha u(x)=f(x) \]
+  mit $a_\alpha:X\ra\R, f:X\ra\R^m$ gegeben. Ist $f=0$, so heißt die PDE \textbf{homogen}, für $f\neq 0$ \textbf{inhomogen}.
+\item \index{Gleichung!semilineare} \underline{\textbf{Semilineare PDGl:}}
+  \[ \sum\limits_{\abs\alpha\leq k}a_\alpha(x)\partial^\alpha u(x)=f\left(x,(\partial^\beta u(x))_{0\leq\abs\beta\leq k-1}\right) \]
+\item \index{Gleichung!quasilineare} \underline{\textbf{Quasilineare PDGl:}}
+  \[ \sum\limits_{\abs\alpha=k}a_\alpha\left( x, (\partial^\beta u(x))_{0\leq\abs\beta\leq k-1} \right)\partial^\alpha u(x) = f\left( x, (\partial^\beta u(x))_{0\leq\abs\beta\leq k-1}\right) \]
+\item \index{Gleichung!voll-nicht-lineare} Gilt keiner der Fälle (a)-(c), so heißt die PDE \textbf{voll-nicht-lineare} Gleichung.
+\end{enumerate}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

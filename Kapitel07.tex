@@ -1,0 +1,1484 @@
+\newchapter{Hilbertraummethoden und schwache Lösungen}
+
+
+Unser Ziel ist es, elliptische Gleichungen wie
+\begin{align*}
+    -\Delta u&=f\condition{in $\Omega$} \\
+    u\vert_{\partial\Omega}&=0
+\end{align*}
+für nicht-reguläre $f$ in allgemeinen Gebieten zu lösen.
+
+\section{Hilberträume und die Sätze von Riesz und Lax-Milgram}
+
+Als Generalvoraussetzung für dieses Kapitel sei $H=(H,(\cdot\vert\cdot))$ ein $\K$-Hilbert\-raum mit $\norm x^2=(x\vert x)$.
+
+\begin{bem}
+  \label{bem:7.1} Für alle $x,y\in H$ gilt die \idx{Parallelogrammgleichung}
+  \[ 2(\norm x^2+\norm y^2)=\norm{x-y}^2+\norm{x+y}^2 \]
+  und die \idx{Cauchy-Schwartzsche~Ungleichung}
+  \[ \abs{(x\vert y)}\leq\norm x\cdot\norm y \, . \]
+\end{bem}
+
+\begin{satz}[Approximationssatz]
+  \label{satz:7.2} Es sei $\emptyset\neq M\subset H$ konvex und abgeschlossen. Dann existiert für alle $x\in H$ ein $m_x\in M$ mit
+  \[ \norm{x-m_x}=\dist(x,M)\coloneqq \inf_{y\in M}\norm{x-y}\, .  \]
+  Wir nennen $P_M:H\ra M$ mit $x\mapsto m_x$ die \idx{Projektionen} auf $M$.
+\end{satz}
+
+\begin{proof}
+  Seien $x\in H$ und $\alpha\coloneqq\dist(x,M)$. Dann existiert für alle $j\in\N$ ein $m_j\in M$ mit $\norm{x-m_j}\leq\alpha+\frac 1j$. Bemerkung~\ref{bem:7.1} liefert uns dann
+  \begin{dmath*}
+    2(\norm{x-m_j}^2+\norm{x-m_k}^2)=4\Norm{\frac{m_j+m_k}2-x}^2+\norm{m_j-m_k}^2
+    \geq4\alpha^2+\norm{m_j-m_k}^2.
+  \end{dmath*}
+  Weiter ist
+  \[ \norm{m_j-m_k}^2\leq2\norm{x-m_j}^2+2\norm{x-m_k}^2-4\alpha^2\xrightarrow{j,k\ra\infty}0\, . \]
+  Also existiert wegen der Chauchy-Schwartzschen Ungleichung und der Abgeschlossenheit von $M$ ein $m\in M$ mit $m_j\ra m$.
+
+  Zum Beweis der Eindeutigkeit seien $m,n\in M$ mit $\norm{x-m}=\alpha=\norm{x-n}$. Weil $M\cap\bar\B(x,\alpha)$ konvex ist, liegt $\frac{m+n}2 \in M\cap\bar\B(x,\alpha)$. Damit ist $\Norm{\frac{m+n}2-x}=\alpha$. Bemerkung~\ref{bem:7.1} liefert uns
+%  \begin{dmath*}
+\[
+    \norm{m-n}^2=2\cdot\norm{x-m}^2+2\cdot\norm{x-n}^2-4\cdot\Norm{\frac{m+n}2-x}^2=0\, ,
+ \]
+ % \end{dmath*}
+  und damit $m=n$.
+\end{proof}
+
+\begin{bem*}
+  Satz~\ref{satz:7.2} ist falsch in allgemeinen Banachräumen.
+\end{bem*}
+
+\begin{satz}[Charakterisierung der Projektionen]
+  \label{satz:7.3} $\emptyset\neq M\subset H$ sei abgeschlossen und konvex und $x\in H$. Dann gilt:
+  \[ m_0=P_M(x)\quad\Longleftrightarrow\quad \Re(m-m_0\vert x-m_0)\leq0 \]
+  für alle $m\in M$.
+\end{satz}
+
+\begin{proof}
+  O.B.d.A. sei $0\in M$ und $m_0=0$.
+ 
+  "`$\Rightarrow$"' Wegen $0=P_M(x)$ muss $\norm{x-tm}\geq\norm x$ für $m\in M$ und $0\leq t\leq1$ sein. Dann ist
+    \[ \norm x^2\leq\norm x^2-2t\cdot\Re(x\vert m)+t^2\norm m^2. \]
+    Damit ist $2\Re(x\vert m)\leq0$.
+ 
+ "`$\La$"' Für alle $m\in M$ ist $\Re(x\vert m)\leq0$. Es folgt
+    \[ \norm x^2\leq\norm x^2+\norm m^2-2\cdot\Re(m\vert x)=\norm{x-m}^2. \]
+    Wegen $0\in M$ ist $\dist(x,M)=\norm x^2$ und damit $0=P_M(x)$.
+\end{proof}
+
+\begin{bem}
+  \label{bem:7.4}
+  \begin{enumerate}[(a)]
+  \item   Das \idx{Minimierungsproblem} auf einer konvexen Menge ist
+   \[ \norm{x-P_M(x)}\overset!=\inf_{m\in M}\norm{x-m} \, .\]
+  \item      Die \idx{Variationsgleichung} (vgl. später) ist
+  \begin{dmath*}
+      \Re(m-P_M(x)\vert x-P_M(x))\leq0\condition{für alle $m\in M$} \, .
+    \end{dmath*}
+  \end{enumerate}
+\end{bem}
+
+\begin{kor}
+  \label{kor:7.5} Es sei $M$ ein abgeschlossener Untervektorraum von $H$ und $x\in H$. Dann gilt:
+    \[ m_0=P_M(x)\quad\Longleftrightarrow\quad x-m_0\perp M\quad\Longleftrightarrow\quad(x-m_0\vert m)=0 \]
+    für alle $m\in M$.
+\end{kor}
+
+\begin{proof}
+  Für alle $m\in M$ ist $m_0=P_M(x)$ genau dann, wenn $\Re(m-m_0\vert x-m_0)\leq0$. Da $M$ ein Untervektorraum ist, ist auch $\Re(m\vert x-m_0)\leq0$. Da dies auch für $-m$ gilt, ist $\Re(m\vert x-m_0)=0$. Also ist die Behauptung für $\K=\R$ bewiesen.
+
+  Wir betrachten nun den Fall $\K=\C$. Dafür ersetzen wir $m$ durch $im\in M$ und erhalten
+  \begin{dseries*}
+    \begin{math}
+      \Re(x\vert x-m_0)=0\condition{$\fa\,  m\in M$}
+    \end{math}
+    $\Longleftrightarrow$
+    \begin{math}
+      \Im(m\vert x-m_0)=0\condition{$\fa \, m\in M$}
+    \end{math}.
+  \end{dseries*}
+  Also ist $(m\vert x-m_0)=0$ für alle $m\in M$ und die Behauptung ist bewiesen.
+
+\end{proof}
+
+\begin{defi}
+  Es sei $\emptyset\neq A\subset H$ und wir definieren das orthogonale Komplement\index{orthogonales~Komplement} von A durch
+  \[ A^\perp\coloneqq\{x\in H\with x\perp A\}\coloneqq\{x\in H\with (x\vert a)=0\;\fa\,  a\in A\}\, . \]
+\end{defi}
+
+\begin{theorem}
+  \label{theorem:7.6} Es sei $M$ ein abgeschlossener Untervektorraum von $H$. Dann ist
+  \[ H=M\oplus M^\perp, \]
+  d.h.\ jedes $x\in H$ hat eine eindeutige Zerlegung $x=x_M+x_{M^\perp}$ mit $x_M\in M$ und $x_{M^\perp}\in M^\perp$.
+\end{theorem}
+
+\begin{proof}
+  Für alle $x\in H$ gilt
+  \[ 
+  x=\underbrace{P_M(x)}_{\underset{\text{Satz~\ref{satz:7.2}}}\in M}
+  +\underbrace{(x-P_M(x))}_{\underset{\text{Korollar~\ref{kor:7.5}}}\in M^\perp}\in M+M^\perp.
+  \]
+
+  Um die Eindeutigkeit zu zeigen sei $x=a+b$ mit $a\in M$ und $b\in M^\perp$. Dann ist
+  \[ 0=a-P_M(x)+b-(x-P_M(x))\, . \]
+  Sei nun $c\coloneqq a-P_M(x)\in M$. Es ist dann aber auch $c=(x-P_M(x))-b\in M^\perp$, und somit $c\in M\cap M^\perp$. Dann ist $(c\vert c)=0=\norm c^2$, also $c=0$.
+\end{proof}
+
+\newpage
+
+\begin{kor}
+  \label{kor:7.7} Für $0\neq A\subset H$ gilt:
+  \begin{enumerate}[\rm(i)]
+  \item \label{kor:7.7-1} $A^\perp$ ist abgeschlossener Untervektorraum von $H$.
+  \item \label{kor:7.7-2} $\overline{\spn A}=(A^\perp)^\perp=:A^{\perp\perp}$.
+  \item \label{kor:7.7-3} Es ist $A$ ein Untervektorraum. Dann ist $\bar A=H$ genau dann wenn $A^\perp=\{0\}$.
+  \end{enumerate}
+\end{kor}
+
+\begin{proof}
+  \begin{enumerate}
+  \item[(\ref{kor:7.7-1})] \[ A^\perp=\bigcap_{a\in A}\ker(\, \cdot \, \vert a) \]
+    ist abgeschlossener Untervektorraum.
+  \item[(\ref{kor:7.7-2})] Es ist klar, dass $A\subset A^{\perp\perp}$, da $(a\vert b)=0$ für alle $b\in A^\perp$, $a\in A$. Wegen (\ref{kor:7.7-1}) ist $A^{\perp\perp}$ ein abgeschlossener Untervektorraum von $H$, ist also ein Hilbertraum.
+
+    Sei $B:=\overline{\spn A}$. Dann ist wegen $A\subset A^{\perp\perp}$, $B$ auch abgeschlossener Untervektorraum von $A^{\perp\perp}$. Nach Theorem~\ref{theorem:7.6} ist
+    \[ A^{\perp\perp}=B\oplus B^\perp. \]
+    Außerdem ist
+    \[ B^\perp\subset A^\perp\cap A^{\perp\perp}=\{0\}\, , \]
+    denn $A\subset B$. Diese beiden Aussagen führen zu $A^{\perp\perp}=B$.
+  \item[(\ref{kor:7.7-3})] $A$ sei Untervektorraum. Dann gilt laut Theorem~\ref{theorem:7.6}:
+    \[ A^\perp\oplus A^{\perp\perp}=A^\perp\oplus \bar A\, . \qedhere \]
+  \end{enumerate}
+\end{proof}
+
+% ----------------- 17.05.2011 ------------------------------
+
+\begin{theorem}[Riesz]
+  \label{theorem:7.8} \index{Satz~von!Riesz}
+  Für alle $f\in\L(H,\K)=:H'$ existiert genau ein $J(f)\in H$ mit
+  \begin{dmath*}
+    f(x)=(x\vert J(f))\condition{$x\in H$}.
+  \end{dmath*}
+  Ferner gilt $\norm{J(f)}=\norm f_{H'}$.  
+\end{theorem}
+
+\begin{proof}
+  O.B.d.A. sei $f\neq 0$. Dann ist $\ker(f)\neq H$ und dach Korollar~\ref{kor:7.7} (\ref{kor:7.7-3}) existiert ein $y\in\ker(f)^\perp$ mit $\norm y=1$. Für alle $x\in H$ ist $f(x)y-f(y)x\in\ker(f)$. Damit ist $(f(x)y-f(y)x|y)=0$. Somit ist
+  \[ f(x)=f(x)(y\vert y)=(f(y)x\vert y)=(x\vert \overline{f(y)}y) \]
+  für alle $x\in H$.
+
+  Wir setzen $J(f):=\overline{f(y)}y\in H\setminus\{0\}$. Es ist
+  \[ 
+  \norm f_{H'}=\sup_{x\neq0}\frac{\abs{f(x)}}{\norm x}
+  \geq\frac{\abs{f(J(f))}}{\norm{J(f)}}=\frac{\abs{(J(f)\vert J(f))}}{\norm{J(f)}}
+  =\norm{J(f)}
+  \]
+  und
+  \begin{dmath*}
+    \abs{f(x)}=\abs{(x\vert J(f))}\leq\norm x\norm{J(f)}
+    \condition{$x\in H$}.
+  \end{dmath*}
+  Damit ist $\norm f_{H'}\leq\norm{J(f)}$.
+  
+  Um die Eindeutigkeit zu zeigen sei $f=(\, \cdot\, \vert y_1)=(\, \cdot\, \vert y_2)$. Dann ist $(x\vert y_1-y_2)=0$ für alle $x\in H$. Mit $x=y_1-y_2$ ist $\norm{y_1-y_2}^2=0$, d.h.\ $y_1=y_2$.
+\end{proof}
+
+\begin{bem}
+  \label{bem:7.9}
+  \begin{enumerate}[(a)]
+  \item \label{bem:7.9-1} $E$ sei ein normierter Vektorraum. Dann bezeichnen wir mit $E':=\L(E,\K)$ den (topologischen) \idx{Dualraum} von $E$.
+  \item \label{bem:7.9-2} $J:H'\ra H$ mit $f\mapsto J(f)$ ist ein konjugiert linearer (d.h.\ $J(f+\alpha g)=J(f)+\alpha J(g)$ für $\alpha\in\K$, $f,g\in H'$) isometrischer Isomorphismus. Damit lässt sich $H'$ mit $H$ identifizieren.
+  \item \label{bem:7.9-3} Ist $\Omega$ eine offene Teilmenge des $\R^n$, dann ist wegen (b) $(L_2(\Omega))'\cong L_2(\Omega)$.
+  \end{enumerate}
+\end{bem}
+
+\begin{theorem}[Lax-Milgram]
+  \index{Theorem~von!Max-Milgram}
+  \label{theorem:7.10}
+  Sei $a:H\times H\ra\K$ eine stetige, koerzive \idx{Sesquilinearform}, d.h.\ für alle $x\in H$ sind $a(\, \cdot\, , x)$ und $\overline{a(x,\, \cdot\, )}$ linear $($\idx{sesquilinear}$)$, es existiert ein $c>0$ mit
+{\rm  \begin{dmath}[number={\textit{stetig}}]
+    a(x,y)\leq c\norm x\norm y\condition{\textit{für alle} $x,y\in H$}
+  \end{dmath}
+  \textit{und es existiert ein $\alpha>0$ mit}
+  \begin{dmath}[number={\textit{koerziv}}]
+    \Re a(x,x)\geq \alpha\norm x^2\condition{\textit{für alle} $x\in H$}.
+  \end{dmath}
+  \textit{Dann existiert für alle $f\in H'=\L(H,\K)$ genau ein $u_f\in H$ mit}
+  \begin{dmath*}
+    f(x)=a(x,u_f)\condition{\textit{für alle} $x\in H$}.
+  \end{dmath*}}
+  Ferner ist $\norm{u_f}_H\leq\frac 1\alpha\norm f_{H'}$.
+\end{theorem}
+
+\begin{proof}
+  Sei $u\in H$ beliebig. Dann ist $[x\mapsto a(x,u)]\in\L(H,\K)=H'$. Nach Theorem~\ref{theorem:7.8} existiert dann genau ein $Su\in H$ mit
+  \begin{dseries}
+    \label{eq:7.1}
+    \begin{math}
+      a(x,u)=(x\vert Su)\condition*{x\in H}
+    \end{math}
+    und
+    \begin{math}
+      \norm{Su}=\norm{a(\cdot, u)}_H\underset{\scriptsize\text{stetig}}\leq c\norm u_H
+    \end{math}.
+  \end{dseries}
+  Sei $S:H\ra H$ mit $u\mapsto Su$. Wegen Bemerkung~\ref{bem:7.9} (\ref{bem:7.9-2}) ist $S$ linear, also $S\in\L(H,H)=\L(H)$.
+
+  Nun ist
+  \begin{dmath}
+    \label{eq:7.2}
+    \alpha\norm u^2\underset{\scriptsize\text{koerziv}}\leq\Re a(u,u)\hiderel\leq\abs{a(u,u)}\hiderel=(u\vert Su)
+    \underset{\scriptsize\text{Cauchy-Schwartz}}\leq\norm u\norm{Su}.
+  \end{dmath}
+  Somit ist $\norm{Su}\geq\alpha\norm u$.
+
+  Sei $(u_j)$ eine Folge in $H$ mit $Su_j\ra v$ in $H$. Dann ist
+  \begin{dmath*}
+    \norm{u_j-u_k}\underset{\scriptsize\eqref{eq:7.2}}\leq\frac 1\alpha\norm{Su_j-Su_k}
+    \xrightarrow{j,k\ra\infty}0.
+  \end{dmath*}
+  Da $(u_j)$ eine Cauchy-Folge ist, existiert ein $u\in H$ mit $u_j\ra u$ in $H$. Da $S$ stetig ist, gilt $Su_j\ra Su$ und $Su_j\ra v$. Also ist $v=Su\in\im(S)$. Somit ist $M:=\im(S)$ ein abgeschlossener Untervektorraum von $H$. Nach Theorem~\ref{theorem:7.6} ist dann $H=M\oplus M^\perp$.
+
+  Sei $w\in M^\perp$. Dann ist $0=\abs{(w\vert Sw)}=\abs{a(w,w)}\geq\alpha\norm w^2$, da $a$ koerziv ist. Es muss dann $w=0$ bzw.\ $M^\perp=\{0\}$ sein. Aus Korollar~\ref{kor:7.7} (~\ref{kor:7.7-3}) folgt $H=\bar M$. Da $M$ abgeschlossen ist, gilt außerdem $M=\bar M$. Somit ist $S\in\L(H)$ bijektiv.
+
+  Sei $f\in H'$ beliebig. Dan existert laut Theorem~\ref{theorem:7.8} genau ein $J(f)\in H$ mit $f(x)=(x\vert J(f))$ für $x\in H$. Wir setzen $u_f:=S^{-1}J(f)\in H$. Dann ist
+  \[ a(x,u_f)\overset{\scriptsize\eqref{eq:7.1}}=(x\vert Su_f)=(x\vert J(f))=f(x)\in H. \]
+  Um die Eindeutigkeit zu zeigen sei $a(x,y_1)=a(x,y_2)$ für alle $x\in H$. Mit $x:=y_1-y_2$ erhalten wir $a(y_1-y_2,y_1-y_2)=0$. Da $a$ koerziv ist, muss $y_1-y_2=0$ bzw.\ $y_1=y_2$ sein.
+
+  Ferner ist 
+  \[ 
+  \norm{u_f}=\norm{S^{-1}J(f)}\overset{\scriptsize\eqref{eq:7.2}}\leq\frac 1\alpha\norm{J(f)}
+  \overset{\scriptsize\text{Riesz}}=\frac 1\alpha\norm f_{H'}.
+  \]
+\end{proof}
+
+\subsection*{Orthonormalbasen}
+
+Wir setzen nun voraus, dass $\dim H=\infty$ ist.
+
+\begin{defi}
+  Sei $\Phi\subset H$.
+  \begin{enumerate}[\rm(i)]
+  \item $\Phi$ heißt \idx{Orthogonalsystem} (OS), wenn $\phi\perp\psi$ für alle $\phi,\psi\in\Phi$ und $\phi\neq\psi$.
+  \item $\Phi$ heißt \idx{Orthonormalsystem} (ONS), wenn $\Phi$ ein Orthogonalsystem und $\norm\phi=1$ für alle $\phi\in\Phi$.
+  \item $\Phi$ heißt \idx{Orthonormalbasis} (ONB), wenn $\Phi$ ein Orthonormalsystem und $\Phi^\perp=\{0\}$ ist.
+  \end{enumerate}
+\end{defi}
+
+\begin{lemma}
+  \label{lemma:7.11} Sei $\Phi:=\{\phi_j\with j\in\N\}$ ein Orthogonalsystem. Dann gilt:
+  \begin{enumerate}[\rm(i)]
+  \item $\Phi\setminus\{0\}$ ist linear unabhängig.
+  \item $\sum\phi_j$ konvergiert in $H$ genau dann, wenn $\sum\norm{\phi_j}^2<\infty$ ist. Dann ist $\Norm{\sum\phi_j}^2=\sum\norm{\phi_j}^2$ eine Verallgemeinerung des Satzes von Pythagoras. 
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+  \item Seien $\alpha_0,\ldots,\alpha_m\in\K$. Dann ist
+    \begin{dmath*}
+      \Norm{\sum_{j=0}^m\alpha_j\phi_j}^2=\left(
+        \sum_{j=0}^m\alpha_j\phi_j\;\vrule\;\sum_{k=0}^m\alpha_k\phi_k
+      \right)
+      \hiderel=\sum_{j,k=0}^m\alpha_j\overline{\alpha_k}\underbrace{(\phi_j\vert \phi_k)}_{=\delta_{jk}}
+      \hiderel=\sum_{j=0}^m\abs{\alpha_j}^2.
+    \end{dmath*}
+  \item Mit $S_N:=\sum_{j\leq N}\phi_j$ erhalten wir
+    \[ \norm{S_N-S_M}^2=\Norm{\sum_{j=M+1}^N\phi_j}^2=\sum_{j=M+1}^N\norm{\phi_j}^2. \]
+  \end{enumerate}
+\end{proof}
+
+\begin{defi}
+  Sei $\Phi:=\{\phi_j\with j\in \N\}$ ein Orthonormalsystem und $x\in H$. $(x\vert\phi_j)$ heißt \idx{Fourierkoeffizient} von $x$ bezüglich $\phi_j$. $\sum_j(x\vert\phi_j)\phi_j$ heißt \idx{Fourierreihe} von $x$ bezüglich $\Phi$.
+\end{defi}
+
+\begin{theorem}
+  \label{theorem:7.12} Sei $\Phi:=\{\phi_j\with j\in\N\}$ ein Orthonormalsystem. Dann gilt:
+  \begin{enumerate}[\rm(a)]
+  \item \label{theorem:7.12-1} Für alle $x\in H$ konvergiert die Fourierreihe $\sum(x\vert \phi_j)\phi_j$ unbedingt. Ferner gilt für $N:=\spn\Phi=\Phi^{\perp\perp}$:
+    \[ P_N(x)=\sum(x\vert \phi_j)\phi_j\, . \]
+  \item \label{theorem:7.12-2} Es sind folgende Aussagen äquivalent:
+    \begin{enumerate}[\rm(i)]
+    \item \label{theorem:7.12-2-1} $\Phi$ ist eine Orthonormalbasis.
+    \item \label{theorem:7.12-2-2} Für alle $x\in H$ gilt: $x=\sum(x\vert \phi_j)\phi_j$.
+    \item \label{theorem:7.12-2-3} Für alle $x\in H$ gilt: $\norm x^2=\sum\abs{(x\vert\phi_j)}^2$.
+    \end{enumerate}
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}[(a)]
+  \item
+    \begin{align*}
+      0&\  \leq\Norm{x-\sum_{j\leq N}(x\vert \phi_j)\phi_j}^2 \\
+      &\underset{\scriptsize\text{ONS}}=\norm x^2-2\Re\sum_{j\leq N}
+      \underbrace{\overline{(x\vert \phi_j)}(x\vert\phi_j)}_{=\abs{(x\vert\phi_j)}^2}
+      +\sum_{j,k\leq N}\underbrace{(x\vert\phi_j)\overline{(x\vert\phi_k)}}_{\underset{j=k}=\abs{(x\vert\phi_j)}^2}
+      \underbrace{(\phi_j\vert\phi_k)}_{\delta_{jk}}  \\
+      & \ =\norm x^2-\sum_{j\leq N}\abs{(x\vert\phi_j)}^2
+    \end{align*}
+    Damit ist 
+    \begin{dmath*}
+      \sum_{j\leq N}\abs{(x\vert\phi_j)}^2\leq\norm x^2
+      \condition{für alle $N$}.
+    \end{dmath*}
+    Also konvergiert $\sum(x\vert\phi_j)\phi_j$ für alle $x\in H$. Für alle $\phi_k\in\Phi$ gilt
+    \begin{dmath*}
+      \left(\sum (x\vert \phi_j)\phi_j-x\Big\vert\phi_k\right)
+      =\sum(x\vert\phi_j)\underbrace{(\phi_j\vert\phi_k)}_{\delta_{jk}}-(x\vert \phi_k)\hiderel=0\, .
+    \end{dmath*}
+    Mit Korollar~\ref{kor:7.5} folgt
+    \[ P_N(x)=\sum(x\vert\phi_j)\phi_j \]
+    und damit die unbedingte Konvergenz.
+
+  \item
+    (i) $\Rightarrow$ (ii)
+      Für alle $\phi_k\in\Phi$ ist
+      \[ \Big(\underbrace{x-\sum(x\vert\phi_j)\phi_j}_{=:y}\Big\vert\phi_k\Big)=0\, . \]
+      Damit ist $y\in\Phi^\perp=\{0\}$, da $\Phi^\perp$ eine Orthonormalbasis ist.
+      
+   (ii) $\Rightarrow$ (i)
+         Sei $x\in\Phi^\perp$. Dann ist $(x\vert\phi_j)=0$ für alle $j$. Wegen (ii) ist dann $x=0$.
+      
+      (ii) $\Lra$ (iii) Es gilt
+        \begin{dmath*}
+          \Norm{x-\sum(x\vert\phi_j)\phi_j}^2
+          \underset{\
+            \begin{subarray}{c}
+              \text{ONS} \\
+              \text{vgl. (a)}
+            \end{subarray}
+          }=\norm x^2-\sum\abs{(x\vert\phi_j)}^2,
+        \end{dmath*}
+        damit folgt die Behauptung. \qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{bem}
+  \label{bem:7.13}
+  Jeder Hilbert-Raum besitzt eine Orthonormalbasis. Allerdings muss diese nicht notwendigerweise abzählbar sein. Jedes Orthonormalsystem kann zu einer Orthonormalbasis ergänzt werden (Gram-Schmidt). Es gilt: hat $H$ genau dann eine abzählbare Orthonormalbasis, wenn $H$ separabel ist, d.h. es existiert eine abzählbare dichte Teilmenge (z.B.\ ist $L_s(\Omega)$ separabel). Lemma~\ref{lemma:7.11} bzw.\ Theorem~\ref{theorem:7.12} gelten auch dann, wenn $\Phi$ nicht abzählbar ist.
+\end{bem}
+
+\section{Schwache Lösungen des Laplace-Dirichlet-Pro-blems}
+
+Wir setzen voraus, dass $\Omega\subset\R^n$ ein $C^2$-Gebiet ist.
+
+Wir betrachten das \idx{Dirichlet-Problem}
+\begin{align*}
+  -\Delta u& =f\condition{in $\Omega$}, \\ u\rvert_{\partial\Omega}&=g
+\end{align*}
+mit $f\in C(\bar\Omega)$ und $g\in C(\partial\Omega)$. Eine klassische Lösung $u$ liegt in $C^2(\Omega)\cap C(\bar\Omega)$.
+
+\begin{bem}
+  \label{bem:7.14}
+  \begin{enumerate}[(a)]
+  \item \label{bem:7.14-1} Für $n\geq2$ hat das Dirichlet-Problem im Allgemeinen keine klassische Lösung $u\in C^2(\Omega)\cap C(\bar\Omega)$.
+    \begin{proof}
+      Sei $n=2, \Omega:=\frac 12\B(0,1)\subset\R^2$ und 
+       \begin{align*}
+        f(x):=\begin{cases}
+           \frac{-x_1x_2}{\abs x^2}\left(\frac 4{\log\abs x}-\frac 1{(\log\abs x)^2}\right) &,x\neq 0 \\
+           \qquad 0 &,x=0
+         \end{cases}.
+       \end{align*}
+       Dann ist $f\in C(\bar\Omega)$. Weiter sei $u:=x_1x_2(\log\abs{\log\abs x}-\log\log 2)$ mit $x\in\Omega$. Dann ist $u\in C(\bar\Omega), u\rvert_{\partial\Omega}=0, \partial_ju\in C(\Omega), \partial_j^2 u\in C(\bar\Omega)$ und $-\Delta u=f$ in $\Omega$. Jedoch ist
+       \begin{dmath*}
+         \partial_1\partial_2u(x)=\log\abs{\log\abs x}-\log\log 2-
+         \left(\frac{x_1x_2}{\abs x^2}\right)^2
+         \left(\frac1{\log\abs x^2}+\frac2{\log\abs x}\right)
+         =\log\abs{\log\abs x}+O(1).
+       \end{dmath*}
+       Also ist $\partial_1\partial_2u\notin C(\Omega)$, d.h.\ $u\notin C^2(\Omega)$.
+   
+
+     Annahme: Es existiere ein $v\in C^2(\Omega)\cap C(\bar\Omega)$ mit  $-\Delta v=f$ in $\Omega$ und $v\rvert_{\partial\Omega}=0$. Es sei $w:=u-v$. Da $w$ harmonisch ist, ist $-\Delta w=0$ in $\Omega$ mit $w\rvert_{\partial\Omega}=0$ und $w\in C^\infty(\Omega)$. Damit ist
+     \[
+      0=\int w\underbrace{\Delta w}_{=0}\d x\underset{\scriptsize\text{Gauß}}=\int_{\partial\Omega}\underbrace{w}_{=0}\partial_\nu w\d\sigma-\int_\Omega\abs{\nabla w}^2\d x\, .
+      \]
+      Somit ist $\abs{\nabla w}^2=0$ in $\Omega$ und damit $w\equiv\text{const}$. Also ist $u=v\in C^2(\Omega)$. Dies ist ein Widerspruch.
+        \end{proof}
+
+  \item \label{bem:7.14-2} Abhilfemöglichkeiten:
+    \begin{enumerate}[(i)]
+    \item Verlange mehr Regularität: $a>0$, $f\in C^\infty(\Omega)$. Ist $\Omega\in C^3$, so existiert dann genau eine klassische Lösung $u\in C^2(\Omega)\cap C(\bar\Omega)$. Das ist die "`klassische"' oder "`Schaudersche Theorie"'. \index{Theorie|Schaudersche}\index{Theorie|klassische}
+      
+    \item Distributionelle Lösungen: $-\Delta u=f$ in $D'(\Omega)$. Dann ist $u=\mathcal{N}\ast f$ mit dem Newtonpotential $\mathcal{N}$ und es ist $f\in\Lloc(\Omega)$. Es ergibt sich aber das Problem, wie $u\rvert_{\partial\Omega}$ zu interpretieren ist.
+
+
+    \item \label{bem:7.14-2-3} Variationeller Zugang: \\
+      Es sei $f\in L_1(\Omega)$ und $u(x)$ sei die Auslenkung einer homogenen elastischen Membran unter dem Einfluss der Kraftdichte $f$, wobei für $f\equiv 0$ gerade $\Omega$ ausgefüllt wird. Die Membran sei fest eingespannt auf $\partial\Omega$. Wir nehmen an, dass die innere Spannungsenergie $E$ proportional zum Flächenzuwachs ist.
+      \begin{figure}[ht!]
+        \centering
+        \begin{pspicture}(-3,-3)(3,3)
+          \psset{Beta=15}
+          
+          % Membran
+          \pstThreeDCircle(0,0,0)(2,2,0)(-2,2,0)
+          \pstThreeDEllipse[beginAngle=0,endAngle=180](0,0,0)(2,-2,0)(0,0,-2)
+          \pstThreeDLine[arrows=|-|](2.5,-2.5,0)(2.5,-2.5,-2)
+          \pstThreeDPut[origin=rt](2.9,-2.9,-1){\Large $u(x)$}
+          \pstThreeDPut(-2.4,2.4,0){\Large$\Omega$}
+
+          % Kraft
+          \pstThreeDLine[arrows=->,arrowscale=3](0,0,2)(0,0,0)
+          \pstThreeDPut[origin=lt](-0.2,0.2,1.3){\Large $f$}
+        \end{pspicture}
+        \caption{Membran}
+      \end{figure}
+      Der Flächeninhalt ist
+      \[ \int_\Omega\sqrt{1+\abs{\nabla u}^2}\d x \, . \]
+      Damit ist
+      \[ E=c\cdot\int_\Omega(\sqrt{1+\abs{\nabla u}^2}-1)\d x\, . \]
+      Nun ist $\sqrt{1+\xi}=1+\frac 12 \xi+\sigma(\xi)$ mit $\xi\ra 0$ (mit  Taylor für $\sqrt x$ in $x_0 = 1$). Also gilt für kleine Auslenkungen
+      \[ E\approx \frac c2\int_\Omega\abs{\nabla u}^2\d x\, . \]
+      Außerdem ist 
+      \[ E_{\text{pot}}=c\cdot\int_\Omega\left(\frac 12\abs{\nabla u}^2-f\cdot u\right)\d x. \]
+      Es ergibt sich das \idx{Variationsproblem}: Gesucht ist $u\in C^1(\Omega)$ mit $u(\partial\Omega)=0$ und
+      \begin{align}
+      \begin{aligned}
+        \label{eq:7.VP}
+        J(u):=\int_\Omega&\left(\frac 12\abs{\nabla u}^2-f\cdot u\right)\d x\hiderel \leq J(v)\, , \\
+        &%\textnormal{für alle } 
+        \forall \, v\in C^1(\bar\Omega) \textnormal{ mit } v\rvert_{\partial\Omega}=0\, . 
+      \end{aligned}
+      \end{align}
+     
+      Wir machen nun folgende Annahme: $u$ sei eine Lösung des Variationsproblems und $M:=\{v\in C^1(\bar\Omega)\with v\rvert_{\partial\Omega}=0\}$. Für alle $v\in M$ sei $\varphi(t):=J(u+tv)$, $t\in\R$. Dann hat $\varphi:\R\ra\R$ in $t=0$ ein Minimum, d.h.\ $\dot\varphi(0)=0$. Wegen $\abs{\nabla(u+tv)}^2=\abs{\nabla u}^2+2t\nabla u\cdot\nabla v+t^2\cdot \abs{\nabla v}^2$ ist  
+      \begin{align}
+        \label{eq:7.plus}
+        \begin{aligned}
+        \varphi(t)&=J(u+tv) \\
+        & =J(u)+t\cdot\int_\Omega(\nabla u\cdot\nabla
+        v-fv)\d x + \frac{t^2}2\cdot\int_\Omega\abs{\nabla v}^2\d x\, .
+      \end{aligned}
+      \end{align}
+      Wegen 
+      \[ 0=\dot\varphi(0)=\int_\Omega(\nabla u\cdot\nabla v-fv)\d x\quad\fa \, v\in C^1(\bar\Omega)\, ,\quad v\rvert_{\partial\Omega}=0  \]
+    ist
+    \begin{align}
+      \label{eq:7.3}
+      \int_\Omega\nabla u\cdot\nabla v\d x=\int_\Omega fv\d x\quad\fa\,  v\hiderel \in C^1(\bar\Omega)\, 
+      \condition{$v\rvert_{\partial\Omega}=0$}\, .
+    \end{align}
+
+    Andererseits folgt aus \eqref{eq:7.plus}, dass $u\in M$ Lösung von \eqref{eq:7.3} ist. Damit ist $u$ auch Lösung von \eqref{eq:7.VP}.
+
+
+    Wir nehmen nun an, dass $u$ eine Lösung von \eqref{eq:7.VP} mit $u\in C^2(\bar\Omega)$ sei. Dann ist
+    \begin{align}
+      \label{eq:7.4}
+      \nabla u\cdot\nabla v=\div(v\cdot\nabla u)-v\cdot\Delta u
+    \end{align}
+    und damit
+    \begin{align}
+      \label{eq:7.5}
+      \begin{aligned}
+      \int_\Omega fv\d x
+     & \  \,  =\ \, \int_\Omega\nabla u\cdot\nabla v\d x \\
+      & \underset{\scriptsize\text{Gauß}}=\int_{\partial\Omega}\underbrace{v}_{=0}\partial_\nu u\d\sigma
+      -\int_\Omega v\Delta u\d x \, ,
+      \end{aligned}
+    \end{align}
+    für alle $v\in M$. Also ist
+    \begin{dmath*}
+      \int_\Omega(-\Delta u-f)v\d x=0
+      \condition{für alle $v\in M\subset \D(\Omega)$}\, .
+    \end{dmath*}
+    Mit Theorem~\ref{theorem:3.6} ist dann
+    \begin{dmath*}
+      -\Delta u=f\text{ in }\Omega
+      \condition{$u\rvert_{\partial\Omega}=0$ mit $f\in L_1(\Omega)$}\, ,
+    \end{dmath*}
+    d.h.\ $u\in C^2(\bar\Omega)$ ist eine klassische Lösung.
+
+    Andererseits ist $u\in C^2(\Omega)\cap C(\bar\Omega)$ eine klassische Lösung von
+    \begin{dmath*}
+      -\Delta u=f\text{ in }\Omega\condition{$u\rvert_{\partial\Omega}=0$}\, .
+    \end{dmath*}
+    Dann gilt für alle $v\in\D(\Omega)$
+    \begin{align*}
+      \int_\Omega fv\d x = \int_\Omega -\Delta u\cdot v\d x
+      \underset{\scriptsize\text{Gauß},~\eqref{eq:7.4}}=
+      \int_\Omega\nabla u\cdot\nabla v\d x\, ,
+    \end{align*}
+    d.h.\ $u$ löst \eqref{eq:7.3}, also \eqref{eq:7.VP}.
+    \end{enumerate}
+  \end{enumerate}
+\end{bem}
+
+\begin{defi}
+  $u$ heißt \idx{schwache Lösung} des Laplace-Dirichlet-Problems
+  \begin{align}
+    \label{eq:7.DP}
+    -\Delta u=f\text{ in }\Omega\condition{$u\rvert_{\partial\Omega}=0$} \tag{LDP}
+  \end{align}
+  genau dann, wenn $u\in \mathring H^1(\Omega)=\mathring W^1_2(\Omega)$ mit
+  \begin{dmath*}
+    \int_\Omega\nabla u\cdot\nabla\varphi\d x=\int_\Omega f\cdot\varphi\d x
+    \condition{für alle $\varphi\in\D(\Omega)$}\, .
+  \end{dmath*}
+\end{defi}
+
+\begin{bem}
+  \label{bem:7.15}
+  \begin{enumerate}[(a)]
+  \item \[ \delta J(u)v:=\lim_{t\ra 0}\frac 1t\cdot(J(u+tv)-J(v)) \]
+    heißt erste Variation von $J$ im Punkt $u$ in Richtung $v$. Damit ist
+    \[ \delta  J(u) v=\int_\Omega(\nabla u\cdot\nabla v-fv)\d x\, . \]
+    Es gilt: $\delta J(u)\varphi=0$ für alle $\varphi\in\D(\Omega)$ genau dann, wenn $u$ eine schwache Lösung von \eqref{eq:7.DP} ist. Das Minimieren des Funktionals $J:M\ra \R$ heißt \idx{Dirichletsches Prinzip}.
+    \begin{proof}
+      Bemerkung~\ref{bem:7.14} (b) (iii).
+    \end{proof}
+  \item
+    \begin{itemize}
+    \item Ist $u\in C^2(\bar\Omega)$ eine schwache Lösung von \eqref{eq:7.DP}, dann ist $u$ eine klassische Lösung.
+    \item Ist $u\in C^2(\Omega)\cap C(\bar\Omega)$ eine klassische Lösung, dann ist $u$ schwache Lösung.      
+    \end{itemize}
+    \begin{proof}
+      Siehe auch Bemerkung~\ref{bem:7.14} (b) (iii).
+    \end{proof}
+  \item Ist $u$ schwache Lösung von \eqref{eq:7.DP}, dann ist $u$ distributionelle Lösung von $-\Delta u=f$ (d.h.\ in $\D'(\Omega)$).
+    \begin{proof}
+      Definition der distributionellen Ableitung.
+    \end{proof}
+  \item Ist $u\in\mathring H^1(\Omega)$, so folgt aus Bemerkung~\ref{bem:6.17}~(\ref{bem:6.17-1}) dass $\spur(\gamma_0 u)=0$ (d.h.\ $u$ erfüllt die Randbedingungen $u\rvert_{\partial\Omega}=0$ im Sinne der Spur).
+  \end{enumerate}
+\end{bem}
+
+Wir verfolgen nun folgende Strategie: (zum Lösen elliptischer Probleme)
+\begin{enumerate}[(1)]
+\item Konstruiere schwache Lösung.
+\item Regularität $\ra$ Klassische Lösung (z.B.\ $u\in H^2(\Omega)\cap\mathring H^1(\Omega)$, $-\Delta u=f$ in $L_p(\Omega)$).
+\end{enumerate}
+
+\begin{theorem}
+ \label{theorem:7.16}
+ Sei $\Omega\subset\R^n$ offen und beschränkt $($in einer Richtung$)$. Dann existiert für alle $f\in L_2(\Omega)$ genau eine schwache Lösung $u\in\mathring H^1(\Omega)$ von $-\Delta u=f$ in $\Omega$, $u\rvert_{\partial\Omega}=0$.
+\end{theorem}
+
+\begin{proof}
+   Aus Korollar~\ref{kor:6.10} folgt, dass $(u,v)\mapsto(\nabla u\vert\nabla v)_{L_2}$ ein äquivalentes Skalarprodukt auf $\mathring H^1(\Omega)$ definiert. Sei $F(v):=(v\vert \bar f)_{L_2(\Omega)}$ mit $v\in\mathring H^1(\Omega)$ für $f\in L_2(\Omega)$ fest. Nun ist $F:\mathring H^1(\Omega)\ra\K$ linear und es gilt
+   \begin{dmath*}
+     \abs{F(v)}\leq\norm v_{L_2(\Omega)}\norm {\bar f}_{L_2(\Omega)}
+     \leq c\cdot\norm f_{L_2(\Omega)}\cdot\norm v_{\mathring H^1(\Omega)}\, .
+   \end{dmath*}
+   Also ist $F\in\L(\mathring H^1(\Omega), \K)=\mathring H^1(\Omega)'$. Nach Theorem~\ref{theorem:7.8} existiert genau ein $u\in\mathring H^1(\Omega)$ mit $F(v)=(u|v)_{\mathring H^1(\Omega)}=(\nabla v\vert\nabla u)_{L_2(\Omega)}$ für alle $v\in\mathring H^1(\Omega)$. Wegen $\D(\Omega)\subset\mathring H^1(\Omega)$ ist
+   \begin{dmath*}
+     \int_\Omega\nabla v\cdot\nabla \bar u\d x=(\nabla v\vert\nabla u)_{L_2}
+     \hiderel =F(v)\hiderel =(v\vert f)_{L_2}
+     = \int_\Omega f\bar v\d x
+     \condition{für alle $v\in\D(\Omega)$}\, .
+   \end{dmath*}
+   Damit ist
+  \begin{dmath*}
+    \int_\Omega\nabla\bar v\cdot\nabla u\d x=\int_\Omega\nabla f\d x
+    \condition{für alle $\bar v\in\D(\Omega)$}\, .
+  \end{dmath*}
+\end{proof}
+
+\begin{bem}
+  \label{bem:7.17}
+  \begin{enumerate}[(a)]
+  \item Theorem~\ref{theorem:7.16} bleibt richtig für $f\in\mathring H^1(\Omega)$.
+  \item Regularität: Man kann folgendes zeigen für die schwache Lösung $u$:
+    \begin{itemize}
+    \item Sind $m\in\N$, $f\in H^m(\Omega)$, dann ist $u\in H^{m+2}(\Omega)$, d.h. $u$ ist eine klassische Lösung.
+    \item Speziell: Ist $f\in C^\infty(\bar \Omega)$, so ist $u\in C^\infty(\bar\Omega)$.
+    \end{itemize}
+    Literatur: Evans, Jost.
+  \item $C^1(\bar\Omega)$ ist kein Hilbertraum, d.h. Riesz ist nicht anwendbar.
+  \end{enumerate}
+\end{bem}
+
+\section{Lineare elliptische Differentialoperatoren 2. Ordnung}
+
+Im folgenden setzen wir voraus, dass $\Omega\subset\R^n$ offen, beschränkt und glatt ist und für $a_{jk}=a_{kj}\hiderel\in C^1(\bar\Omega, \R)$, $b_j,c\in C(\bar\Omega,\R)$ ist
+\begin{align*}
+  A(x,D)u\coloneqq -\sum_{j,k=1}^n\partial_k(a_{jk}(x)\partial_ju)
+  + \sum_{j=1}^nb_j(x)\partial_ju+c(x)u\, .
+\end{align*}
+
+Für Elliptizität muss ein $\alpha>0$ mit
+\begin{dmath*}
+  \sum_{j,k=1}^na_{jk}(x)\xi^j\xi^k\geq\alpha\abs\xi^2
+  \condition{$\, \fa\, \xi=(\xi^1,\ldots,\xi^n)\in\R^n\,  \fa\,  x\in\bar\Omega$}
+\end{dmath*}
+existieren.
+
+Beachte: $a(x):=[a_{jk}(x)]_{1\leq j,k\leq n}\in\R^{n\times n}$ ist symmetisch und $b(x):=[b_j(x)]_{1\leq j\leq n}\in\R^n$. Weiter ist
+\begin{align*}
+  A(x,D)u\coloneqq\underbrace{-\div (a(x)\cdot\nabla u)}_{\text{"`Hauptteil"'}}
+    +\underbrace{b(x)\cdot\nabla u}_{\text{"`Transport"'}}+c(x)u\, .
+\end{align*}
+Für die Elliptizität muss $a(x)\xi\cdot\xi\geq\alpha\abs\xi^2$ für alle $\xi\in\R^n$ und $x\in\bar\Omega$ gelten. D.h.\ $a$ ist positiv definit.
+
+$A(\cdot, D)$ ist ein gleichmäßig stark elliptischer linearer Differentialoperator zweiter Ordnung mit Hauptteil in Divergenzform.
+
+Seien $a_{jk}=\delta_{jk}$, $b_j\equiv 0$ und $c\equiv 0$. Dann ist $A(x,D)=-\Delta$.
+
+Im Folgenden nehmen wir an, $u$ sei eine "`glatte"' Lösung (d.h.\ zum Beispiel sei $u\in C^2(\Omega)\cap C(\bar\Omega)$ oder $u\in H^2(\Omega)\cap \mathring H^1(\Omega)$). Dann ist für alle $v\in D(\Omega)$
+\begin{dmath*}
+  \int_\Omega\bar fv\d x=\bar\lambda\int\bar u\cdot v\d x
+  -\underbrace{\int_\Omega v\cdot\div(a(x)\nabla\bar u)\d x}_{ 
+    \underset{\text{Gauß}}=\int_\Omega\nabla v\cdot a(x)\nabla \bar u\d x+\int_{\partial\Omega}0
+  }
+  +\int_\Omega vb(x)\cdot\nabla\bar u\d x+\int_\Omega vc(x)\bar u\d x\, ,
+\end{dmath*}
+d.h.\
+\begin{dmath*}
+  \bar\lambda(v\vert u)_{L_2}+(\nabla u\vert a(\cdot)\nabla u)_{L_2}
+  +(v\vert b(\cdot)\cdot\nabla u+cu)_{L_2}
+  = (v\vert f)_{L_2}
+\end{dmath*}
+für alle $v\in D(\Omega)$ mit $(v\vert\omega)_{L_2}:= \int_\Omega v\bar\omega\d x$.
+
+\begin{defi}
+  Es gelten die obigen Voraussetzungen und weiter seien $u,v\in H^1(\Omega)$. Dann ist
+  \begin{align*}
+    a(v,u)&\coloneqq (\nabla v\vert a(\cdot)\cdot\nabla u)_{L_2}+(v\vert b(\cdot)\cdot\nabla u+cu)_{L_2} \\
+    & =\sum_{j,k=1}^n\int_\Omega\partial_jv\, a_{jk}(x)\partial_k\bar u\d x
+    +\sum_{j=1}^n\int_\Omega v\,  b_j(x)\partial_j\bar u\d x
+    +\int_\Omega v\, c(x)u\d x\, .
+  \end{align*}
+  Speziell ist für $a_{jk}=\delta_{jk}$, $c\equiv 0$ und $b\equiv 0$
+  \[ a(v,u)=\int_\Omega\nabla v\cdot\nabla\bar u\d x\, , \]
+  und wir definieren
+  \[ a_\lambda(v,u):=a(v,u)+\bar\lambda(v\vert u)_{L_2}\, . \]
+\end{defi}
+
+\subsection{Dirichletproblem}
+
+\begin{defi}
+  Sei $f\in L_2(\Omega)$ und $\lambda\in\K$. Dann heißt $u$ "`schwache Lösung"' von
+  \begin{align}
+    \label{eq:7.D}
+    (\lambda+A(\, \cdot\, ,D))u=f\quad\text{in}\;\Omega
+    \condition{$u\rvert_{\partial\Omega}=0$}\, , \tag{DP}
+  \end{align}
+  wenn $u\in\mathring H^1(\Omega)$ mit $a_\lambda(v,u)=(v\vert f)_{L_2(\Omega)}$ für alle $v\in\D(\Omega)$.
+
+  Beachte: ist $u\in\mathring H^1(\Omega)$, so ist  $\spur\gamma_0 u=0$.
+\end{defi}
+
+Im Folgenden verwenden wir die Notationen $c^+:=\max\{c, 0\}$, $c^-:=\max\{-c, 0\}\geq0$ und $c=c^+-c^-$ für ein $c\in\R$.
+
+\begin{theorem}
+  \label{theorem:7.18} Es gelten die obigen Voraussetzungen und es sei $f\in L_2(\Omega)$. Dann ist für alle $\lambda\in\K$ mit $\Re\lambda\geq\norm{c^-}_\infty+\frac1{2\alpha}\norm{b}^2_\infty$ besitzt \eqref{eq:7.D} eine eindeutige schwache Lösung $u=u(f)$. Ferner ist $[f\mapsto u(f)]\in\L(L_2(\Omega),\mathring H^1(\Omega))$.
+\end{theorem}
+
+\begin{proof}
+  Mit der Cauchy-Schwartzschen Ungleichung erhalten wir
+  \begin{dmath*}
+    \abs{a_\lambda(v,u)}\leq\norm{a}_\infty\norm{\nabla v}_{L_2}\norm{\nabla u}_{L_2}+\norm{b}_\infty\norm{v}_{L_2}+\norm{\nabla u}_{L_2}+\norm{c}_\infty\norm{v}_{L_2}\norm{u}_{L_2}+\abs\lambda\norm{v}_{L_2}\norm{u}_{L_2}
+  \leq\norm{u}_{\mathring H^1}\norm{v}_{\mathring H^1}.
+  \end{dmath*}
+  Also ist $a_\lambda:\mathring H^1(\Omega)\times\mathring H^1(\Omega)\ra\K$ eine stetige Sesquilinearform für alle $\lambda\in\K$.
+
+  Ferner ist für $u=u_1+iu_2$
+  \begin{align}
+  \label{eq:7.6}
+  \begin{aligned}
+    \sum_{j,k=1}^n\Re a_{jk}\partial_k\bar u\partial_j u
+   &\  \stackrel[a_{jk}\in \mathbb{R}]{}= \ \sum_{j,k=1}^na_{jk}(\partial_ku_1\partial_ju_1+\partial_ku_2\partial_ju_2)\\
+  & \underset{\scriptsize\text{elliptisch}}\geq \alpha\abs{\nabla u_1}^2+\alpha\abs{\nabla u_2}^2-\alpha\abs{\nabla u}^2.
+    \end{aligned}
+  \end{align}
+  Damit ist
+  \begin{align*}
+    \Re a_\lambda(u,u)& \ = \ \sum_{j,k=1}^n\Re (\partial_ju\vert a_{jk}\partial_k u)_2+\Re(u\vert b\cdot\nabla u)_2
+    +\Re(u\vert (\lambda+c)u)_2 \\
+ &   \underset{\scriptsize\eqref{eq:7.6}}\geq\alpha\norm{\nabla u}_{L_2}^2
+    -\underbrace{\norm b_\infty\norm u_{L_2}\norm{\nabla u}_{L_2}}_{
+      \underset{\text{Young}}=\frac \alpha2\norm{\nabla u}^2_{L_2}+\frac1{2\alpha}\norm{b}_\infty^2\norm{u}_{L_2}^2
+    }+(\Re\lambda-\norm{c^-}_\infty)\norm u_{L_2}^2  \\
+    & \ \geq\ \frac 12\alpha\norm{\nabla u}_{L_2}^2-\left(
+      \frac 1{2\alpha}\norm b_\infty^2+\norm{c^-}_\infty-\Re\lambda
+    \right)\norm u^2.
+  \end{align*}
+  Korollar~\ref{kor:6.10} liefert uns nun
+  \[ \Re a_\lambda(u,u)\geq\frac 12\alpha\norm{\nabla u}_{L_2}^2\geq c_1\norm u_{L_2}^2 \]
+  mit $c_1>0$ für alle $u\in\mathring H^1(\Omega)$. Damit ist $a_\lambda:\mathring H^1(\Omega)\times\mathring H^1(\Omega)\ra\K$ koerziv. Ferner ist $(\, \cdot\, \vert f)_{L_2}\in\L(\mathring H^1(\Omega),\K)=(\mathring H^1(\Omega))'$.
+
+  Mit Theorem~\ref{theorem:7.10} folgt dann die Behauptung.
+\end{proof}
+
+\begin{bsp*}
+  Das Problem
+  \begin{dmath*}
+    (\lambda-\Delta)u=f\quad\text{in}\;\Omega
+    \condition{$u\rvert_{\partial u}=0$}
+  \end{dmath*}
+  hat für alle $\Re\lambda\geq0$ eine eindeutige schwache Lösung.
+\end{bsp*}
+
+\subsection{Neumannproblem}
+
+Es sei $\nu_a(x):=a(x)\nu(x)$ mit $a=[a_{jk}]$. Dann ist 
+\[ \nu_a\cdot\nu\geq\alpha\abs\nu^2=\alpha>0\, , \]
+d.h.\ $\nu_a$ ist nirgends tangential an $\partial\Omega$. $\partial_{\nu_a}u:=\nabla u\cdot\nu_a$ wird "`Konormalen-ableitung"' \index{Konormalenableitung} genannt.
+
+\begin{figure}[h]
+  \centering
+  \begin{pspicture}(-2,-2)(2,2)
+    % Omega
+    \psccurve(-2,.5)(0,1.2)(1,.7)(1.5,0)(1,-2)(-.5,-.5)
+    \rput[l](0,0){$\Omega$}
+
+    % x
+    \psdot(1,.7)
+    \rput[tr](.9,.6){$x$}
+    \psline{->}(1,.7)(1.8,1.5)
+    \rput[r](.9,1.4){$\nu_a$}
+    \psline{->}(1,.7)(1,1.7)
+    \rput[l](1.6,1.1){$\nu(x)$}
+  \end{pspicture}
+  \caption{Konormalenableitung}
+\end{figure}
+
+\begin{defi}
+  Es sei $f\in L_2(\Omega)$ und $\lambda\in\K$. Dann heißt $u$ schwache Lösung des Neumannproblems
+  \begin{align}
+    \label{eq:7.N}
+    (\lambda-A(\, \cdot \, ,D))u=f\;\text{in}\;\Omega
+    \condition{$\partial_{\nu_a}u=0$ auf $\partial\Omega$} \tag{NP}
+  \end{align}
+  genau dann, wenn $u\in\mathring H^1(\Omega)$ und $a_\lambda(v,u)=(v\vert f)_{L_2}$ für alle $v\in H^1(\Omega)$.
+\end{defi}
+
+\begin{theorem}
+  \label{theorem:7.19} Es gelten die obigen Voraussetzungen und es sei $f\in L_2(\Omega)$. Dann besitzt das Problem \eqref{eq:7.N} für alle $\lambda\in\K$ mit $\Re\lambda>\norm{c^-}_\infty+\frac 1{2\alpha}\norm b_\infty^2$ eine eindeutige schwache Lösung $u=u(f)$. Ferner ist $[f\mapsto u(f)]\in\L(L_2(\Omega),$ $H^1(\Omega))$.
+\end{theorem}
+
+\begin{proof}
+  Vgl. Beweis zu Theorem~\ref{theorem:7.18}: $a_\lambda:H^1(\Omega)\times H^1(\Omega)\ra\K$ ist eine stetige Sesquilinearform mit
+  \begin{dmath*}
+    \Re a_\lambda(u,u)\geq\frac 12\alpha\norm{\nabla u}_{L_2}^2+
+    \underbrace{(\Re\lambda-\norm{c^-}_\infty+\frac1{2\alpha}\norm b_\infty^2)}_{=:q>0} \norm{u}^2_{L_2}
+    \geq\min\{\frac 12\alpha,q\}(\underbrace{\norm{\nabla u}_{L_2}^2+\norm u_{L_2}^2}_{\norm u_{H^1(\Omega)}^2})
+  \end{dmath*}
+  für alle $u\in H^1(\Omega)$. Damit folgt analog zu Theorem 7.18 die Behauptung.
+\end{proof}
+
+\begin{bsp*}
+  Das Problem
+  \begin{dmath*}
+    (\lambda-\Delta)u=f\;\text{in}\;\Omega
+    \condition{$\partial_{\nu_a} u=0$ auf $\partial\Omega$}
+  \end{dmath*}
+  hat für alle $\Re\lambda>0$ und $f\in L_2(\Omega)$ eine eindeutige schwache Lösung.
+
+  Beachte: für $\lambda=0$ und $f\equiv0$ ergibt sich das Problem
+  \begin{dmath*}
+    -\Delta u=0\;\text{in}\;\Omega
+    \condition{$\partial_\nu u=0$ auf $\partial\Omega$}\, .
+  \end{dmath*}
+  Dies hat die Lösungen $u=\R\cdot\mathds{1}$.
+\end{bsp*}
+
+\begin{bem}
+  \label{bem:7.20}
+  \begin{enumerate}[(a)]
+  \item \label{bem:7.20-1} Sei $u\in C^2(\Omega)\cap C(\bar\Omega)$ (bzw.\ $u\in H^2(\Omega)$ + Randbed.) eine klassische Lösung der Probleme \eqref{eq:7.D} bzw.\ \eqref{eq:7.N}. Dann ist $u$ ebenfalls eine schwache Lösung.
+    \begin{proof}
+      Übung.
+    \end{proof}
+  \item Die Matrix $a$ habe $C^\infty(\bar\Omega)$-Koeffizienten und $u$ sei schwache Lösung von \eqref{eq:7.D} bzw.\ \eqref{eq:7.N}. Dann ist $u$ auch distributionelle Lösung.
+  \begin{proof}
+  Übung.
+  \end{proof}
+  \item Ist $u$ schwache Lösung von \eqref{eq:7.D} bzw.\ \eqref{eq:7.N} und ist $f\in L_2(\Omega)$, so ist $u\in H^2(\Omega)$. Ist $f\in C^\infty(\bar\Omega)$ mit $C^\infty(\bar\Omega)$-Koeffizienten von $a$, so ist $u\in C^\infty(\bar\Omega)$ auch klassische Lösung.
+    \begin{proof}
+      Vgl.\ Evans.
+    \end{proof}
+  \end{enumerate}
+\end{bem}
+
+\begin{kor}
+  \label{kor:7.21} Es gelten die Voraussetzung von Theorem~\ref{theorem:7.18} bzw.\ Theorem~\ref{theorem:7.19} und $u(f)$ sei die entsprechende Lösung. Dann ist $[f\mapsto u(f)]\in\mathscr{K}(L_2(\Omega))$, d.h.\ $[f\mapsto u(f)]\in\L(L_2(\Omega)):=\L(L_2(\Omega),L_2(\Omega))$ und beschränkte Mengen $($in $L_2(\Omega))$ werden auf relativ kompakte Mengen $($in $L_2(\Omega))$ abgebildet.
+\end{kor}
+
+\begin{proof}
+  Es ist
+  \[ 
+  \mathring H^1(\Omega)
+  \underset{\scriptsize\text{Def.}}\hookrightarrow H^1(\Omega) 
+  \underset{\scriptsize\text{Bem.~\ref{bem:6.14}}}\hhookrightarrow L_2(\Omega)
+  \]
+  und
+  \[ [f\mapsto u(f)]\in\L(L_2(\Omega),H^1(\Omega))\subset\mathscr{K}(L_2(\Omega),L_2(\Omega))=\mathscr K(L_2(\Omega))\, . \qedhere \]
+\end{proof}
+
+\subsection{Variationeller Zugang}
+
+\begin{lemma}
+  \label{lemma:7.22} Es sei $H$ ein reeller Hilbertraum, $a:H\times H\ra\R$ eine stetige koerzive Bilinearform, $L\in H'=\L(H,\R)$ und $V$ ein abgeschlossener Untervektorraum von $H$. Dann existiert genau ein $u_0\in V$ mit
+  \begin{dmath*}
+    a(u_0,\varphi)+a(\varphi,u_0)+L\varphi=0
+    \condition{für alle $\varphi\in V$}.
+  \end{dmath*}
+\end{lemma}
+
+\begin{proof}
+  $(u,v)\mapsto a(u,v)+a(v,u)$ ist eine stetig, koerziv und bilinear auf dem Hilbertraum $V$. Nun ist $-L\in V'=\L(V,\R)$. Die Behauptung folgt dann aus Theorem~\ref{theorem:7.10} (Lax-Milgram).
+\end{proof}
+
+Falls $a$ symmetrisch ist, so ist $a(\varphi,u_0)=-\frac 12L\varphi$ für alle $\varphi\in V$ (z.B.\ schwache Lösung von $(\lambda+A)u=f$, falls $b\equiv0)$.
+
+\begin{kor}[Dirichletsches Prinzip]
+  \label{kor:7.23} Es gelten die Voraussetzungen von Lemma~\ref{lemma:7.22} und es sei $J(u):=a(u,u)+Lu$ mit $u\in V$. Dann existiert genau ein $u_0\in V$ mit $J(u_0)=\inf_{v\in V}J(v)$.
+\end{kor}
+
+\begin{proof}
+  Sei $u_0$ wie in Lemma~\ref{lemma:7.22}. Dann ist
+  \begin{dmath*}
+    J(u_0+t\varphi)=J(u_0)+\underbrace{t^2 a(\varphi,\varphi)}_{\geq0 \, \text{(koerziv)}}
+    +t(\underbrace{a(u_0,\varphi)+a(\varphi,u_0)+L\varphi}_{=0})
+    \geq J(u_0)
+    \condition{$\fa\,  t\in\R, \varphi\in V$} .
+  \end{dmath*}
+  Damit ist $u_0$ ein Minimum.
+
+  Zum Beweis der Eindeutigkeit sei $v_0\in V$ ebenfalls Minimum. Dann ist
+  \[ 
+  0=\left.\diff{t}J(v_0+t\varphi)\right\vert_{t=0}
+  =a(v_0,\varphi)+a(\varphi,v_0)+L\varphi\, .
+  \]
+  Aus Lemma~\ref{lemma:7.22} folgt dann, dass $v_0=u_0$ ist.
+\end{proof}
+
+\begin{theorem}
+  \label{theorem:7.24} Es seien $H$ ein Hilbertraum, $a:H\times H\ra\R$ stetig, koerziv und bilinear, $L\in H'$ und $J(v):=a(v,v)+L(v)$ für $v\in H$. Außerdem sei $(V_n)_{n\in\N}$ eine Folge von abgeschlossenen Untervektorräumen von $H$ mit $V_n\subset V_{n+1}$ und
+  \[ \fa \, v\in H\;\fa\, \delta>0\;\exists\,  n\in\N\;\exists\,  v_n\in V_n:\norm{v-v_n}<\delta\, . \]
+  Sei nun $u_n\in V_n$ die eindeutige Lösung von $J(u)=\inf_{v\in V_n}J(v)$ gemäß Korollar~\ref{kor:7.23}. Dann existiert ein $u_*\in H$ mit $u_n\ra u_*$ in $H$ und $u_*$ löst das Variationsproblem $J(u_*)=\inf_{v\in H}J(v)$.
+\end{theorem}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+  \item Für alle $v\in H$ gilt
+    \begin{dmath*}
+      J(v)=a(v,v)+Lv\geq\alpha\norm v^2-\norm L_{H'}\norm v\geq -\frac{\norm L_{H'}^2}{4\alpha}\, .
+    \end{dmath*}
+    Also ist $J$ nach unten beschränkt.
+  \item Sei $\kappa:=\inf_{v\in H} J(v)\in\R$. Wir nehmen nun an, es existiere ein $\epsilon>0$ mit $J(u_n)\geq\kappa+\epsilon$ für alle $n\in\N$. Dann gibt es ein $u_0\in H$ mit $J(u_0)<\kappa+\frac\epsilon 2$. Da $J$ stetig ist, existiert ein $\delta>0$ mit $\abs{J(u_0)-J(v)}<\frac\epsilon2$ für alle $v\in H$ mit $\norm{v-u_0}<\delta$. Damit existieren nach Voraussetzung ein $n\in\N$ und ein $v_n\in V_n$ mit $\norm{v_n-u_0}<\delta$. Also ist
+    \begin{dmath*}
+      J(v_n)\leq\abs{J(v_n)-J(u_0)}+J(u_0)\leq\frac\epsilon2+\kappa+\frac\epsilon2\leq J(u_n)\, ,
+    \end{dmath*}
+    was ein Widerspruch ist. Somit gilt $J(u_n)\ra\kappa$ und ist eine Minimalfolge.
+  \item $(u_n)$ ist eine Cauchy-Folge, denn
+   \begin{dmath*}
+   0 \leq    \alpha\frac14\norm{u_n-u_m}^2\leq\frac14a(u_n-u_m,u_n-u_m)
+      =\frac12J(u_n)+\frac12J(u_m)-J\left(\frac{u_m-u_n}{2}\right)
+      \xrightarrow[n,m\ra\infty]{}0\, .
+    \end{dmath*}
+    Damit existiert ein $u_*\in H$ mit $u_n\ra u_*$. Da $J$ stetig ist, ist $J(u_*)=\lim_{n\ra \infty} J(u_n)=\kappa\leq J(v)$ für alle $v\in H$.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{bem*}
+Theorem~\ref{theorem:7.24} liefert eine konstruktive Methode zur approximativen Lösung des Variationsproblems $J(u) = \inf_{v \in H} J(v)$, wenn die (endliche-dimensionalen) Untervektorräume $V_n$ geeignet gewählt werden (z.B. Polynome).
+
+Ist $\{\varphi^n_1, \ldots, \varphi_{N_n}^n\}$ eine Basis von $V_n$, so genügt es die endlich vielen Gleichungen $a(u_n, \varphi^n_j) + a(\varphi^n_j, u_n) + L\varphi_j^n = 0, j = 1, \ldots, N_n$ zu lösen (vgl. Lemma~\ref{lemma:7.22}).
+\end{bem*}
+
+\textit{Beachte.} Die Dirichletformen $a_\lambda$ aus Theorem~\ref{theorem:7.18} bzw. Theorem~\ref{theorem:7.19} erfüllen die Bedingungen von Theorem~\ref{theorem:7.24}.
+
+\section{Schwache Lösungen für nichtlineare Probleme}
+
+Wir setzen in diesem Abschnitt voraus, dass $\Omega \in\R^n$  offen, beschränkt und $C^\infty$ ist, sowie $g \in C(\partial \Omega)$ und eine \idx{Lagrangefunktion} $L\in C^\infty (\R^n \times \R \times \bar\Omega, \R)$ ist.
+
+\begin{notation}
+Für die Lagrangefunktion notieren wir $L = L(p,z,x), (p,z,x)\in \R^n\times \R\times \bar \Omega$, sowie $L_p = (L_{p_1}, L_{p_2}, \ldots, L_{p_n})$ für die partiellen Ableitungen (analog für $L_z, L_x$).
+\end{notation}
+
+Wir betrachten das Variationsproblem
+\[
+	J(u) := \int_\Omega L(\nabla u(x), u(x), x) \d x \longrightarrow \min
+\]
+für $u : \bar\Omega \ra \R$ unter der Nebenbedingung $u \vert_{\partial \Omega} = g$, dabei ist $J$ ein Energiefunktional.
+
+\subsection*{Euler-Lagrange-Gleichung}
+
+Es sei $V:=\{u \in C^\infty (\bar\Omega) \with u |_{\partial \Omega} = g \}$. Wir nehmen an,  $\exists \, u \in V: J(u) = \inf_{v \in V} J(v)$, dann folgt
+\[
+	\fa \, v \in \D (\Omega) : u + tv \in V \, ,  \quad t \in \R \, .
+\]
+Wir betrachten die 1. \idx{Variation} von $J$ im Punkt $u$ in Richtung $v$ definiert als
+\[
+	\delta J(u) v := \lim_{t\ra 0} \frac 1 t (J(u+tv)-J(u)) ,
+\]
+dann ist $\delta J(u) v = 0 \, \fa \, v \in \D(\Omega)$ (bzw. $\varphi'_v (0) = 0$ mit $\varphi(t) := J(u+tv)$), wenn $u$ ein Minimum von $J$ auf $V$ ist, d.h.
+\begin{align*}
+&\frac \d {\d t} \varphi_v (t)  = \frac \d{\d t} \int_\Omega L(\nabla u + t \nabla v, u+tv, x) \d x \\
+			 \stackrel{\parbox{1.077cm}{\scriptsize$u,v$, \\ $L \in C^\infty$}}=& \int_\Omega \frac \d{\d t} L(\nabla u + t \nabla v, u+tv, x) \d x \\
+			=\quad & \int_\Omega \Bigr(\sum_{j=1}^n L_{p_j} (\nabla u + t \nabla v, u+tv, x) v_{x_j} + L_z(\nabla u + t \nabla v, u+tv, x) v \Bigr) \d x \, ,
+\end{align*}
+also:
+\begin{align*}
+& \ \,  0  =  \varphi'_v(0) = \int_\Omega \Bigr( \sum_{j=1}^n L_{p_j} (\nabla u, u , x) v_{x_j} + L_z (\nabla u, u, x) v\Bigr) \d x \\
+&\stackrel{\parbox{1.2cm}{\center\scriptsize part. Int. \\ $v|_{\partial\Omega} = 0$}}= \int_\Omega \Bigr(-\sum_{j=1}^n(L_{p_j} (\nabla u, u, x))_{x_j} + L_z(\nabla u, u, x)\Bigr) v \d x \quad \fa \, v \in \D(\Omega) \, .
+\end{align*}
+Damit folgt aus Theorem~\ref{theorem:3.6}
+\begin{align*}
+\label{eq:ELG}
+\tag{ELG} -\sum_{j=1}^n(L_{p_j} (\nabla u, u, x))_{x_j} + L_z(\nabla u, u, x) = 0 \text{ in } \Omega \, ,
+\end{align*}
+d.h. falls $u \in C^\infty (\bar\Omega)$ das Energiefunktional $J$ minimiert, so erfüllt $u$ die \idx{Euler-Lagrange-Gleichung}.
+
+\begin{bsp}
+\begin{enumerate}[(a)]
+\item Wir betrachten
+\[
+	L(p,z,x) := \frac 12\sum_{j,k=1}^n a_{jk} (x) p_j p_k - z f(x)
+\]
+mit $a_{jk} = a_{kj}$. Dann folgt
+\[
+	L_{p_j} = \sum_{k=1}^n a_{jk} p_k \, , \quad L_z = -f(x)
+\]
+und das Energiefunktional $J$ lautet
+\[
+	J(u)= \int_\Omega \Bigr( \frac 1 2 \sum_{j,k=1}^n a_{jk} (x) \partial_j u \partial_k u - u(x) f(x)\Bigr) \d x \, .
+\]
+Damit ist die Euler-Lagrange-Gleichung
+\[
+	-\sum_{j,k=1}^n \partial_j (a_{jk} (x) \partial_k u) = f \text{ in } \Omega \, .
+\]
+Speziell gilt dann also für $a_{jk} = \delta_{jk}$
+\[
+	J(u) = \int_\Omega \Bigr( \frac 12 \abs{\nabla u}^2 - fu\Bigr) \d x \, , 
+\]
+damit ergibt sich als Euler-Lagrange-Gleichung die Laplace-Gleichung $-\Delta u = f$ in $\Omega$ \text{(vgl. Abschnitt 7.2)}.
+\item Sei nun
+\[
+	L(p,z,x) := \frac 1 2 \abs p^2 - F(z) \, , \quad F(z) := \int_0^z f(r) \d r \, .
+\]
+Dann ist das Energiefunktional
+\[
+	J(u) = \int_\Omega \Bigr(\frac 1 2 \abs{\nabla u}^2 - F(u) \Bigr) \d x \, .
+\]
+Damit folgt die Euler-Lagrange-Gleichung $-\Delta u = f(u)$ in $\Omega$, also erhalten wir eine semilineare Laplace-Gleichung, d.h. diese ist nicht lösbar mit Lax-Milgram, da $f$ von $u$ abhängt.
+\item Mit $L(p,z,x) = \sqrt{1+\abs p^2}$ ergibt sich
+\[
+	J(u) = \int_\Omega \sqrt{1+\abs{\nabla u}^2} \d x \, , 
+\]
+d.h. $J$ berechnet die Fläche des Graphen $u:\Omega \ra \R$ (also wird das $u$ mit minimaler Oberfläche gesucht). Damit erhalten wir die Euler-Lagrange-Gleichung
+\[
+	-\underbrace{\sum_{j=1}^n \partial_j \left( \frac{\partial_j u}{\sqrt{1+\abs{\nabla u}^2}}\right)}_{\text{Krümmung}} = 0 \text{ in } \Omega \, .
+\]
+\end{enumerate}
+\end{bsp}
+
+\begin{lemma}
+\label{lemma:7.26}
+Sei $X \subset \R^n$ beschränkt und messbar, sowie $\varphi_j, \varphi \in L_{\infty}(X)$, $\varphi_j \ra \varphi$ gleichmäßig auf $X$. Sei weiter $1\leq q < \infty, \omega_j, \omega \in L_q(X), \omega_j \ra \omega$ in $L_q(X)$, dann folgt
+\[
+	\int_X \varphi_j \omega_j \d x \longrightarrow \int_X \varphi \omega \d x \, .
+\]
+\end{lemma}
+
+\begin{proof}
+Wegen $\omega_j \ra \omega$ in $L_q (X)$ folgt aus Bemerkung~\ref{bem:6.19} (a) $$\sup_j \norm{\omega_j}_{L_q(X)}  <\infty \, .$$ Da $X$ beschränkt ist, ist $L_q(X) \hookrightarrow L_1(X)$ und damit $\norm{\omega_j}_{L_1(X)} \leq c < \infty \, \fa \, j \in \N$. Also gilt
+\begin{dmath*}
+\Abs{\int_X \varphi_j \omega_j \d x - \int_X \varphi \omega \d x} \leq \overbrace{\norm{\varphi_j-\varphi}}^{\longrightarrow 0} \ \!\!\!\!_{L_\infty(X)}\overbrace{\norm\omega}^{\leq c} \!\!_{L_1(X)} + \underbrace{\Abs{\int_X \varphi(\omega_j-\omega) \d x}}_{\longrightarrow 0}  .
+\end{dmath*}
+Damit folgt die Behauptung.
+\end{proof}
+
+\begin{satz}\label{satz:7.27}
+Sei $1 < q < \infty$ und $L$ nach unten beschränkt. Weiter sei $L(\, \cdot \, , z, x)$ konvex für alle $(z,x) \in \R \times \Omega$. Dann folgt $f: W^1_q(\Omega) \ra (-\infty, \infty]$ ist schwach folgenunterhalbstetig, d.h.
+\[
+	J(u) \leq \liminf_{j \ra \infty} J(u_j) \quad \fa \, \text{Folgen } (u_j) \text{ in } W^1_q(\Omega) \text{ mit } u_j \longrightarrow u \text{ in } W^1_q(\Omega) \, .
+\]
+\end{satz}
+
+\begin{proof}
+Sei $u_j \in W^1_q (\Omega), u_j \rightharpoonup u$ in $W^1_q (\Omega)$, d.h. $u_j \rightharpoonup u, \partial_k u_j \rightharpoonup \partial_k u$ in $L_q(\Omega) \, \fa \, k = 1, \ldots, n$. Wir setzen $\kappa := \liminf_{j\ra \infty} J(u_j)$. Wir wählen eine Teilfolge, so dass o.B.d.A. $\kappa = \lim_{j\ra \infty} J(u_j)$. Wegen der schwachen Konvergenz und Bemerkung~\ref{bem:6.19} (d) ist $(u_j)$ beschränkt in $W^1_q(\Omega) \hhookrightarrow L_q(\Omega)$ (wegen Bemerkung~\ref{bem:6.14} und Redlich Konarachov). Aufgrund von Bemerkung~\ref{bem:6.19} (e) sind schwache Grenzwerte eindeutig und mit der Wahl einer Teilfolge gilt dann auch
+\begin{align}
+\label{eq:7.9}
+u_j \longrightarrow u \quad \text{in } L_q(\Omega) \text{ (fast überall)} \, .
+\end{align}
+Sei $\epsilon > 0$ beliebig. Dann gilt nach Egoroff (Maßtheorie), 
+\begin{align}\label{eq:here}\exists \text{ messbare Menge } E_\epsilon \text{ mit }\lambda_n (\Omega\setminus E_\epsilon) < \epsilon, u_j \ra u\text{ glm. auf }E_\epsilon\, . \end{align}
+Wir definieren $F_\epsilon := \{ x \in \Omega \with \abs{u(x)} + \abs{\nabla u(x)} < \frac 1\epsilon\}$
+\begin{align}
+\label{eq:7.11}
+\Longrightarrow F_\epsilon \text{ messbare Menge mit } \lambda_n(\Omega \setminus F_\epsilon) \xrightarrow{\epsilon \ra 0} 0 \, .
+\end{align}
+Setze $G_\epsilon := E_\epsilon \cap F_\epsilon$.
+\begin{align}
+\label{eq:7.12}
+\stackrel{\scriptsize(7.10), \eqref{eq:7.11}}\Ra 0 \leq \lambda_n(\Omega \setminus G_\epsilon) \leq \lambda_n(\Omega \setminus E_\epsilon) + \lambda_n (\Omega \setminus F_\epsilon) \xrightarrow[\epsilon \ra \infty]{} 0
+\end{align}
+Sei $L$ nach unten beschränkt, dann folgt o.B.d.A. $L\geq 0$ (sonst $\tilde L := L+\beta , \beta \gg0$). Da $L(\, \cdot \, z,x)$ konvex ist, folgt
+\begin{align*}
+\tag{$\ast$}
+\begin{aligned}
+ L(p_1, z, x) \geq L(p_2, z, x) + L_p (p_2, z,x) \cdot (p_1-p_2) \quad & \fa \, p_1,p_2 \in \R^2,\\
+ & (z,x)\in\R\times \Omega
+ \end{aligned}
+ \end{align*}
+ \begin{align}
+ \label{eq:7.13}
+\Ra \ \ \, & J(u_j)  = \int_\Omega L(\nabla u_j, u_j, x) \d x \stackrel{L\geq 0}\geq \int_{G_\epsilon} L(\nabla u_j, u, x) \d x \notag\\
+\stackrel{\scriptsize\text{konvex}, (\ast)}\geq &\int_{G_\epsilon} L(\nabla u, u_j, x) \d x + \int_{G_\epsilon} L_p(\nabla u, u_j, x) \cdot (\nabla u_j-\nabla u) \d x \, .
+\end{align}
+Da $L$ stetig ist, folgt mit $(7.10), \eqref{eq:7.11}$
+\begin{align*}
+L(\nabla& u(x), u_j(x), x) \longrightarrow L(\nabla u(x),u(x),x) \quad \fa \, x \in G_\epsilon \; , \\
+&\abs{L(\nabla u(x), u_j(x), x)} \leq c(\epsilon) \quad \fa \, j \in \N, x \in G_\epsilon
+\end{align*}
+\begin{align}
+\label{eq:7.14}
+\stackrel{\scriptsize\text{Lebesgue}}\Ra \int_{G_\epsilon} L(\nabla u, u_j, x)\d x \longrightarrow \int_{G_\epsilon} L(\nabla u, u , x) \d x \, .
+\end{align}
+Analog erhalten wir $L_p (\nabla u(x), u_j(x), x) \rightarrow L_p(\nabla u(x),u(x),x)$ gleichmäßig bzgl. $x \in G_\epsilon$. Wegen der schwachen Konvergenz gilt $\nabla u_j \rightharpoonup \nabla u$ in $L_q(G_\epsilon, \R^n)$.
+\begin{align}
+\label{eq:7.15}
+&\, \stackrel{\scriptsize\text{Lemma }\ref{lemma:7.26}}\Ra  \int_{G_\epsilon} \underbrace{L_p(\nabla u, u_j, x)}_{\text{konv. glm.}} \cdot \underbrace{(\nabla u_j - \nabla u)}_{\rightharpoonup 0} \d x \stackrel[j \ra \infty]{}\longrightarrow 0 \\
+&\stackrel{\scriptsize\eqref{eq:7.13}-\eqref{eq:7.15}} \Ra \kappa = \lim_{j\ra \infty} J(u_j) \geq \int_{G_\epsilon} L(\nabla u, u, x) \d x \notag
+\end{align}
+\begin{align*}
+\stackrel{\epsilon >0}\Ra \liminf_{j} J(u_j) =& \kappa \geq \liminf_{\epsilon \ra 0} \int_\Omega \underbrace{\chi_{G_\epsilon} (x) L(\nabla u, u, x)}_{\geq 0} \d x \\
+&\! \! \! \!\stackrel[\scriptsize\text{Faton}]{\scriptsize\text{Lemma v.}}\geq l \int_\Omega \underbrace{\lim_{\epsilon\ra 0} \chi_{G_\epsilon} (x)}_{\ra \chi_\Omega (x)} L(\nabla u, u, x) \d x \\
+&\ \ =J(u)\qedhere
+\end{align*}
+\end{proof}
+
+\begin{notation}
+Wir schreiben
+\[
+	W := \{u \in W^1_q(\Omega) \with \gamma_0 u = g\} \, ,
+\]
+wobei $\gamma_0$ der Spuroperator ist. Man beachte, dass $W = \mathring W^1_q(\Omega)$ ist, wenn $g \equiv 0$ (dies folgt aus Bemerkung~\ref{bem:6.17}).
+
+Man kann zeigen: Ist $g$ genügend glatt, z.B. $g \in C^1(\partial \Omega)$, so ist $W \neq \emptyset$ (hierzu: $\gamma_0$ surjektiv auf "`geeigneten"' Räumen).
+\end{notation}
+
+\begin{theorem}[Existenz von Minima]
+\label{theorem:7.28}
+Sei $1 < q < \infty$ und $W\neq \emptyset$. Ferner sei $L(\, \cdot , z, x)$ konvex für $(z,x) \in \R \times \Omega$ und erfülle die Koerzivitätsbedingung
+\[
+	L(p, z, x) \geq \alpha \abs p^q-\beta \, , \quad \forall \, p \in \R^n, z\in  \R, x \in \bar\Omega
+\]	
+für $\alpha > 0, \beta \geq 0$. Dann folgt, dass $J$ ein Minimum auf $W$ annimmt, d.h. $\exists \, u_\ast \in W$ mit $J(u_\ast) = \inf_{w \in W} J(w)$.
+\end{theorem}
+
+\begin{proof}
+Ohne Beweis (siehe  ungeteXtes Skript).
+\end{proof}
+
+\begin{bem}
+\label{bem:7.29}
+Es gelten die Voraussetzungen von Theorem~\ref{theorem:7.28}.
+\begin{enumerate}[(a)]
+\item Gilt ferner, dass $L = L(p,x)$ unabhängig von $z$ ist und genügt $L$ der Elliptizitätsbedingung (mit $\alpha \geq 0$)
+\[
+	\sum_{j,k=1}^n L_{p_jp_k} (p,x) \xi^j\xi^k \geq \alpha \abs \xi^2 , \quad p, \xi \in \R^n, x \in \bar \Omega \, ,
+\]
+so ist das Minimum $u_\ast$ eindeutig. (ohne Beweis)
+\item Genügt $L$ den Wachstumsbedingungen
+\begin{align*}
+\abs{L(p,z,x)} & \leq c(1+\abs p^q + \abs z^q) \\
+\abs{L_p(p,z,x)}+ \abs{L_z(p,z,x)} & \leq c(1+\abs p^{q-1} + \abs z^{q-1})
+\end{align*}
+für alle $p \in \R^n, z \in \R, x \in \bar\Omega$, so ist das Minimum $u_\ast$ von $J$ auf $W$ eine schwache Lösung der Euler-Lagrange-Gleichungen
+\[
+	- \sum_{j=1}^n (L_{p_j} (\nabla u, u, x))_{x_j} + L_z (\nabla u, u, x) = 0 \, , \quad u |_{\partial \Omega} = g
+\]
+in dem Sinne, dass
+\[
+	\int_\Omega\left( \sum_{j=1}^n L_{p_j} (\nabla u, u, x) v_{x_j} + L_z (\nabla u, u, x) v\right) \d x = 0 \quad \fa \, v \in \mathring W^1_q (\Omega) \, .
+\]
+\begin{proof}
+Übung (vgl. die Herleitung der Euler-Lagrange-Gleichungen und verwende die Wachstumsbedingungen).
+\end{proof}
+\end{enumerate}
+\end{bem}
+
+\begin{bsp}
+\begin{enumerate}[(a)]
+\item Semilineare Laplacegleichung: Sei $f \in L_1(\R) \cap L_q(\R)$ und 
+\[ F(z) :=\int_0^z f(r) \d r \, . \]
+Wir betrachen $L(p,z,x) := \frac 1 2 \abs p^2 - F(z)$, damit ergibt sich das Energiefunktional
+\[ J(u) := \int_\Omega \left(\frac 1 2 \abs{\nabla u}^2 - F(u) \right) \d x \, ,\]
+dann folgt mit Theorem~\ref{theorem:7.28} und Bemerkung~\ref{bem:7.29} (b)
+\[
+	\exists \, u_\ast \in \mathring W^1_2 (\Omega) : J(u_\ast) = \inf_{v \in \mathring W^1_2 (\Omega)} J(v)
+\]
+und $u_\ast$ ist schwache Lösung von $-\Delta u = f(u)$ in $\Omega, u|_{\partial\Omega} = 0$.
+\item Wir betrachten
+\begin{align*}
+\label{eq:stern}
+\tag{$\ast$}
+\begin{aligned}
+	-u_{xx}& = \frac 1 2 \frac{h'(u)}{h(u)} u_x^2 \, , \quad x \in (0,1) =: \Omega \\
+	u(0) &= g_0 \, , \quad u(1) = g_1
+\end{aligned}
+\end{align*}
+mit $g_0, g_1 \in\R, h \in C^1(\R), h'\in L_\infty (\R), h(z) \geq \alpha > 0, z \in \R$. Dann ist $L(p,z,x):=h(z) p^2$ und damit folgt
+\[
+	L_p (p,z,x) = 2 h(z) p \, , \quad L_z = h'(z) p^2 \, .
+\]
+Wir erhalten mit Euler-Lagrange
+\begin{dmath*}
+0 = -(2h(u)u_x)_x + h'(u) u_x^2 = -2h'(u) u_x^2 - 2h(u) u_{xx} + h'(u) u_x^2
+\end{dmath*}
+und nach Umformen folgt die DGL aus \eqref{eq:stern}. Mit den Voraussetzungen gilt, dass $L$ koerziv ($q=2$) und konvex in $p$ ist.
+\begin{align*}
+	\stackrel{\scriptsize \text{Theorem}~\ref{theorem:7.28}} \Ra \exists \, u \in W :=& \{ w \in W^1_2 ((0,1)) \with w(0) = g_0, w(1) = g_1 \} \neq \emptyset \\ &\text{ mit } J(u) = \inf_W J
+\end{align*}
+Mit Sobolev-Morrey (Theorem~\ref{theorem:6.15}) und $n=1$ ist
+\begin{align}
+\label{eq:7.16}
+	W^1_2((0,1)) \hookrightarrow BUC((0,1)) \stackrel ! = C([0,1])\, .
+\end{align}
+Man beachte, dass Bemerkung~\ref{bem:7.29} (b) hier nicht angewendet werden kann, da die Wachstumsbedingungen nicht erfüllt sind (z.B. $L_z$ ist quadratisch in $p$).
+
+\textit{Behauptung.} $u$ ist schwache Lösung von \eqref{eq:stern}.
+\begin{proof}
+Sei $v \in \mathring W^1_2((0,1))$ beliebig, $\varphi(t) := f(u+tv), t \in \R$. Für $\abs t \leq 1$ gilt
+\begin{dmath*}
+	\frac 1 t (\varphi(t) - \varphi(0)) = \int_0^1 \frac 1 t (h(u+tv) (u_x + tv_x)^2 - h(u) u_x^2) \d x
+	= \int_0^1 \underbrace{\frac{h(u+tv)-h(u)}t (u_x+tv_x)^2}_{\stackrel{t\ra 0}\longrightarrow h'(u) vu_x^2 \text{ punktweise}} \d x + \int_0^1 \underbrace{h/(u) \frac{(u_x+tv_x)^2-u_x^2}t}_{\stackrel{t\ra 0}\longrightarrow h(u) 2 u_xv_x \text{ punktweise}} \d x \, .
+\end{dmath*}
+Dann folgt aus Hölder und \eqref{eq:7.16}, dass die Integranden Majoranten in $L_1((0,1))$ besitzen und damit gilt
+\[
+	\underbrace{\frac 1 t (\varphi(t) - \varphi(0))}_{\longrightarrow \varphi'(0)} \xrightarrow{\scriptsize\text{Lebesgue}} \int_0^1 h'(u) u_x^2 v \d x + \int_0^1 2h(u) u_xv_x \d x \, .
+\]
+Da $u$ ein Minimum von $f$ ist, folgt $\varphi'(0) = 0$ und somit
+\[
+	 0 =  \int_0^1 ( h'(u) u_x^2 v  +  2h(u) u_xv_x) \d x \quad \fa \, v \in \mathring W^1_2(\Omega) \,  ,
+\]
+d.h. $u$ ist schwache Lösung von \eqref{eq:stern}.
+\end{proof}
+Man kann sogar zeigen, dass $u \in C^\infty ((0,1))$, d.h. $u$ ist klassische Lösung von \eqref{eq:stern}.
+\end{enumerate}
+\end{bsp}
+
+\section{Eigenwertprobleme}
+
+Wir betrachten in diesem Abschnitt das Problem
+\begin{align*}
+	-\Delta u = \lambda u\quad \text{in } \Omega \, , \quad u|_{\partial\Omega} = 0 \, , 
+\end{align*}
+d.h. $(-\lambda - \Delta)u = 0, u|_{\partial\Omega} = 0$. Jede Lösung $u \not\equiv 0$ ist eine Eigenfunktion von $-\Delta_D$ und $\lambda$ ist Eigenwert von $-\Delta_D$.
+
+\begin{notation}
+Mit $-\Delta_D$ bezeichnen wir den Laplace-Operator mit Dirichlet-Nebenbedingung.
+\end{notation}
+
+\textit{Ziel.} Wir wollen Eigenwerte des Laplace-Operators bestimmen.
+
+Wegen Theorem~\ref{theorem:7.18} gilt für alle Eigenwerte $\lambda$, dass $\Re \lambda \geq 0$. Abstrakt erhalten wir
+\[
+	Au = \mu u
+\]
+mit $\mu := \frac 1 \lambda, A :=(-\Delta_D)^{-1} : L_2(\Omega)\ra L_2(\Omega)$ kompakt und beschränkt (vgl. Theorem~\ref{theorem:7.18} und Korrolar~\ref{kor:7.21}), d.h. man sucht Eigenwerte und Eigenfunktionen von einem kompakten, beschränkten Operator in einem Hilbertraum.
+
+Als Generalvoraussetzung soll gelten, dass $(H,(\, \cdot\, \vert \, \cdot \, ))$ ein $\C$-Hilbertraum (oder Komplexifizierung) ist und $A \in \mathcal L(H):=\mathcal L(H,H)$.
+
+\begin{defi}
+$\mu \in \C$ heißt \idx{Eigenwert} von $A : \Longleftrightarrow \, \exists \, \varphi \in H \setminus \{0\} : A \varphi = \mu \varphi$ (beachte: $\abs \mu \leq \norm A$). Dann heißt $\varphi$ \idx{Eigenvektor}.
+
+$A$ heißt \index{Operator!symmetrisch}symmetrisch $: \Longleftrightarrow (Ax | y ) = (x| Ay) \, \fa \, x,y \in H$.
+\end{defi}
+
+\begin{bsp}\label{bsp:7.31}
+\begin{enumerate}[(a)]
+\item Eine symmetrische Matrix in $\R^{n\times n}$ definierten symmetrische kompakte Abbildungen auf $H = \C^n$.
+\item Integraloperatoren: Es sei $H:= L_2(\Omega), \Omega \subset \R^n$ offen, beschränkt, $K \in L_2(\Omega \times \Omega)$ ("`Kern"') reelwertig und symmetrisch, d.h. $K(x,y) = K(y,x)$ $ \fa \, x,y \in \Omega \times \Omega$.
+\[
+	(Af)(x) := \int_{\Omega} \underbrace{K(x,y)}_{\scriptsize\text{Greensche Fkt.}} f(y) \d y \, , \quad x \in \Omega, f \in L_2(\Omega)
+\]
+Dann folgt, $A \in \mathcal L(L_2(\Omega))$ ist symmetrisch und kompakt.
+\begin{proof}
+Übung.
+\end{proof}
+\end{enumerate}
+\end{bsp}
+
+\begin{satz}\label{satz:7.32}
+Sei $A \in \mathcal L(H)$ symmetrisch, dann folgt: Alle Eigenwerte sind reell und Eigenvektoren zu verschiedenen Eigenwerten sind orthogonal.
+\end{satz}
+
+\begin{proof}
+Es seien $\lambda, \mu \in \C, \varphi, \psi \in H\setminus\{0\}$ mit $A\varphi = \lambda \varphi, A\psi = \mu \psi$. Dann gilt
+\begin{align*}
+\lambda (\varphi\vert\psi) = (\lambda \varphi \vert \psi) = (A \varphi \vert \psi) \stackrel{\scriptsize\text{symm.}}=(\varphi\vert A\psi)=(\varphi\vert\mu\psi) = \bar\mu(\varphi\vert\psi) \, ,
+\end{align*}
+d.h. wenn $\varphi = \psi$ ist, so gilt $\lambda = \bar\lambda$ und bei $\lambda \neq \mu$ ist $\varphi \perp \psi$. Damit folgt die Behauptung.
+\end{proof}
+
+\begin{satz}\label{satz:7.33}
+Sei $A \in \mathcal L(H)$ symmetrisch, dann folgt
+\[
+	\norm A = \sup_{\norm x = 1} \abs{(Ax \vert x)} \, .
+\]
+\end{satz}
+
+\begin{proof}
+\begin{enumerate}[(i)]
+\item Sei $d := \sup_{\norm x = \norm y = 1} \abs{(Ax\vert y)}$. Für alle $\norm x = \norm y = 1$ gilt wegen Cauchy-Schwarz
+\begin{dmath*}
+	\abs{(Ax\vert y)} \leq \norm{Ax} \norm y \leq \norm A \norm x \norm y = \norm A\, , 
+\end{dmath*}
+also gilt $d \leq \norm A$. Sei $(x_n)$ eine Folge mit $\norm{x_n} = 1, \norm{Ax_n} \ra \norm A$. Sei o.B.d.A. $A\neq 0$,
+\[
+	y_n := \frac 1{\norm{Ax_n}} Ax_n \Longrightarrow \norm{y_n} = 1 \, .
+\]
+Damit gilt
+\begin{dmath*}
+	d \geq \abs{(Ax_n \vert y_n)} = \frac 1{\norm{Ax_n}} \norm{Ax_n}^2 = \norm{Ax_n} \xrightarrow{n \ra \infty} \norm A \, , 
+\end{dmath*}
+d.h. $d = \norm A$.
+\item Es gilt mit Cauchy-Schwarz (analog zu oben)
+\[
+	r := \sup_{\norm x = 1} \abs{(Ax\vert x)} \leq \norm A\, .
+\]
+Man beachte, dass
+\begin{align*}
+	4 (Ax\vert y) \stackrel{\scriptsize\text{symm.}}= & (A(x+y)\vert x+y) - (A(x-y)\vert x-y) \\
+	= \ \, \,   & 4 \abs{(Ax\vert y)} \\
+	\leq \ \, \, & \abs{(A(x+y)\vert x+y)} + \abs{(A(x-y)\vert x-y)} \\
+	\leq \ \, \, & r \norm{x+y}^2 + r \norm{x-y}^2 \\
+	= \ \, \, & 2r (\norm x^2 + \norm y^2)
+\end{align*}
+gilt, daraus folgt $d \leq r$ und damit gilt mit (i)
+\[
+	\norm A = d \leq r \leq \norm A \, . \qedhere
+\]
+\end{enumerate}
+\end{proof}
+
+\begin{satz}\label{satz:7.34}
+$A \in \mathcal L(H)$ sei symmetrisch und kompakt, dann gilt, $\norm A$ oder $-\norm A$ ist Eigenwert von $A$.
+\end{satz}
+
+\begin{proof}
+Wegen Satz~\ref{satz:7.33} gilt, es existiert eine Folge $(x_n)$ mit $\norm{x_n} = 1$ und $\abs{(Ax_n\vert x_n)} \ra \norm A$. Wähle o.B.d.A. eine Teilfolge von $(x_n)$, dann 
+\[
+	\exists \, \lambda \in \C : (Ax_n \vert x_n) \longrightarrow \lambda \, , \quad \abs\lambda = \norm A \, .
+\]
+\begin{dmath*}
+	\norm{Ax_n - \lambda x_n}^2 = \norm{Ax_n}^2 - 2 \Re (Ax_n\vert \lambda x_n) + \norm{\lambda x_n}^2 \leq \underbrace{\norm A^2}_{=\abs\lambda^2} - 2 \Re \bar\lambda \underbrace{(Ax_n \vert x_n)}_{\ra \lambda} + \abs \lambda^2
+\end{dmath*}
+Damit folgt 
+\begin{align}
+\label{eq:7.17}	Ax_n - \lambda x_n \longrightarrow 0 \, .
+\end{align}
+Da $(x_n)$ eine beschränkte Folge, $A$ kompakter Operator ist und wegen der gewählten Teilfolge folgt o.B.d.A., dass $(Ax_n)$ konvergiert.
+\[
+	\stackrel{\scriptsize\eqref{eq:7.17}}\Longrightarrow	 \, \exists \, x \in H : x_n \longrightarrow x \, , \quad \norm x = 1 
+\]
+Da $A$ stetig ist, folgt $Ax_n - \lambda x_n \ra Ax - \lambda x$, also $Ax = \lambda x$, d.h. $\lambda$ ist  Eigenwert. Wegen Satz~\ref{satz:7.32} ist $\lambda \in \R$, d.h. $\lambda \in \{-\norm A, \norm A\}$.
+\end{proof}
+
+
+\begin{theorem}\label{theorem:7.35}
+Es sei $A \in \mathcal L(H)$ symmetrisch, kompakt, sowie $H$ separabel. Dann gilt:
+\begin{enumerate}[\rm (i)]
+\item $A$ hat abzählbar viele Eigenwerte $(\mu_j)$ mit $0$ als einzig möglichen Häu-fungspunkt.
+\item Jeder Eigenwert $\mu_j \neq 0$ hat endliche Vielfachheit, d.h. $\dim (\ker (A-\mu_j)) < \infty$ $($somit: o.B.d.A. $\abs{\mu_1} \geq \abs{\mu_2} \geq \ldots \geq 0)$.
+\item Die zugehörigen normierten Eigenvektoren $\{\varphi_j\}$ $($gemäß Vielfachheit$)$ bilden eine ONB von $H$.
+\item $\fa \, x \in H : Ax = \sum_j \mu_j (x\vert \varphi_j) \varphi_j$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Sei o.B.d.A. $A \neq 0$. (Satz~\ref{satz:7.34}) Sei $0 \neq \mu_1 \in \{\norm A, - \norm A\}$ ein Eigenwert mit Eigenvektor $\varphi_1 \in H\setminus\{0\}, \norm{\varphi_1} =1$. Dann ist $H_2:=\{\varphi_1\}^T$ ein abgeschlossener Unterraum von $H$, also ein Hilbertraum.
+\begin{align*}
+\fa \, x \in H_2 : (Ax \vert \varphi_1) \stackrel{\scriptsize A\text{ symm.}}= (x \vert A\varphi_1) = \mu_1 (x \vert \varphi_1) = 0
+\end{align*}
+Daraus folgt, $Ax \in H_2 \, \fa \, x \in H_2 \Ra A_2 := A\vert_{H_2} \in \mathcal L(H_2)$ ist symmetrisch. Da $H_2$ abgeschlossen  in $H$ und $A$ kompakt ist, folgt $A_2 \in \mathcal L(H_2)$ symmetrisch. Daraus folgt aus Satz~\ref{satz:7.34} und Induktion, dass Eigenwerte $\mu_1, \mu_2, \ldots , \mu_n \neq 0$ existieren (nicht notwendigerweise verschieden) mit zugehörigen paarweise verschiedenen Eigenvektoren $\varphi_1, \ldots, \varphi_n, \norm{\varphi_j} = 1$. Dann ist $H_{j+1} := \operatorname{span} \{\varphi_1 , \ldots , \varphi_n\}^\perp$ abgeschlossener Untervektorraum, also Hilbertraum. Weiter ist $A_{j+1} := A\vert_{H_{j+1}} \in \mathcal L(H_{j+1}), 1 \leq j \leq n$ und $\abs{\mu_j} = \norm{A_j}_{\mathcal L(H_j)}, 1 \leq j \leq n+1$.
+\begin{enumerate}
+\item[\underline{1. Fall:}] Die Folge $(\mu_j)$ bricht ab, d.h. $\mu_{n+1} = 0$. Dann gilt $A_{n+1} = 0$ und Null ist ein Eigenwert von $A$ (mit möglicherweise unendlicher Vielfachheit). Dann ist $H_{n+1} \subset \ker (A)$ abgeschlossener Unterraum von $H$, also separabler Hilbertraum. Damit folgt mit Bemerkung~\ref{bem:7.13}, $H_{j+1}$ besitzt eine abzählbare ONB $\{\varphi_{n+1}, \varphi_{n+2}, \ldots \}$, also
+\[
+	\{\varphi_1, \ldots , \varphi_n, \varphi_{n+1}, \ldots\} \text{ ist ONB von } H .
+\]
+\item[\underline{2. Fall:}] Die Folge $(\mu_j)$ bricht nie ab, d.h. $\mu_j \neq 0 \, \fa \, j \in \N$. Da $A$ kompakt ist, hat $(Ax_j)$ eine kompakte Teilfolge.
+\begin{align*}
+	\norm{A\varphi_j - A\varphi_k}^2 & \ \, \,  =\ \, \,  \norm{A\varphi_j}^2 - 2\Re (A\varphi_j\vert A\varphi_k) + \norm{A\varphi_k}^2 \\
+	& \stackrel{\scriptsize\text{EW}\in\R}= \abs{\mu_j}^2 + \abs{\mu_k}^2
+\end{align*}
+Daraus folgt
+\begin{align*}
+	 & \mu_j \longrightarrow 0 \Ra \, \fa \, \mu_j \neq 0 : \mu_j \text{ hat endliche Vielfachheit,}
+\end{align*}
+daraus folgt 0 ist einzig möglicher Häufungspunkt.
+
+Sei $x \in H$ beliebig und
+\[
+	x_n := x  - \sum_{j=1}^n (x\vert \varphi_j) \varphi_j \in H_{n+1} = \operatorname{span} \{\varphi_1,\ldots, \varphi_n\}^\perp .
+\]
+(Denn: $(\varphi_l \vert x_n) =( \varphi_l\vert x) - (\varphi_l\vert x) = 0$.) Daraus folgt
+\begin{dmath*}
+ \norm{Ax_n} = \norm{A_{n+1}x_n}_{H_{n+1}} \leq \norm{A_{n+1}}_{\mathcal L(H_{n+1})} \underbrace{\norm{x_n}_{H_{n+1}}}_{=\norm{x_n}} = \abs{\mu_{n+1}} \norm{x_n} \stackrel{\scriptsize\text{Def.}}\leq \abs{\mu_{n+1}} \norm x\, .
+\end{dmath*}
+Mit $\mu_j \ra 0$ gilt dann $Ax_n \ra 0$,
+\begin{align}
+\label{eq:7.18}
+\Ra: Ax = \sum_j \mu_j (x\vert \varphi_j)\varphi_j \quad \forall \, x \in H \, .
+\end{align}
+\textit{Behauptung.} $\Phi := \{\varphi_j\}$ ist ONB in $N:= (\ker A)^\perp$.
+
+Aus Korollar~\ref{kor:7.7} folgt, dass $N$ abgeschlossener Unterraum von $H$, also Hilbertraum, ist.
+\begin{align*}
+	\fa \, x \in \ker A : (\varphi_j \vert x) & \ \,  \, \ = \frac 1{\mu_j} (\mu_j \varphi_j\vert x) 
+	= \frac 1{\mu_j} (A\varphi_j \vert x) \\
+	&  \stackrel{\scriptsize A\text{ symm.}}= \frac 1{\mu_j} (\varphi_j \vert \underbrace{Ax}_{=0}) = 0 \, , 
+\end{align*}
+d.h. $\varphi_j \perp \ker A \, \fa \, j$, damit ist $\Phi \subset N$.
+
+Sei $x \in \Phi^\perp = \{ x \in N \with x \perp \Phi\}$.
+\begin{align*}
+ & \Ra (x \vert \varphi_j) = 0 \, \fa \, j \stackrel{\scriptsize\eqref{eq:7.18}}\Ra x \in \ker A \\ 
+ & \Ra: x \in \ker A \cup (\ker A)^\perp = \{0\} \Ra: \Phi^\perp = \{ 0\} \, ,
+\end{align*}
+somit ist $\Phi$ ONB in $N = (\ker A)^\perp$.
+
+$\ker A$ ist ein separabler Hilbertraum, daher folgt aus Bemerkung~\ref{bem:7.13}, dass eine abzählbare ONB von $\ker A$ existiert. Daraus folgt, $\Phi = \{\varphi_j\}$ lässt sich zu einer ONB von $H =(\ker A)^\perp \otimes \ker A$ ergänzen.\qedhere
+\end{enumerate} 
+\end{proof}
+
+\subsubsection{Anwendung auf den Laplace-Operator}
+
+\underline{Voraussetzungen:} $\Omega \subset \R^n$ sei ein beschränktes Gebiet und $C^\infty$. $G$ sei die Greensche Funktion für $\Omega$ (vgl. Bemerkung~\ref{bem:5.3} (d)).
+
+Wir definieren
+\[
+	(Af)(x) := \int_\Omega G(x,y) f(y) \d y \, , \quad x \in \Omega, f \in L_2(\Omega) \, .
+\]
+Aus Theorem~\ref{theorem:5.7} folgt dann, ist $f\in C^\alpha (\bar\Omega), \alpha >0,$ so ist $u := Af \in C^2(\Omega ) \cap C(\bar\Omega)$ die eindeutige Lösung von $-\Delta u = f$ in $\Omega, u\vert_{\partial \Omega} = 0$.
+
+\begin{lemma}\label{lemma:7.36}
+Sei $n \in \{2,3\}$ und $A$ wie oben definiert. Dann ist $A \in \mathcal L(L_2(\Omega))$ symmetrisch und kompakt.
+\end{lemma}
+
+\begin{proof}
+Sei $R>0 : \Omega \subset \B (0,R).$ Sei $G_R$ die Greensche Funktion für $\B(0,R)$ (vgl. Satz~\ref{satz:5.9}, Bemerkung~\ref{bem:5.10}).
+\begin{align}\label{eq:7.19}
+\stackrel{\scriptsize\text{Lemma}~\ref{lemma:5.6}}\Longrightarrow 0 \leq G(x,y) \leq G_R(x,y) \, , \quad (x,y) \in \Omega \times \Omega
+\end{align}
+Weiter folgt aus Satz~\ref{satz:5.9} und Bemerkung~\ref{bem:5.10}, dass $G_R$ eine Singularität hat von der Form
+\begin{align*} 
+	\begin{cases}
+		\log \abs{x-y} & \text{falls } n=2 \\
+		\abs{x-y}^{-n+2} & \text{falls } n\geq 3
+	\end{cases} \, .
+\end{align*}
+In Polarkoordinaten folgt $G_R \in L_2(\B(0,R) \times \B(0,R))$ und damit mit \eqref{eq:7.19} $G \in L_2(\Omega \times \Omega)$. Wegen Satz~\ref{satz:5.4} gilt, $G$ ist symmetrisch und insgesamt folgt dann mit Beispiel~\ref{bsp:7.31} (b) $A \in \mathcal L(L_2(\Omega))$ symmetrisch und kompakt.
+\end{proof}
+
+\begin{lemma}
+Sei $n = 2,3, A$ wie oben, dann folgt $Af \in C(\bar\Omega) \, \fa \, f \in L_2(\Omega)$.
+\end{lemma}
+
+\begin{proof}
+Sei $\eta \in C^1 (\R), 0 \leq \eta \leq 1, \eta(t) = 0, t \leq 1$ und $\eta(t) = 1 , t \geq 2$.
+
+Sei $f \in L_2(\Omega)$ fest,
+\[
+	\omega_\epsilon (x) := \int_\Omega G(x,y) \eta \left(\frac{\abs{x-y}}\epsilon\right) f(y) \d y \, , \quad x \in \Omega \, ,
+\]
+daraus folgt $\omega_\epsilon \in C(\bar\Omega) \, \fa \, \epsilon >0$ und
+\begin{dmath*}
+\abs{(Af)(x) - \omega_\epsilon(x)} \leq \int_\Omega G(x,y) \Abs{1-\eta\left(\frac{\abs{x-y}}\epsilon\right)} \abs{f(y)} \d y  \\
+\stackrel{\scriptsize\text{CS}}\leq \norm f_{L_2(\Omega)} \left(\int_\Omega G(x,y)^2 \Abs{1-\eta\left(\frac{\abs{x-y}}\epsilon\right)}^2 \d y \right)^{\frac 1 2} 
+= \norm f_{L_2(\Omega)} \left( \int_{[\abs{x-y}\leq 2 \epsilon]} G(x,y)^2 \d y \right)^{\frac 1 2} .
+\end{dmath*}
+Sei $n = 3: G(x,\, \cdot \,) = G(x,\, \cdot \, ) - \mathcal N(x-\cdot) + \mathcal N(x-\cdot)$.
+\begin{align*}
+	\Ra: \int_{[\abs{x-y} \leq 2\epsilon]} G(x,y)^2 \d y & \leq c \int_{[\abs{x-.y} \leq 2 \epsilon]} \frac 1{\abs{x-y}^2} \d y \\
+	& = c \int_{\B(0,2\epsilon)} \frac 1{\abs y^2} \d y = c \int_0^{2\epsilon}  r^{-2} r^{3-1} \\
+	& = 2c\epsilon \\
+	\Ra \abs{(Af)(x) - \omega_\epsilon (x)} & \leq c_1 \sqrt \epsilon \xrightarrow{\epsilon \ra 0} 0
+\end{align*}
+Somit ist $\omega_\epsilon \in C(\bar\Omega), \omega_\epsilon \xrightarrow{\epsilon\ra 0} Af$ gleichmäßig in $\bar\Omega$. Da $Af$ ein gleichmäßiger Grenzwert einer stetigen Funktion ist, folgt
+$Af\in C(\bar\Omega)$. Analog gilt dies für $n=2$.
+\end{proof}
+
+\begin{theorem}[Eigenwerte des Laplace-Dirichlet-Operators] 
+\label{theorem:7.37}
+Sei $\Omega \subset \R^n$ beschränktes $C^\infty$-Gebiet, $n = 2, 3$. Dann besitzt das Eigenwertproblem
+\[
+	- \Delta u = \lambda u \quad\text{in } \Omega \, , \quad u|_{\partial \Omega} = 0 
+\]
+eine Folge $(\lambda_k)$ positiver Eigenwerte $0 < \lambda_1 \leq \lambda_2 \leq \ldots\leq \lambda_k\xrightarrow{k\ra\infty} \infty$. Jeder Eigenwert hat endliche Vielfachheit und die zugehörigen $($in $L_2(\Omega)$ normierten$)$ Eigenfunktionen $\{\varphi_n\}$ sind aus $C^2(\Omega)\cap C^1(\bar\Omega)$ und bilden eine ONB von $L_2(\Omega)$.
+
+Ferner: $\left\{\frac 1{\sqrt{1+\lambda_k}} \varphi_k\right\}$ ist eine ONB in $\mathring W^1_2(\Omega)$.
+\end{theorem}
+
+\begin{proof}
+Die Idee ist, dass wir $A=(-\Delta_D)^{-1}$ betrachten. Wegen Theorem~\ref{theorem:7.35} und Lemma~\ref{lemma:7.36} folgt ($L_2(\Omega)$ separabel), es existiert eine ONB $\{\varphi_j\}$ von $L_2(\Omega)$ bestehend aus Eigenfunktionen mit zugehörigen Eigenwerten $\mu_j \neq 0$ des Operators $A$, definiert durch
+\[
+	(Af)(x) := \int_\Omega G(x,y)f(y) \d y \, , \quad f\in L_2(\Omega) , x \in \Omega 
+\] 
+und $\mu_j \ra 0$. Man beachte, dass aus $A\varphi_j = \mu_j \varphi_j$ folgt
+\begin{align*}
+\label{eq:7.20}
+\Ra \, \, \quad  & \varphi_j = \frac 1{\mu_j} A\varphi_j \in C(\bar \Omega) \\
+\stackrel{\scriptsize\text{Theorem}~\ref{theorem:5.7}}\Ra & \varphi_j = \frac 1{\mu_j} A\varphi_j \in C^1(\bar\Omega) \qquad (\text{impliziert Hölder-stetig})  \\
+\stackrel{\scriptsize\text{Theorem}~\ref{theorem:5.7}}\Ra & \varphi_j \in C^2(\Omega) \cap C^1(\bar\Omega)  \\
+\end{align*}
+löst
+\begin{align}
+\begin{aligned}
+-\Delta \varphi_j & = \frac 1{\mu_j} \varphi_j \quad \text{in } \Omega \, , \\
+\varphi_j|_{\partial \Omega}& = 0 \, .
+\end{aligned}
+\end{align}
+Setze $\lambda_j := \frac 1{\mu_j}$, dann folgt $\abs{\lambda_j} \xrightarrow{j\ra\infty} \infty$. Wegen Theorem~\ref{theorem:7.16} wissen wir, dass $\lambda = 0$ kein Eigenwert sein kann. Wir betrachten
+\begin{align*}
+	\lambda_j\underbrace{(\varphi_j \vert \varphi_j)}_{=1} & \stackrel{\scriptsize\eqref{eq:7.20}}= - \int_\Omega \underbrace{\Delta \varphi_j \bar \varphi_j}_{\parbox{1.9cm}{\scriptsize$=\div (\bar\varphi_j \nabla \varphi_j)\\ - \nabla \varphi_j \nabla \bar\varphi_j$}} \d x \\
+	&\,  \stackrel{\scriptsize\text{Gauß}}= - \underbrace{\int_{\partial\Omega} \underbrace{\bar\varphi_j}_{\stackrel{\eqref{eq:7.20}}= 0} \nabla \varphi_j \cdot \nu \d \sigma(x)}_{=0} + \underbrace{\int_\Omega \abs{\nabla \varphi_j}^2 \d x}_{>0} \, ,
+\end{align*}
+daraus folgt, $\lambda_j > 0 \, \fa \, j \geq1$, also o.B.d.A. $0 < \lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_j \ra \infty$.
+
+Es bleibt also noch zu zeigen, dass $\left\{\frac 1{\sqrt{1+\lambda_k}} \varphi_k\right\}$ eine ONB von $\mathring W^1_2(\Omega)$ ist. Es gilt
+\begin{align*}
+(\varphi_j \vert \varphi_k)_{\mathring W^1_2} & = \underbrace{(\varphi_j \vert \varphi_k)_{L_2} }_{= \delta_{jk}}+ (\nabla\varphi_j \vert \nabla\varphi_k)_{L_2}  \\
+&= \delta_{jk} + \int_\Omega \nabla \varphi_j \overline{\nabla\varphi_k} \d x \\
+&= \delta_{jk} - \int_\Omega \underbrace{\Delta\varphi_j}_{\stackrel{\eqref{eq:7.20}}=-\lambda_j \varphi_j} \bar \varphi_k \d x \\
+&= \delta_{jk} + \lambda_j \underbrace{(\varphi_j \vert \varphi_k)_{L_2}}_{= \delta_{jk}} = (1+\lambda_j) \delta_{jk} \, ,
+\end{align*}
+d.h. $\left\{\frac1{\sqrt{1+\lambda_j}} \varphi_j\right\}$ ist ONS in $\mathring W^1_2 (\Omega)$.
+
+Sei $g \in (\operatorname{span} \{\varphi_j \with j \geq 1\})^\perp$ in $\mathring W^1_2(\Omega)$, d.h. $g \in \mathring W^1_2(\Omega)$ und $(g \vert \varphi_j)_{\mathring W^1_2} = 0 \, \fa \, j \geq 1$.
+\begin{align*}
+ \Ra : 0& = (g \vert \varphi_j)_{L_2} + \underbrace{(\nabla g \vert \nabla \varphi_j)_{L_2}}_{\parbox{2.6cm}{\scriptsize $\, \, \,  = \int_\Omega \nabla g \overline{\nabla\varphi_j} \d x \\ \stackrel{\text{Gauß}}= - \int_\Omega g \underbrace{\Delta \bar \varphi_j}_{=-\lambda_j \bar \varphi_j}$}} \\
+ \Ra : 0 &= (g \vert \varphi_j)_{L_2} + \lambda_j (g\vert \varphi_j)_{L_2} \\
+ & = \underbrace{(1+\lambda_j)}_{>0} (g \vert \varphi_j)_{L_2}\\
+ \Ra (g \vert \varphi_j)_{L_2}& = 0 \quad \fa \, j \geq 1 \stackrel[\scriptsize\text{in } L_2(\Omega)]{\scriptsize\{\varphi_j\} \text{ ONB}}\Ra g = 0 \, ,
+\end{align*}
+d.h. $(\operatorname{span} \{\varphi_j\})^\perp = \{0\}$ in $\mathring W^1_2(\Omega)$.
+\end{proof}
+
+\begin{bem}
+\label{bem:7.38}
+\begin{enumerate}[(a)]
+\item Theorem~\ref{theorem:7.37} gilt auch für $n \neq 2,3$.
+\begin{proof}
+E. Di Benedetto.
+\end{proof}
+\item $\lambda_1 > 0$ heißt Haupteigenwert von $-\Delta_D$. Es gilt
+\begin{enumerate}[(i)]
+\item $\lambda_1$ ist einfach (d.h. $0 < \lambda_1 < \lambda_2 \leq \ldots$),
+\item $\lambda_1^{-1} = \sup_{\norm \varphi_{L_2} = 1} \abs{(A\varphi\vert\varphi)}$ und die zugehörige Eigenfunktion $\varphi_1$ ist strikt positiv, d.h. $\varphi_1 (x) > 0, x \in \Omega, \varphi_1(x) = 0, x \in \partial\Omega$.
+\end{enumerate} 
+\item Neumannproblem: $-\Delta u = \lambda u$ in $\Omega, \partial_\nu u = 0$ auf $\partial \Omega$ hat Eigenwerte 
+\[
+	0 = \lambda_1 < \lambda_2 \leq \lambda_3 \leq \ldots \leq \lambda_j \xrightarrow{j\ra\infty} \infty
+\]
+mit Eigenfunktionen $\varphi_j \in C^2(\Omega) \cap C^1(\bar\Omega)$. Es gilt $\varphi_1 = \frac 1{\abs\Omega^{\frac 1 2}}$.
+\item Theorem~\ref{theorem:7.37} gilt für allgemeine Operatoren der Form
+\[
+	Lu = - \sum_{j,k=1}^n \partial (a_{jk}(x) \partial_k u)
+\]
+mit $a_{jk}(x) = a_{kj}(x) > 0, x \in \bar\Omega$, d.h. $L$ ist gleichmäßig elliptisch.
+\end{enumerate}
+\end{bem}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 

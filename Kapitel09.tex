@@ -1,0 +1,570 @@
+\newchapter{Wellengleichung}
+
+Wir betrachten  in diesem Kapitel die homogene \idx{Wellengleichung} in $\Omega$
+\[
+	\underbrace{\partial_t^2u}_{\parbox{1.3cm}{\centering\scriptsize Beschleu-  nigung}} - \underbrace{\Delta_x u}_{\scriptsize\text{Kraft}} = 0\, , \quad t \in \R, x \in \Omega
+\]
+mit $u = u(t,x)$.
+
+Hintergrund: $\Omega\subset \R^n$ ist ein elastisches Medium und $u(t,x)$ die Ausrenkung des Mediums in einer festen Richtung zur Zeit $t$ am Ort $x$.
+
+Als Randbedingung kann z.B. durch $u(t,x) = 0, t \in \R, x \in \partial \Omega$ gegeben sein. Die Wellengleichung ist ein Prototyp einer hyperbolischen Gleichung.
+
+\section{Wellengleichung auf $\Omega=\R^n$}
+
+\begin{theorem}
+\label{theorem:9.1}
+Sei $u \in C^2 ([0,T]\times \R^n)$ Lösung der homogenen Wellengleichung
+\[
+	\partial_t^2 u - \Delta_x u = 0 \, , \quad t \in (0,T), x \in \R^n .
+\]
+Ferner sei $(t_0,x_0) \in (0,T)\times \R^n$ mit $u(0,x)=0=\partial_t u(0,x)$ auf $\abs{x-x_0} \leq t_0$. Dann folgt $u \equiv 0$ auf dem Kegel $K:=\{(t,x) \with 0 \leq t \leq t_0, \abs{x-x_0} \leq t_0 - t\}$.
+\begin{figure}[ht!]
+    \centering<
+    \begin{pspicture}(-3,-1)(3,2.5)
+	 \psaxes[linewidth=1pt,labels=none]{->}(-2,-0.5)(-3,-1)(3,2.5)
+	 \rput(2.95,-.75){$t$}
+	 \rput(-1.75,2.5){$x$}
+	 \rput(-2.7,0){$x_0-t_0$}
+	 \rput(-2.7,2){$x_0+t_0$}
+	 \rput(1,-.78){$t_0$}
+	 \psline[linewidth=2pt](-2,0)(-2,2)
+	  \psline[linewidth=1.3pt](-2,0)(1,1)
+	   \psline[linewidth=1.3pt](-2,2)(1,1)
+    \end{pspicture}
+    \caption{Kegel}
+    \label{fig:4.1}
+  \end{figure}
+Störungen außerhalb von $\{(0,x) \with \abs{x-x_0} \leq t_0\}$ $($zur Zeit $t = 0)$ haben keinen Einfluss auf die Lösung innerhalb des Kegels $K$ $($endliche Ausbreitungsgeschwindigkeit$)$.
+\end{theorem}
+
+\begin{proof}
+Es sei o.B.d.A. $u$ reellwertig. Wir definieren
+\[
+	B_t:=\{ x\in\R^n \with \abs{x-x_0} \leq t_0 - t\} = \bar\B_{\R^n} (x_0,t_0-t) 
+\]
+und betrachten das Energiepotential
+\[
+	E(t) := \frac 1 2 \int_{B_t} \left((\partial_t^2 u)^2 + \abs{\nabla_x u}^2\right) \d x \, .
+\]
+Man kann zeigen, dass gilt (s. Skript)
+\begin{align}
+\label{eq:9.1}
+	\frac{\d}{\d r} \int_{\B (x_0,r)} f(x) \d x = \int_{\partial \B(x_0,r)} f(x) \d \sigma(x) \, .
+\end{align}
+Also gilt
+\begin{align}\label{eq:9.2}
+	\dot E(t) \stackrel{\scriptsize\eqref{eq:9.1}}= \, & \int_{B_t} (\partial_t^2 u \, \partial_t u + \underbrace{\nabla u\,  \partial_t u}_{\scriptsize\parbox{2cm}{\centering$=\div_x (\partial_t u \nabla u)$\\ $-\partial_t u \Delta_x u$}} ) \d x - \frac 1 2 \int_{\partial B_t }((\partial_t u)^2 + \abs{\nabla u}^2) \d \sigma(x) \notag \\
+	\stackrel{\scriptsize\text{Gauß}}= & \int_{B_t} \partial_t u \, (\underbrace{\partial_t^2 u - \Delta_x u}_{=0}) \d x + \int_{\partial B_t} \partial_t u\, \partial_\nu u \d \sigma (x) \notag \\ 
+	& - \frac 12 \int_{\partial B_t} \left( (\partial_tu)^2+\abs{\nabla u}^2\right) \d \sigma(x) \, .
+\end{align}
+Man beachte, dass gilt
+\begin{align}
+\label{eq:9.3}
+	\abs{\partial_t u \, \partial_\nu u} \stackrel{\scriptsize\text{C.S.}}\leq & \abs{\partial_t u}\,  \abs{\nabla u}	\leq \frac 12 \abs{\partial_t u}^2 + \frac 12 \abs{\nabla u}^2 \, .
+\end{align}
+Dann folgt aus \eqref{eq:9.2} und \eqref{eq:9.3}
+\begin{align*}
+	& \dot E(t) \leq 0 \Ra 0 \leq E(t) \leq E(0) = 0 \, , \quad 0 \leq t \leq t_0 \\
+	\Ra\,  & \partial_t u \equiv 0 \, , \quad \nabla_xu \equiv 0 \quad \text{in } K  \\
+	\Ra \, & u \equiv \text{const.} \quad \text{in } K \stackrel{\scriptsize\text{Vor.}}\Ra u \equiv 0 \quad \text{in } K \qedhere
+\end{align*}
+\end{proof}
+
+\subsubsection{Die \idx{Wellengleichung} im 1-dimensionalen Fall}
+
+Wir betrachten $u_{tt} - u_{xx} = 0, t \in \R, x\in \R$, daraus folgt per Definition der Wellenoperator
+\[
+	0 = Lu := (\partial_t -\partial_x)(\partial_t + \partial_x) u \, .
+\]
+Wir zerlegen also diesen in zwei Gleichungen 1. Ordnung
+\begin{align}
+	\label{eq:9.4}
+	v :=& (\partial_t + \partial_x) u \\
+	\label{eq:9.5}
+	0 = & (\partial_t-\partial_x) v 
+\end{align}
+und aus \eqref{eq:9.5} erhalten wir mit Charakteristiken
+\begin{align}\label{eq:9.6}
+	 & v(t,x) = f(x+t) \quad \text{mit } f \in C^1 (\R) \\
+	 \label{eq:9.7}
+	\stackrel{\scriptsize\eqref{eq:9.4}}\Ra \, & (\partial_t +\partial_x) u(t,x) = f(x+t)  \, .
+\end{align}
+Verwenden wir wiederum Charakteristiken, so erhalten wir: Sei $x = \xi + t, w_\xi := u(t,\xi+t)$, dann folgt aus \eqref{eq:9.7} $\dot w_\xi (t) = f(\xi + 2t)$. Sei $F \in C^2(\R)$ mit $F' = \frac 1 2 f$. Dann folgt
+\[
+	\frac\d{\d t} F(\xi + 2t) = f(\xi + 2t) \, ,
+\] 
+also $w_\xi (t) = F(\xi + 2t) + G(\xi)$ mit $G(\xi)$ geeignet gewählt.
+\begin{align}\label{eq:9.8}
+	\stackrel{x=\xi+t}\Ra u (t,x) = \underbrace{F(x+t)}_{\parbox{1.45cm}{\scriptsize Welle nach links}} + \underbrace{G(x-t)}_{\parbox{1.4cm}{\scriptsize Welle nach rechts}} \, , 
+\end{align}
+dabei ist $u$ also eine Überlagerung von Wellen. Jede Funktion $u$ mit $F,G \in C^2 (\R)$ beliebig ist Lösung der 1-dimensionalen Wellengleichung. $F$ und $G$ sind willkürlich, d.h. es lassen sich also zwei Bedingungen zur Bestimmung einer eindeutigen Lösung vorschreiben.
+
+\subsubsection{Das Cauchy-Problem für die 1-dimensionale Wellengleichung}
+
+Wir betrachten das \idx{Cauchy-Problem} in $\R$
+\begin{align*}
+	u_{tt} - u_{xx} &= 0 \, , \quad \qquad \! \! t \in \R, x \in \R \\
+	u(0,x) & = \varphi (x) \, , \quad x \in \R \\
+	\partial_t u(0,x)& = \psi(x) \, , \quad x \in \R
+\end{align*}
+wobei $\varphi \in C^2(\R), \psi \in C^1(\R)$ fest gegeben. Wegen \eqref{eq:9.8} gilt $F(x) + G(x) = \varphi(x)$ und $F'(x) -G'(x) = \psi(x)$, also bleibt folgendes System zu lösen:
+\begin{align*}
+	F(x) & = \frac 1 2 \varphi (x) + \frac 1 2 \int_0^x \psi (s) \d s + c \\
+	G(x) & = \frac 1 2 \varphi (x) - \frac 1 2 \int_0^x \psi(s) \d s - c
+\end{align*}
+mit $c \in \R$.
+
+\begin{theorem}
+\label{theorem:9.2}
+Seien $\varphi \in C^2(\R)$ und $\phi \in C^1(\R)$. Dann ist die eindeutige $C^2$-Lösung des Cauchy-Problems für die eindimensionale \idx{Wellengleichung} gegeben durch
+\[
+	u(t,x) = \frac 1 2 (\varphi(x+t) + \varphi(x-t)) + \frac 1 2 \int_{x-t}^{x+t} \psi (s) \d s \, .
+\]
+\end{theorem}
+
+\begin{proof}
+Existenz: Nachrechnen. Eindeutigkeit: s.o.
+\end{proof}
+
+\begin{bem}
+\label{bem:9.3}
+\begin{enumerate}[(a)]
+\item $u$ ist im Punkt $(t,x)$ durch die Werte von $\varphi$ und $\psi$ auf $[x-t,x+t]$ bestimmt (vgl. Theorem~\ref{theorem:9.1}/Wärmeleitungsgleichung in Kapitel 10).
+\item Die Lösung $u$ ist nicht regulärer als der Anfangswert $\varphi$ (keine Regularisierung wie z.B. bei Wärmeleitungsgleichung/vgl. auch Bemerkung 10.7).
+\item Für die Eindeutigkeit müssen $u|_{t = 0} $ und $\partial_t u|_{t = 0}$ vorgeschrieben werden.
+\end{enumerate}
+\end{bem}
+
+\subsubsection{Höhere Dimensionen}
+
+Die Idee hier ist ähnlich wie bei der Laplacegleichung: Mittelwertbildung reduziert die Wellengleichung für $n>1$ auf \idx{Darbouxgleichung} (hyperbolische Gleichung, 1-dimensional $\rightsquigarrow$ 1-dimensionale \idx{Wellengleichung}).
+
+\begin{defi}
+Wir definieren das sphärische Mittel\index{sphärisches Mittel} mit $\omega_n := \vol (\partial \B(x,1)),$ $ \vol (\partial \B (x,r)) = r^{n-1} \omega_n, \varphi \in C(\R^n), r>0, x \in \R^n$ durch
+\begin{align*}
+	M_\varphi (x,r)  := & \frac 1{r^{n-1} \omega_n} \int_{\partial \B (x,r)} \varphi (y) \d \sigma(y) \\
+	 = & \frac 1{\omega_n} \int_{\partial\B(0,1)} \varphi(x+ry) \d \sigma(y) \, .
+\end{align*}
+\end{defi}
+
+\begin{satz}[\idx{Darbouxgleichung}]
+\label{satz:9.4}
+Für $\varphi \in C^2(\R^n)$ gilt:
+\[
+	\left(\partial_r^2 + \frac{n-1}r \partial_r\right) M_\varphi (x,r) = \Delta_x M_\varphi (x,r) \, , \quad r \neq 0 , x \in \R^n .
+\]
+\end{satz}
+
+\begin{proof}
+Es sei o.B.d.A. $r > 0$. Dann gilt mit $y$ als äußere Einheitsnormale
+\begin{align*}
+	\partial_r M_\varphi(x,r)& \ \, =\ \, \frac 1{\omega_n} \int_{\partial \B(0,1)} \nabla_y \varphi (x+ry) y \d \sigma(y) \\
+	& \stackrel{\scriptsize\text{Gauß}}= \frac 1{\omega_n} \int_{\B(0,1)} (\Delta_y)(x+ry) r \d y \\
+	& \stackrel{z:=ry}= \frac 1{\omega_n r^{n-1}} \int_{\B(0,1)} \Delta \varphi(x+z) \d z \\
+	& \stackrel{\scriptsize\parbox{0.8cm}{Polar-\\koord.}}= \frac 1{\omega_n r^{n-1}} \int_0^r\int_{\abs y = 1} \Delta \varphi (x+\rho y) \rho^{n-1} \d \sigma(y) \d \rho \\
+\end{align*}
+\begin{align*}
+	\Ra \, \partial_r [r^{n-1} \partial_r M_\varphi(x,r)] &\  =\, \, \frac 1{\omega_n} \int_{\abs y = 1} \Delta_x \varphi (x+ry) r^{n-1} \d \sigma(y) \\
+	& \stackrel{\scriptsize\text{Def.}}= r^{n-1} \Delta_x M_\varphi (x,r) 
+\end{align*}
+Man beachte, dass $\partial_r(r^{n-1} \partial_r) = r^{n-1} \partial_r^2 + \frac{n-1}r r^{n-1} \partial_r$ gilt und daraus folgt die Behauptung.
+\end{proof}
+
+\begin{kor}
+\label{kor:9.5}
+Sei $u = u(t,x)\in C^2 (\R^+ \times \R^n)$ und $M_u (t,x,r):=M_{u(t,\cdot)} (x,r)$ aus sphärischen Mittel von $u(t,\cdot)$. Dann sind äquivalent:
+\begin{enumerate}[\rm(i)]
+\item $u$ löst die Wellengleichung $\partial_t^2 - \Delta_x u = 0, t > 0, x \in \R^n$.
+\item $ \left[ \partial_r^2 + \frac{n-1}r \partial_r\right] M_u(t,x,r) = \partial_t^2 M_u(t,x,r) , t > 0, x \in \R^n \setminus\{0\}$.
+\end{enumerate}
+\end{kor}
+
+\begin{proof}
+Es gilt $\partial_t^2 M_u = M_{\partial^2_tu}$ und $\Delta_x Mu = M_{\Delta_x u}$ und mit Satz~\ref{satz:9.4} folgt dann die Behauptung.
+\end{proof}
+
+\subsubsection{Lösung der Wellengleichung im $\R^3$}
+
+Wir nehmen an $u \in C^2(\R^+ \times \R^3)$ ist Lösung des Cauchy-Problems
+\begin{align*}
+	\partial^2_t u - \Delta_x u &= 0 \, , \quad \qquad \! \! t >0, x \in \R^3 \\
+	u(0,x) & = \varphi (x) \, , \quad x \in \R^3 \\
+	\partial_t u(0,x)& = \psi(x) \, , \quad x \in \R^3 .
+\end{align*}
+Wir setzen $W(t,r) := M_u (t,x,r)$ mit $x \in \R^3$ fest.
+\[
+	\stackrel{\scriptsize\text{Kor.}~\ref{kor:9.5}}\Ra \left\{
+	\begin{aligned}
+		W_{tt}&= W_{rr} + \frac 2 r W_r \\
+		W(0,r) & = M_u(0,x,r) = M_\varphi (x,r) \\
+		W_t (0,r) & = \partial_t M_u (0,x,r) = M_\psi (x,r)
+	\end{aligned}
+	\right.
+\]
+Setze $V(t,r) := r \, W(t,r)$, dann folgt $V_{tt} = r(W_{rr} + \frac 2 r W_r) = V_{rr}$, d.h. $V$ löst die 1-dimensionale Wellengleichung
+\[
+	\left\{
+	\begin{aligned}
+		V_{tt} - V_{rr} &= 0 \, , \quad t > 0, r \in\R \\
+		V(0,r) &= rM_\varphi (x,r) \\
+		V_t (0,r) & = r M_\psi (x,r)
+	\end{aligned}
+	\right. \, .
+\]
+Dann folgt aus Theorem~\ref{theorem:9.2}
+\begin{align}
+\label{eq:9.9}
+	\begin{aligned}
+	V(t,r) =& \frac 12 \left[  (r+t) M_\varphi (x,r+t) + (r-t) M_\psi (x,r-t)  \right]\\
+	& + \frac 1 2 \int_{r-t}^{r+t} s M_\varphi (x,s) \d s \, .
+	\end{aligned}
+\end{align}
+Aus der Definition von $M_u$ und $u$ stetig folgt
+\begin{align}
+\label{eq:9.10}
+	\lim_{r \ra 0^+} M_u (t,x,r) = u(t,x)
+\end{align}
+\begin{align*}
+	\stackrel{V=rM_u}\Ra u(t,x) & \stackrel{\scriptsize\eqref{eq:9.10}}= \lim_{r\ra 0^+} \frac 1 r V(t,r) \\
+	&\hspace{0.2em} \stackrel{\scriptsize\eqref{eq:9.9}}= \hspace{0.2em} \partial_t (tM_\varphi (t,x)) + t M_\psi (x,t) \\
+	&\hspace{0.6em}  = \hspace{0.6em}M_\varphi(t,x) + tM_\varphi (t,x) + t \partial_t \underbrace{\frac 1{\omega_3} \int_{\partial\B (0,1)} \varphi(x+ty) \d \sigma(y)}_{=M_\varphi (t,x)} \\
+	& \hspace{0.6em}=\hspace{0.6em} M_\varphi (t,x) + t M_\psi(t,x) + \frac t{\omega_3} \int_{\partial \B(0,1)} \nabla \varphi(x+ty) y \d \sigma(y) \\
+	& \hspace{0.6em}=\hspace{0.6em} M_\varphi(t,x) + t M_\psi(t,x) + \frac 1{t\omega_3} \int_{\partial\B(x,t)} \nabla \varphi (\bar y) \cdot \frac{\bar y- x}t \d \sigma(\bar y)
+\end{align*}
+Somit gilt, jede $C^2$-Lösung der 3-dimensionalen Wellengleichung lässt sich schreiben als
+\[
+	u(t,x) = \frac 1{t^2\omega_3} \int_{\partial\B (x,t)} [\varphi(y)+t \psi(y) + \nabla \varphi(y) \cdot (y-x)] \d \sigma(y) \, ,
+\]
+wobei $\omega_3 = 4\pi$ ist. Dies nennen wir die \idx{Kirchhoffsche Formel}.
+
+\begin{theorem}
+\label{theorem:9.6}
+Sei $n=3, \varphi \in C^3(\R^3), \psi \in C^2(\R^3)$. Dann wird die eindeutige Lösung $u \in C^2([0,\infty) \times \R^3)$ für das Cauchy-Problem der 3-dimensionalen Wellengleichung
+\begin{align*}
+	\partial^2_t u - \Delta_x u &= 0 \, , \quad \qquad \! \! t >0, x \in \R^3 \\
+	u(0,x) & = \varphi (x) \, , \quad x \in \R^3 \\
+	\partial_t u(0,x)& = \psi(x) \, , \quad x \in \R^3 .
+\end{align*}
+durch die Kirchhoffsche Formel gegeben.
+\end{theorem}
+
+\begin{proof}
+Existenz: Nachrechnen (Darbeoux, Kapitel 5).
+
+Eindeutigkeit: Siehe oben.
+\end{proof}
+
+\begin{bem}
+\label{bem:9.7}
+Lösungen der Wellengleichung (Prototyp für hyperbolische Gleichungen) können für strikt positive Zeiten weniger regulär sein als die Anfangswerte (im Gegensatz zu parabolischen Gleichungen wie z.B. die Wärmeleitungsgleichung, vgl. nächstes Kapitel), d.h. beispielsweise $\varphi \in C^k, \psi \in C^{k-1} \Ra u \in C^{k-1}$ (Regularitätsverlust).
+\end{bem}
+
+\subsubsection{Lösung der Wellengleichung im $\R^2$}
+
+Problem: Es gibt keine Transformation, die die 2-dimensionale Gleichung auf eine 1-dimensionale reduziert. 
+
+Ausweg: Wir betrachten das 2-dimensionale Problem als 3-dimensionales, in dem wir $x_3 := 0$ setzen (in der \index{Kirchhoffsche Formel}Kirchhoffschen Formel).
+
+\begin{figure}[ht!]
+      \centering
+      \begin{pspicture}(-3,-1)(3,3.5)
+      \pscircle(0,1){2cm}
+      \psellipse(0,1)(2,0.6)
+      \psline(0,1)(-1,1)
+      \psline(0,1)(-1,2.73)
+      \psline(-1,1)(-1,2.73)
+      \pswedge(-1,1){0.3}{0}{90}
+      \psdot[dotsize=1.2pt](-0.89,1.11)
+      \psdot(-1,2.73)
+      \rput(-1.4,3.1){$(y,T(y))$}
+      \rput(-1,0.8){$y$}
+      \rput(-0.3,2.1){$t$}
+      \rput(0.2,1){$\bar x$}
+      \rput(3,-0.7){$\partial\B_{\R^2}(x,t)$}
+      \rput(3.4,2){$\partial \B_{\R^3} (\bar x,t)$}
+      \psline{->}(2.1,-0.6)(1,0.45)
+      \psline{->}(2.5,2)(1.9,1.8)
+      \end{pspicture}
+     \caption{Transformation vom $\R^2$ in den $\R^3$}
+\end{figure}
+
+Es sei $\bar x :=(x_1,x_2,0)$ mit $x = (x_1,x_2) \in \R^3$, beachte
+\begin{align*}
+	\int_{\partial\B_{\R^3} (\bar x,t)} h(y) \d \sigma(y) \stackrel[T(y):=\sqrt{t^2 -\abs{x-y}^2}]{\scriptsize\text{Transformation}}= 2 \int_{\B_{\R^2} (x,t)} h(y) \sqrt{1+\abs{\nabla y T(y)}^2} \d \sigma(y) \, .
+\end{align*}
+Daraus folgt mit Nachrechnen (vgl. Kirchhoffsche Formel), dass die Lösung der 2-dimensionalen Wellengleichung wie folgt lautet:
+\[
+	u(t,x) = \frac 1{2\pi t^2} \int_{\B_{\R^2} (x,t)} \frac{t \varphi(y) + t^2 \psi (y) + t \nabla \varphi (y) \cdot (y-x)}{\sqrt{t^2-\abs{x-y}^2}} \d y \, .
+\]
+Dies ist die \idx{Poisson-Formel}.
+
+\begin{bem}
+\label{bem:9.8}
+\begin{enumerate}[(a)]
+\item Die Wellengleichung lässt sich in beliebigen Dimensionen $n>3$ lösen (Fallunterscheidung: $n \in 2\N +1$ bzw. $ n \in 2\N$, vgl. Evans).
+\item Für $n = 1, 3$ (bzw. allgemein $n \in 2\N +1$) hängt die Lösung $u(t,x)$ nur von den Anfangsdaten $\varphi, \psi$ auf der Oberfläche $\partial \B(x,t)$ ab. (\idx{Huygens-Prinzip})
+
+Für $n =2$ (bzw. allgemein $n \in 2\N$) hängt $u(t,x)$ von den Anfangsdaten $\varphi, \psi$ auf ganz $\B(x,t)$ ab.
+\end{enumerate}
+\end{bem}
+
+\subsubsection{Cauchy-Problem für die inhomogene Wellengleichung}
+
+Wir betrachten
+\begin{align*}\label{eq:IW}\tag{IW}
+\begin{aligned}
+	\partial^2_t u - \Delta_x u &= f(t,x) \, , \, \, \,  t >0, x \in \R^n \\
+	u(0,x) & = \varphi (x) \, , \quad x \in \R^n \\
+	\partial_t u(0,x)& = \psi(x) \, , \quad x \in \R^n .
+\end{aligned}
+\end{align*}
+Sei $u_1$ Lösung für $f\equiv 0$ (vgl. vorher) und $u_2$ Lösung für $\varphi \equiv 0, \psi \equiv 0$. Dann folgt $u_1+u_2 =: u$ löst \eqref{eq:IW}. 
+
+\begin{satz}
+\label{satz:9.9}
+Sei $f\in C^{\lfloor \frac n2\rfloor +1} (\R^+ \times \R^n)$. Für $s>0$ sei $v = v(s,t,x)$ die $C^2$-Lösung von
+\[
+	\partial_t^2 v-\Delta_x v = 0\, ,\quad v(s,0,x) = 0\, ,\quad \partial_t v(s,0,x) = f(s,x)\, .
+\]
+Dann löst
+\[
+	u_2 (t,x) := \int_0^t v(s,t-s,x) \d s
+\]
+das Problem \eqref{eq:IW} für $\varphi\equiv 0, \psi \equiv 0$.
+\end{satz}
+
+\begin{proof}
+Es gilt $u_2 (0,x) = 0$.
+\begin{align}\label{eq:9.11}
+	\partial_t u_2(t,x) = \underbrace{v(t,0,x)}_{=0} + \int_0^t \partial_t v(s,t-s,x)\d s
+\end{align}
+Dann folgt $\partial_t u_2(0,x) = 0$.
+\begin{align*}
+	\stackrel{\scriptsize\eqref{eq:9.11}}\Ra \partial_t^2 u_2(t,x) & = \underbrace{\partial_t v(t,0,x)}_{=f(t,x)} + \int_0^t \underbrace{\partial_t^2 v(s,t-s,x)}_{=\Delta_x v(s,t-s,x)} \d s \\
+	& = f(t,x) + \Delta_x u_2 (t,x) \qedhere
+\end{align*}
+\end{proof}
+
+\section{Wellengleichung auf beschränktem Gebiet $\Omega$}
+
+\underline{Idee:} Wir wollen versuchen die Wellengleichung auf einem beschränkten Gebiet durch Variablenseparation zu lösen, d.h. $u(t,x) = w(t) v(x)$.
+
+ \begin{figure}[ht!]
+      \centering
+      \begin{pspicture}(-3,-1)(3,2.5)
+      		\psccurve(-2,1)(0.6,2)(1.2,0.8)(2,-0.5)
+		\rput(1,0){$\Omega$}
+      \end{pspicture}
+      \caption{Beschränktes $C^\infty$-Gebiet $\Omega$}
+ \end{figure}
+
+Sei $\Omega \subset \R^n$ ein beschränktes $C^\infty$-Gebiet. Wir betrachten das Cauchy-Problem für die homogene Wellengleichung in $\Omega$.
+\begin{align*}
+	&\partial^2_t u - \Delta_x u  = 0 \, , \quad t > 0, x \in \Omega \\
+	&\hspace{2em} u(t,x)  = 0 \, , \quad t > 0, x \in \partial \Omega \quad\text{Dirichletrandbedinung} \\
+	&\hspace{0.6em} \left.\begin{aligned}
+		u(0,x) & = u^0(x) \, , \quad x \in \Omega \\
+		\partial_t u(0,x) & = u^1(x) \, , \quad x \in \Omega  
+	\end{aligned}\quad \, \right\} \text{ Anfangswerte}
+\end{align*}
+Abstrakte Formulierung: Wir definieren $A: \mathring W_2^2 (\Omega) \rightarrow L_2(\Omega), W \mapsto -\Delta_x W$. Daraus folgt $A \in \mathcal L(\mathring W_2^2 (\Omega) , L_2(\Omega))$.
+
+Man beachte, dass die Randbedingung $u|_{\partial \Omega}=0$ wird in den Definitionsbereich $\operatorname{dom} (A) = \mathring W^2_2 (\Omega)$ (vgl. Kapitel 6: $\gamma_0 \omega = 0 \, \fa \, \omega \in \mathring W^2_2 (\Omega)$).
+
+Wir betrachten die abstrakte Wellengleichung mit $\dot u := \partial_t u, \ddot u :=\partial_{tt} u$ als Gleichung im Hilbertraum $H=L_2(\Omega)$:
+\begin{align*}
+	\ddot u + Au & = 0 \, ,\quad t >0 \\
+	u(0) & = u^0 \\
+	\dot u(0) & = u^1
+\end{align*}
+mit (gesuchter) Funktion $u \in C^2([0,\infty),H), u(t) \in \operatorname{dom} (A) = \mathring W^2_2(\Omega)$. Somit haben wir eine gewöhnliche Differentialgleichung im Hilbertraum $H=L_2(\Omega)$.
+
+\begin{vor}
+\begin{enumerate}[(a)]
+\item $H$ ist ein seperabler, komplexer Hilbertraum mit $\dim H = \infty$, Skalarprodukt $( \cdot | \cdot )$ und Norm $\norm{\, \cdot \, }$.
+\item $\operatorname{dom}(A)$ ist Unterraum von $H, A \in \mathcal L(\operatorname{dom}(A),H)$.
+\item $A$ ist selbstadjungierter Operator (Notation: $A = A^\ast$), d.h. $(Au | v) = (u | Av) \, \fa \, u,v \in \operatorname{dom} (A)$.
+\item $A$ ist abgeschlossenen (Notation: $A \in \mathcal A(H)$), d.h. $\fa $ Folgen $(u_n)$ in $\operatorname{dom}(A)$ mit $u_n \rightarrow u$ in $H$ und $Au_n \rightarrow v$ in $H$ gilt: $u \in \operatorname{dom}(A)$ und $Au = v$.
+\item Es existiert eine Orthonormalbasis $\{\varphi_j \with j \in \N\}$ in $H$ bestehend aus Eigenvektoren aus $A$ mit entsprechenden Eigenwerten $\{\lambda_j \with j \in \N\}$, d.h. $A\varphi_j = \lambda_j \varphi_j$ und $\lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_j \xrightarrow[j\ra \infty]{} \infty$.
+\end{enumerate}
+\end{vor}
+
+\begin{bsp}
+\label{bsp:9.10}
+Sei $\Omega \subset \R^n$ ein beschränktes $C^\infty$-Gebiet.
+\begin{enumerate}[(a)]
+\item Sei $H:= L_2(\Omega), \operatorname{dom}(A) :=\mathring W^2_2 (\Omega), Aw := -\Delta_x w, w \in \mathring W^2_2 (\Omega)$. Es ist zu zeigen, dass die obigen Voraussetzungen erfüllt sind.
+\begin{proof}
+Es ist noch zu zeigen, dass $A \in \mathcal A(L_2(\Omega))$. Es ist $A=A^\ast$, da mit Gauß gilt
+\[
+	\int_\Omega -\Delta_x u \bar v \d x = \int_\Omega u(-\Delta_x \bar v )\d x \quad \fa \, u,v \in \mathring W^2_2(\Omega) \, .
+\]
+Wegen Theorem~\ref{theorem:7.37}, Bemerkung~\ref{bem:7.38} müssen wir nur zeigen, dass $A \in \mathcal A(H)$. Seien $w_j \in \mathring W^2_2(\Omega)$ mit $w_j \rightarrow w$ in $L_2 (\Omega), -\Delta_x w_j \rightarrow v$ in $L_2(\Omega)$.
+
+Es ist zu zeigen, dass $w \in \mathring W^2_2(\Omega), -\Delta_x w = v$.
+
+Es ist $\mathring W^2_2(\Omega) = \operatorname{cl}_{W^2_2(\Omega)} \D(\Omega)$ und es sei $\tilde e_\Omega$ die triviale Fortsetzung. 
+\begin{align}
+	\Ra \ & \tilde e_\Omega \in \mathcal L(\mathring W^2_2(\Omega), W^2_2(\Omega)), W^2_2 (\R^n) \stackrel[\scriptsize\text{Thm.}~\ref{theorem:8.20}]{}\cong H^2(\R^n) \notag \\
+	\Ra : & \tilde w_j := \tilde e_\Omega w_j \longrightarrow \tilde e_\Omega w =: \tilde w \text{ in } L_2(\R^n) \notag \\
+	& - \Delta_x \tilde w_j \longrightarrow \tilde e_\Omega v =: \tilde v \text{ in } L_2(\R^n) \notag\\
+	\Ra \ & (1-\Delta_x) \tilde w_j \longrightarrow \tilde w + \tilde v \text{ in } L_2(\R^n) \notag \\
+	\intertext{mit Fouriertransformation und Plancherel folgt}
+	&1-\Delta_x \in \mathcal L(W^2_2 (\R^n), L_2(\R^n)) \text{ mit Inversen }\notag \\
+	& (1-\Delta_x)^{-1} \in \mathcal L(L_2(\R^n), W^2_2(\R^n)) \notag \\
+	\Ra \ & \underbrace{\tilde w_j}_{\scriptsize\parbox{1.4cm}{\centering$\longrightarrow \tilde w$  \\ in $L_2(\R^n)$}}\longrightarrow (1-\Delta_x)^{-1} (\tilde w + \tilde v) \text{ in } W^2_2 (\R^n) \label{eq:9.12} \\
+	\Ra \ & (1-\Delta_x)^{-1} \tilde w + \tilde v = \tilde w \in H^2(\R^n) = W^2_2(\Omega) \text{, da $L_2$ Hausdorffsch} \notag \\
+	\Ra \ & (1-\Delta_x) \tilde w = \tilde w + \tilde v \label{eq:9.13} \\
+	& - \Delta_x \tilde w = \tilde v \label{eq:9.14} 
+\end{align}
+Aus Fouriertransformation und Plancherel folgt mit Theorem~\ref{theorem:8.21}, dass $1-\Delta : H^2 (\R^n) \rightarrow L_2(\R^n)$  ein isometrischer Isomorphismus ist. Also gilt
+\begin{align*}
+	&\hspace{1.07cm} w = r_\Omega \tilde w \stackrel{\scriptsize\eqref{eq:9.13}}\in W^2_2(\Omega) \text{ (vgl. Beweis von Theorem~\ref{theorem:6.12})} \\
+	&\,   -\Delta w \stackrel{\scriptsize\eqref{eq:9.14}}= v \text{ (also $Aw = v$)} \\
+& \left.
+\begin{aligned}
+	\stackrel{\scriptsize\eqref{eq:9.12}}\Ra & w_j = r_\Omega \tilde w_j \longrightarrow r_\Omega \tilde w = w \text{ in } W^2_2(\Omega) \\
+	& w_j \in \mathring W^2_2(\Omega), \mathring W^2_2(\Omega) \text{  abg. UVR von } W^2_2(\Omega)
+\end{aligned}\, 
+\right\} \Ra w \in \mathring W^2_2 (\Omega) \, ,
+\end{align*}
+d.h. $w \in \operatorname{dom}(A)$.
+\end{proof}
+\item Sei $H:=L_2(\Omega), \operatorname{dom}(A) :=\{w \in W^2_2(\Omega) \with \partial_j w = 0 \text{ auf } \partial \Omega\}, Aw := -\Delta_x w$. Daraus folgt, dass die Generalvoraussetzungen von oben erfüllt sind (ohne Beweis).
+\end{enumerate}
+\end{bsp}
+
+\subsubsection{Produktansatz für "`wellenförmige"' Lösungen}
+
+Es sei $0 \neq v \in H, w : \R^+ \rightarrow \C$ mit $u(t) := w(t) v$ (Separation der Variablen). Dann ist der Ansatz: $u_{tt} = u_{xx}, u = w(t) g(x)$, damit erhalten wir
+\[
+	w_{tt} g = w g_{xx} \Ra \frac{w_{tt}}{w}=\frac{g_{xx}}g = \lambda \, ,
+\]
+also zwei Eigenwertprobleme. (Diesen Ansatz verallgemeinern wir in Banachräumen.)
+
+Es sei $u(t)$ Lösung von
+\begin{align*}
+	& \ddot u + A u = 0 \, , \quad t > 0 \text{ (in } H) \\
+	\stackrel{\scriptsize\text{formal}}\Ra \, & \ddot w (t) v + w(t) Av = 0 \\
+	\Longleftrightarrow\ & Av = -\frac{\ddot w(t)}{w(t)} v \quad \fa \, t > 0 \\
+	&  - \frac{\ddot w(t)}{w(t)} \equiv \text{const.} = \lambda \in \C \, .
+\end{align*}
+Somit ist folgendes Problem zu lösen.
+\[
+	\left| \, 
+	\begin{aligned}
+		-\ddot w & = \lambda w \, , \quad t > 0 \\
+		Av & = \lambda v \, , \quad \text{also } \lambda = \lambda_j \text{ für ein } j \in\N, v = \varphi_j
+	\end{aligned}
+	\right.
+\]
+Aus der gewöhnlichen Differentialgleichung folgt $w_j(\, \cdot \,, \alpha_j, \beta_j)$ mit $\alpha_j, \beta_j \in \R$ und
+\[
+	w_j(\, \cdot\, , \alpha_j, \beta_j) = \begin{cases}
+							\alpha_j e^{t\sqrt{\abs{\lambda_j}}} + \beta_j e^{-t \sqrt{\abs{\lambda_j}}} & , \lambda_j < 0 \\
+							\alpha_j + t \beta_j & , \lambda_j = 0 \\
+							\alpha_j \cos(\sqrt{\lambda_j} t) + \beta_j \sin(\sqrt{\lambda_j} t) & , \lambda_j > 0
+						\end{cases}.
+\]
+Dann ist $u_j(t) := w_j(t,\alpha_j,\beta_j)\varphi_j$ eine Lösung von $\ddot u + Au = 0$.
+
+\begin{bem*}
+Für $\lambda_j > 0$ heißt $u_j$ Eigenschwingung mit der Eigenfrequenz $v_j = \frac{\sqrt{\lambda_j}}{2\pi}$.
+\end{bem*}
+
+Als Ansatz wählen wir nun
+\[
+	u(t) := \sum u_j (t,\alpha_j,\beta_j)\varphi_j
+\]
+ist Lösung von
+\begin{align}
+\label{eq:9.15}
+\begin{aligned}
+\ddot u + Au = 0 \,   \\
+u(0) = u^0 \, , \\
+\dot u (0) = u^1 \, .
+\end{aligned}
+\end{align}
+\begin{align*}
+\Ra u^0 &= u(0) = \sum_j w_j (0,\alpha_j,\beta_j) \varphi_j \\
+u^1 &= \dot u(0) = \sum_j \dot w_j (0,\alpha_j,\beta_j) \varphi_j \\
+\stackrel{\scriptsize\text{ONB}}\Ra (u^0|\varphi_j) & = w_j(0,\alpha_j,\beta_j) \, , \\
+(u^1|\varphi_j) & = \dot w_j(0,\alpha_j,\beta_j) \quad \fa \, j  
+\end{align*}
+Löse das lineare Gleichungssystem für $t = 0$ (indem wir in die gewöhnliche DGL einsetzen)
+\begin{align}
+\label{eq:9.16}
+\begin{aligned}
+	\Ra \alpha_j & = \begin{cases}
+					\frac 1 2 (u^0|\varphi_j) + \frac 1{2\sqrt{\abs{\lambda_j}}} (u^1|\varphi_j) & , \lambda_j < 0 \\
+					(u^0|\varphi_j) & , \lambda_j \geq 0 
+				\end{cases} \\
+	\beta_j & = \begin{cases}
+				\frac 12 (u^0|\varphi_j) - \frac 1{2\sqrt{\abs{\lambda_j}}} (u^1|\varphi_j) & , \lambda_j < 0 \\
+				(u^1|\varphi_j) & , \lambda_j = 0 \\
+				\frac 1{\sqrt{\lambda_j}}(u^1|\varphi_j) & , \lambda_j > 0
+			\end{cases}
+\end{aligned}
+\end{align}
+Formal gilt: \eqref{eq:9.15} besitzt eine eindeutige Lösung. Sie wird durch
+\[
+	u(t) = \sum_j w_j (t,\alpha_j,\beta_j) \varphi_j
+\]
+mit $\alpha_j, \beta_j$ aus \eqref{eq:9.16} gegeben. Hierbei tritt jedoch das Problem auf, ob die Reihe überhaupt absolut konvergiert.
+
+\begin{defi}
+Für alle $s \geq 0$ definieren wir
+\[
+	H_A^s := \left( \Big\{x \in H \with \sum_j  \abs{\lambda_j}^{2s} \abs{(x|\varphi_j)}^2 < \infty \Big\}, (\cdot | \cdot )_{H_A^s} \right)
+\]
+mit $(x|y)_{H_A^s} := (x|y) + \sum\limits_j \abs{\lambda_j}^{2s} (x|\varphi_j) \overline{(y |\varphi_j)}$.
+\end{defi}
+
+\begin{satz}
+\label{satz:9.11}
+Für alle $s \geq 0$ gilt:
+\begin{enumerate}[\rm(i)]
+\item $H_A^s$ ist ein Hilbert-Raum, $\mathring H_A^s = H$.
+\item Für $0 \leq t\leq s$ gilt: $H_A^s \stackrel{d}\hookrightarrow H_A^t$.
+\item $A\in \mathcal L(H_A^{s+1},H_A^s)$. 
+\end{enumerate}
+\end{satz}
+
+\begin{proof}
+Siehe Skript.
+\end{proof}
+
+\begin{kor}
+\label{kor:9.12}
+$\operatorname{dom}(A) = H_A^1$ und $Ax = \sum_j \lambda_j (x|\varphi_j) \varphi_j, \, \fa\, x \in \operatorname{dom}(A)$.
+\end{kor}
+
+\begin{proof}
+Aus Satz~\ref{satz:9.11} folgt $H_A^1 \subset \operatorname{dom}(A)$. Sei $x \in \operatorname{dom}(A)$, dann folgt $Ax \in H$.
+\begin{align}
+\label{eq:9.17}
+\stackrel{\scriptsize\text{ONB}}\Ra & Ax = \sum_j (Ax | \varphi_j) \varphi_j \stackrel{A=A^\ast}= \sum_j \lambda_j (x | \varphi_j) \varphi_j \\
+\stackrel{\scriptsize\text{ONB}}\Ra & \norm x^2_{H^1_A} = \norm x^2 + \sum_j \abs{\lambda_j}^2 \abs{(x|\varphi_j)}^2 \stackrel{\scriptsize\eqref{eq:9.17}}= \norm x^2 + \norm{Ax}^2 < \infty \, ,
+\notag
+\end{align}
+d.h. $x \in H^1_A$.
+\end{proof}
+
+\begin{theorem}
+\label{theorem:9.13}
+Es gelte die Generalvoraussetzung von oben $($Voraussetzungen$)$. Dann gilt: Für alle $(u^0,u^1) \in H_A^1 \times H^{\frac 1 2}_A \, \exists ! $ Lösung $u$ des Anfangswertproblems 
+\[
+	\ddot u + Au = 0 \, , \quad t > 0 , u(0) = u^0, \dot u (0 )= u^1
+\]
+und es gilt
+\[
+	u \in C(\R^+,H^1_A) \cap C^1\Big(\R^+,H^{\frac 1 2}_A\Big) \cap C^2 (\R^+, H) \, .
+\]
+Sie wird gegeben durch die Reihe
+\[
+	u(t) = \sum_j w_j(t) \varphi_j
+\]
+mit $t > 0$ $($oder $t\in \R)$ mit $\ddot w_j + \lambda_j w_j = 0, w_j(0) = (u^0|\varphi_j),\dot w_j(0) = (u^1|\varphi_j) \, \fa \, j \in \N$.
+\end{theorem}
+

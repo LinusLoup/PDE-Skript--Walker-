@@ -1,0 +1,9 @@
+This is makeindex, version 2.15 [TeX Live 2011] (kpathsea + Thai support).
+Scanning input file Skript.idx....done (129 entries accepted, 0 rejected).
+Sorting entries....done (895 comparisons).
+Generating output file Skript.ind....
+## Warning (input = Skript.idx, line = 95; output = Skript.ind, line = 165):
+   -- Conflicting entries: multiple encaps for the same page under same key.
+done (194 lines written, 1 warning).
+Output written in Skript.ind.
+Transcript written in Skript.ilg.

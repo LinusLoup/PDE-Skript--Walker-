@@ -1,0 +1,573 @@
+\newchapter{Sobolevräume}
+
+Auch in diesem Kapitel sei $\emptyset\neq\Omega\subset\R^n$ offen.
+
+\begin{defi}
+  Seien $1\leq p\leq\infty$ und $m\in\N$. Die Menge
+  \[
+  W_p^m(\Omega):=\left(
+    \{u\in L_p(\Omega)\with\partial^\alpha u\in L_p(\Omega)\,\fa\,\abs a\leq m\}
+    , \norm \cdot_{W_p^m}
+  \right)
+  \]
+  heißt \idx{Sobolevraum} der Ordnung $m$. Dabei ist 
+  \[
+  \norm u_{W_p^m}:=\norm u_{W_p^m(\Omega)}:=
+  \left(
+    \sum_{\abs\alpha\leq m}\norm{\partial^\alpha u}_{L_p}^p
+  \right)^{\frac 1p},
+  \]
+  wenn $1\leq p<\infty$. Im Fall $p=\infty$ ist $\norm u_{W_p^m}:=\max_{\abs\alpha\leq m}\norm{\partial^\alpha u}_\infty$.
+\end{defi}
+
+\begin{bem}
+  \label{bem:6.1}
+  \begin{enumerate}[\rm(a)]
+  \item Es ist $W_p^0(\Omega)=L_p(\Omega)$.
+  \item Seien $u\in W_p^m(\Omega)$, $\varphi\in\D(\Omega)$ und $\alpha\in\N^n$ mit $\abs\alpha\leq m$. Dann gilt:
+    \[
+    \begin{split}
+      \int_\Omega\partial^\alpha u\cdot\varphi\d x
+      &=\<\partial^\alpha u,\varphi\>_{\D(\Omega)}
+      =(-1)^{\abs\alpha}\<u,\partial^\alpha\varphi\>_{\D(\Omega)} \\
+      &=(-1)^{\abs\alpha}\int_\Omega u\cdot\partial^\alpha\varphi\d x\, .
+    \end{split}
+    \]
+    $v = \partial^\alpha u$ bezeichnen wir dann als schwache Ableitung von $u$.
+  \end{enumerate}
+\end{bem}
+
+\begin{defi}
+  Seien $E,F$ normierte Vektorräume.
+  \begin{enumerate}[\rm(a)]
+  \item Dann ist $T\in\L(E,F)$ genau dann, wenn $T:E\ra F$
+    linear und stetig ist und wir definieren
+    \[
+    \norm T_{\mathcal{L}(E,F)}:=\sup_{\norm e_E=1}\norm{T(e)}_F=\sup_{
+      \begin{subarray}{c}
+        e\in E \\
+        e\neq 0
+      \end{subarray}}\frac{\norm{T(e)}_F}{\norm e_E}\, .
+    \]
+    Damit ist $\norm{T(e)}_F\leq\norm T_{\mathcal{L}(E,F)}\cdot\norm
+    e_E$, d.h. $T$ ist  ein beschränkter Operator.
+  \item Wir schreiben $E\hookrightarrow F$, wenn $E$ \idx{Untervektorraum} von $F$ ist und $i:[e\mapsto e]\in\L(E,F)$ (d.h.\ es existiert ein $c>0$, so dass $\norm e_F\leq c\cdot\norm e_E$ für alle $e\in E$).
+  \item Wir schreiben $E\xhookrightarrow{d}F$ für $E\hookrightarrow F$ und $E \overset d\subset F$.
+  \item $E\hhookrightarrow F$ bedeutet $E\hookrightarrow F$ und beschränkte Mengen in $E$ sind relativ kompakt in $F$, d.h. wenn $\bar E$ in $F$ kompakt ist.
+  \end{enumerate}
+\end{defi}
+
+\begin{theorem}
+  \label{theorem:6.2} 
+  Es seien $1\leq p\leq\infty$ und $m\in\N$. Dann gilt:
+  \begin{enumerate}[\rm(a)]
+  \item $W_p^m(\Omega)$ ist ein \idx{Banachraum}.
+  \item $H^m:=W_2^m(\Omega)$ ist ein \idx{Hilbertraum} mit Skalarprodukt 
+    \begin{align*}
+      (u\vert v)_{H^m}&:=\sum_{\abs\alpha\leq m}(\partial^\alpha u\vert\partial^\alpha v)_{L_2},\quad u,v\in H^m,
+      \intertext{wobei}
+      (u\vert v)_{L_2}&:=\int_\Omega u\bar v\d x\, .
+    \end{align*}
+  \item $W_p^m(\Omega)\hookrightarrow W_p^k(\Omega)$ mit $k\in\N$ und $k\leq m$.
+  \item Es ist $\partial^\alpha\in\L(W_p^m(\Omega),W_p^{m-\abs{\alpha}}(\Omega))$ für alle $\abs\alpha\leq m$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{satz}
+  \label{satz:6.3}
+  Es seien $1\leq p\leq\infty$ und $m\in\N$. Dann gilt:
+  \begin{enumerate}[\rm(a)]
+  \item \label{satz:6.3-1} Ist $\{\varphi_\epsilon\with\epsilon>0\}$ ein Mollifier, so gilt
+    \[ \varphi_\epsilon\ast u\xrightarrow[\epsilon\ra0]{}u\ \text{ in }\  W_p^m(\Omega)\, . \]
+
+  \item Es ist $\D(\R^n)\overset d\subset W_p^m(\R^n)$.
+  \end{enumerate}
+\end{satz}
+
+\begin{proof}
+  \begin{enumerate}[\rm(a)]
+  \item Satz~\ref{satz:3.4} liefert uns, dass $\varphi_\epsilon\ast u\ra u$ in $L_p(\Omega)$ gilt und
+    \[ \partial^\alpha(\varphi_\epsilon\ast u)=\varphi_\epsilon\ast\partial^\alpha u \ra\partial^\alpha u\ \text{ in }\ L_p(\Omega) \]
+    mit $\abs\alpha\leq m$. Damit folgt $\varphi_\epsilon\ast u\ra u$ in $W_p^m(\Omega)$.
+  \item Sei $u\in W_p^m(\R^n)$ und $\chi\in\D(\R^n)$ mit $0\leq\chi\leq1$, $\chi\rvert_{\bar\B(0,1)}=1$. Wir definieren
+    \[ u_\epsilon:=\chi(\epsilon\, \cdot)u\, , \]
+    und aus den Sätzen von Lebesgue und Leibniz folgt $u_\epsilon\in W_p^m(\Omega)$ mit $u_\epsilon\xrightarrow[\epsilon\ra0^+]{}u$ in $W_p^m(\Omega)$ (vgl.\ Beweis zu Satz~\ref{satz:3.4}).
+
+    Sei $\eta>0$ beliebig. Dann existiert ein $\epsilon>0$ mit $\norm{u_\epsilon-u}_{W_p^m}<\frac\eta2$. Aus Satz~\ref{satz:6.3} (a) folgt dann, dass ein $\delta>0$ mit 
+    \[ \norm{\underbrace{\varphi_\epsilon}_{\in\D(\R^n)}\ast u_\epsilon-u}_{W_p^m}<\frac\eta2 \]
+    existiert. \qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{defi}
+  Seien $m\in\N$, $u\in\D'(\R^n)$ und $\varphi\in\D(\Omega)$. Wir definieren
+  \[ \<r_\Omega u,\varphi\>_{\D(\R^n)}:=\<u,\varphi\>_{\D(\Omega)} \]
+  mit der \idx{Restriktion} $r_\Omega u:=u\rvert_\Omega$ für alle $u\in\Lloc(\Omega)$. Es ist $r_\Omega\in\L(W_p^m(\R^n),\allowbreak W_p^m(\Omega))$. Aus Theorem~\ref{theorem:3.6} folgt, dass $r_\Omega u\in\D'(\Omega)$.
+
+  Wir schreiben $\Omega\in\Ext^m$, wenn $\Omega$ die $C^m$-Erweiterungseigenschaft hat. Dann existiert ein $e_\Omega\in\L(W_p^k(\Omega),W_p^k(\R^n))$ mit $r_\Omega\circ e_\Omega=\id_{W_p^m(\Omega)}$ für alle $k\in\{0,\ldots,m\}$ und $1\leq p<\infty$.
+\end{defi}
+
+\begin{bem}
+  \label{bem:6.4} Es sei $\Omega\in\Ext^m$. Dann existiert ein $c=c(\Omega,m)>0$ mit
+  \[ \norm{e_\Omega u}_{W_p^k(\R^n)}\leq c\norm{u}_{W_p^k(\Omega)} \]
+  für alle $u\in W_p^k(\Omega)$ und
+  \[ \norm{r_\Omega v}_{W_p^k(\Omega)}\leq\norm v_{W_p^k(\R^n)} \]
+  mit $v\in W_p^k(\R^n)$.
+\end{bem}
+
+\begin{theorem}
+  \label{theorem:6.5}
+  Es sei $\R^n\in\Ext^m$ für alle $m\in\N$. Wir definieren
+  \[ \H :=\R^{n-1}\times(0,\infty)\in\Ext^m \]
+  für alle $m\in\N$. Sind nun $\Omega\in C^m$ und $\partial\Omega$ kompakt, dann ist $\Omega\in\Ext^m$.
+\end{theorem}
+
+\begin{proof}
+  Literatur.
+\end{proof}
+
+\begin{kor}
+  \label{kor:6.6} Sei $\Omega\in\Ext^m$. Dann ist $\D(\R^n)\overset{d}\subset W_p^k(\Omega)$ für $1\leq k\leq m$ und $1\leq p<\infty$.
+
+  Speziell gilt: Ist $\Omega\in C^m$ beschränkt, so ist $C^\infty(\bar\Omega)\overset{d}\subset W_p^k(\Omega)$ für $0\leq k\leq m$ und $1\leq p<\infty$.
+\end{kor}
+
+\begin{proof}
+  Seien $u\in W_p^k(\Omega)$ und $\epsilon>0$. Dann ist $e_\Omega u\in W_p^k(\R^n)$. Nach Satz~\ref{satz:6.3} existiert ein $v\in\D(\R^n)$ mit $\norm{v-e_\Omega u}_{W_p^k(\R^n)}<\epsilon$. Dann ist 
+  \[
+  \norm{r_\Omega v-\underbrace{r_\Omega e_\Omega u}_{=u}}_{W_p^k(\Omega)}\leq\norm{v-e_\Omega u}_{W_p^k(\R^n)}<\epsilon\, .
+  \]
+\end{proof}
+
+% ----------------- 10.05.2011 ----------------------------
+
+\begin{defi}
+  Seien $m\in\N$ und $1\leq p\leq\infty$. Wir definieren
+  \[ \mathring{W}_p^m(\Omega):=\operatorname{cl}_{W_p^m(\Omega)}\D(\Omega) \, , \]
+  d.h. der Abschluss von $\D (\Omega)$ bzgl. $\norm{\cdot}_{W_p^m(\Omega)}$.
+\end{defi}
+
+\begin{bem}
+  \begin{enumerate}[\rm(a)]
+  \item $\mathring{W}_p^m(\Omega)$ ist ein abgeschlossener Untervektorraum von $W_p^m(\Omega)$, also ein Banachraum. 
+  \item $\mathring{W}_p^m(\R^n)=W_p^m(\R^n)$ für $p<\infty$.
+    \begin{proof}
+      Satz~\ref{satz:6.3}.
+    \end{proof}
+  \end{enumerate}
+\end{bem}
+
+\begin{theorem}[\idx{Friedrichsche Ungleichung}]
+  \label{theorem:6.8} Sei $\Omega$ beschränkt und $1<p<\infty$. Dann existiert ein $c:=c(\Omega,p)$ mit
+  \[ \norm u_{L_p(\Omega)}\leq c\norm{\nabla u}_{L_p(\Omega)} \]
+  für $u\in\mathring{W}_p^1(\Omega)$.
+\end{theorem}
+
+\begin{proof}
+  Sei $R>0$ so, dass $\Omega\subset[-R,R]^n$ ist. Seien außerdem $u\in\D(\Omega)$ und $x=(y,t)\in\R^{n-1}\times\R$. Nach dem Mittelwertsatz ist
+  \[ u(x)=\int_{-R}^t\partial_u u(y,\tau)\d\tau \]
+  für $x\in\Omega$. Damit ist
+  \[
+  \abs{u(x)}^p\leq\left(
+    \int_{-R}^t 1\cdot\abs{\partial_u u(y,\tau)}\d\tau
+  \right)^p
+  \stackrel[\scriptsize\text{Hölder}]{1=\frac 1p+\frac 1{p'}}\leq
+  (2R)^{\frac p{p'}}\int_{-R}^t\abs{\partial_u u(y,\tau)}^p\d\tau\, .
+  \]
+  Schließlich erhalten wir
+  \[
+  \begin{split}
+    \int_\Omega\abs{u(x)}^p\d x&\leq c\int_{[-R,R]^n}\int_{-R}^t\abs{\partial_u u(y,\tau)}^p\d\tau\d(y,t) \\
+    &\stackrel[\d(y,t)=\d y\d\tau]{ \scriptsize\text{Fubini}}{\leq}
+    c\cdot 2R\int_\Omega\underbrace{\abs{\partial_u u(x)}^p}_{\abs{\nabla u(x)}^p}\d x
+    \leq c\int_\Omega\abs{\nabla u(x)}^p\d x\, .
+  \end{split}
+  \]
+  Somit erhalten wir $\norm u_{L_p(\Omega)}\leq c\norm{\nabla u}_{L_p(\Omega)}$ für alle $u\in\D(\Omega)\overset d\subset\mathring{W}_p^1(\Omega)$.
+\end{proof}
+
+\begin{bem}
+  \label{bem:6.9} Die Friedrichsche Ungleichung bleibt richtig, wenn $\Omega$ nur in einer Richtung (nicht notwendigerweise in Koordinatenrichtung) beschränkt ist.
+\end{bem}
+
+\begin{kor}
+  \label{kor:6.10} Es sei $\Omega$ beschränkt $($zumindest in einer Richtung$)$ und $1<p<\infty$. Dann ist $[u\mapsto\norm{\nabla u}_{L_p(\Omega)}]$ eine äquivalente Norm auf $\mathring{W}_p^1(\Omega)$. Für $p=2$ definiert $(\nabla u\vert\nabla v)$ ein normerzeugendes Skalarprodukt auf $\mathring W_2^1(\Omega)=:\mathring H^1(\Omega)$.
+\end{kor}
+
+\begin{proof}
+  Für alle $u\in\mathring W_p^1(\Omega)$ gilt
+  \[
+  \begin{split}
+    \norm{\nabla u}_{L_p(\Omega)}^p&\ \ \quad\leq \ \ \quad\norm u^p_{L_p(\Omega)}+\norm{\nabla u}^p_{L_p(\Omega)}=\norm u^p_{\mathring W_p^1(\Omega)} \\
+    &\underset{\text{\scriptsize Theorem~\ref{theorem:6.8}}}\leq(c(\Omega,p)+1)\norm{\nabla u}^p_{L_p(\Omega)}. \qedhere
+  \end{split}
+  \]
+\end{proof}
+
+\begin{lemma}[Sobolevsche Ungleichung]
+  \label{lemma:6.11} Für $1\leq p<n$ sei
+  \[ \frac 1{p\ast}:=\frac 1p-\frac 1n \]
+  der \idx{Sobolev-Exponent} mit $p\ast>p$. Dann existiert ein $c:=c(n,p)>0$ mit
+  \[ \norm u_{L_{p\ast}(\R^n)}\leq c\norm{\nabla u}_{L_p(\R^n)} \]
+  für alle $u\in W_p^n(\R^n)$.
+\end{lemma}
+
+\begin{proof}
+  Übung.
+\end{proof}
+
+\begin{theorem}[Sobolevscher Einbettungssatz]
+  \label{theorem:6.12} Seien $k,m\in\N^\ast$ mit $k \leq m$ und $  1\leq p,q<\infty$ mit
+  \[
+  \eq{eq:6.star}\frac 1p\geq\frac 1q\geq\frac 1p-\frac{m-k}n>0.
+  \]
+  Dann gilt:
+  \begin{enumerate}[\rm(a)]
+  \item \label{theorem:6.12-1} $\mathring W_p^m(\Omega)\overset d\hookrightarrow\mathring W_q^k(\Omega)$
+  \item \label{theorem:6.12-2} Ist $\Omega\in\Ext^m$, so ist $W_p^m(\Omega)\overset d\hookrightarrow W_q^k(\Omega)$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof} Wir beweisen die Aussagen in umgekehrter Reihenfolge.
+  \mbox{}
+  \begin{enumerate}[(b)]
+  \item Sei $\Omega\in\Ext^m$.
+    \begin{enumerate}[\rm(i)]
+    \item \label{proof:6.12-1} Sei $n>p$ und $\frac 1p\geq\frac 1q\geq\frac 1{p\ast}$. Wir erhalten das Diagramm
+      \[
+      \begin{diagram}
+        \node{W_p^1(\Omega)} \arrow{s,l}{e_\Omega} 
+        \arrow[2]{e,J} \node{} \node{L_q(\Omega)} \\
+        \node{W_p^1(\R^n)} 
+        \arrow{e,b,J}{\text{Lemma~\ref{lemma:6.11}}} 
+        \node{L_p(\R^n)\cap L_{p\ast}(\R^n)}
+        \arrow{e,b,J}{p\leq q\leq p\ast}
+        \node{L_q(\R^n)} \arrow{n,r}{r_\Omega}
+      \end{diagram}
+      \]
+    \item \label{proof:6.12-2} Sei $k=m-1$ und $u\in W_p^m(\Omega)$. Für alle $\alpha\in\N^n$ mit $\abs\alpha\leq m-1=k$ ist $\partial^\alpha u\in W_p^1(\Omega)$. Nach (i) ist $\partial^\alpha u\in L_q(\Omega)$ und es existiert ein $c>0$ mit
+      \[
+      \norm{\partial^\alpha u}_{L_q(\Omega)}\leq c\norm{\partial^\alpha u}_{W_p^1(\Omega)}\leq c\norm u_{W_p^m(\Omega)}
+      \]
+      für alle $\abs\alpha\leq m-1$. Also ist $W_p^m\hookrightarrow W_p^{m-1}$ für die Bedingungen aus \eqref{eq:6.star}.
+    \item \label{proof:6.12-3} Sei $k=m-2$ und damit wegen \eqref{eq:6.star} $p<\frac n2$. Wegen (ii) ist dann
+      \[
+      \eq{eq:6.12-1}
+      \left.
+      \begin{split}
+        W_p^m&\hookrightarrow W_r^{m-1} &&, \frac 1p\geq\frac 1r\geq\frac 1p-\frac 1n \\
+        W_r^{m-1}&\hookrightarrow W_p^{m-2} &&, \frac 1r\geq\frac 1q\geq\frac 1r-\frac 1n
+      \end{split}\qquad
+      \right\}
+      \]
+      Nach \eqref{eq:6.star} existiert ein $r$ mit \eqref{eq:6.12-1}. Es gilt also $W_p^m\hookrightarrow W_q^{m-2}$ für $\frac 1p\geq\frac 1q\geq\frac 1p-\frac 2n=\frac 1p-\frac{m-k}n$.
+    \end{enumerate}
+    Der Rest ergibt sich durch Induktion. Die Dichtheit folgt aus Korollar~\ref{kor:6.6}.
+
+  \item[(a)] Sei $\Omega$ beliebig und offen in $\R^n$. Es sei
+    \[ 
+    \tilde e_\Omega:=
+    \begin{cases}
+      u(x) &, x\in\Omega \\
+      0 &, x\in\R^n\setminus\Omega
+    \end{cases}
+    \]
+    die \idx{triviale Fortsetzung} von $u$ in $\R^n$. Es ist $\tilde e_\Omega\in\L(W_p^m(\Omega), W_p^m(\R^n))$ und $r_\Omega\circ\tilde e_\Omega=\id_{W_p^m(\Omega)}$. Wir nun haben die folgenden Beziehungen:
+    \[
+    \begin{diagram}
+      \node{\mathring W_p^m(\Omega)}
+      \arrow{s,l}{\tilde e_\Omega} \arrow{e,J} 
+      \node{W_q^n(\Omega)} \\
+      \node{W_p^m(\R^n)} \arrow{e,b,J}{\text{(\ref{theorem:6.12-2})}}
+      \node{W_q^n(\R^n)} \arrow{n,r}{r_\Omega}
+    \end{diagram}
+    \]
+    Damit erhalten wir $\mathring W_p^m(\Omega)\overset d\hookrightarrow\mathring W_q^k(\Omega)$.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Rellich-Kondrachov]
+  \index{Theorem~von!Rellich-Kondrachov}
+  \label{theorem:6.13}
+  Sei $\Omega$ beschränkt und $C^1$. Dann gilt
+  \[ W_p^1(\Omega)\hhookrightarrow L_q(\Omega) \]
+  für $1\leq p<n$ und $1\leq q<p\ast$.
+\end{theorem}
+
+\begin{proof}
+  Theorem~\ref{theorem:6.12} und Theorem~\ref{theorem:6.5} liefern uns $W_p^1(\Omega)\hookrightarrow L_q(\Omega)$.
+
+  Sei $B\subset W_p^1(\Omega)$ beschränkt. Dann genügt zu zeigen, dass $B$ relativ kompakt in $L_q(\Omega)$ ist. Mit Theorem~\ref{theorem:6.5} können wir o.B.d.A. annehmen, dass jedes $u\in B$ auf ganz $\R^n$ definiert ist und einen Träger in $V$ mit $U\Subset V=\mathring V\Subset\R^n$ hat. Außerdem ist $B$ beschränkt in $W_p^1(\Omega)$.
+
+  Sei $\{\varphi_\epsilon\with\epsilon>0\}$ ein Mollifier und $u\in B$, $x\in\Omega$. Dann ist
+  \begin{dmath}
+    %\eq{eq:6.13-1}
+    \label{eq:6.13-1}
+    \abs{\varphi_\epsilon\ast u(x)}\leq \int_{\epsilon\B^n}\abs{u(x-y)}\varphi_\epsilon(y)\d y 
+    \underset{z=\frac y\epsilon}{=}\int_{\B^n}\abs{u(x-\epsilon z)}\varphi(z)\d z 
+    \leq\norm\varphi_\infty\norm u_{L_1(\Omega)}\leq c(B)\, ,
+  \end{dmath}
+  da $W_p^1(V)\hookrightarrow L_p(V)\hookrightarrow L_1(V)$. Weiter ist
+  \begin{dmath}
+    % \eq{eq:6.13-2}
+    \label{eq:6.13-2}
+    \abs{\partial_j(\varphi_\epsilon\ast u)(x)}
+    \leq\int_{\epsilon\B^n}\abs{u(x-y)}\abs{\underbrace{\partial_j\varphi_\epsilon(y)}_{\frac 1\epsilon(\partial_j\varphi)(\frac y\epsilon)}}\d y
+    \leq\frac 1\epsilon\norm{\nabla\varphi}_\infty\norm u_{L_1(V)}\leq c(B)\epsilon^{-1}.
+  \end{dmath}
+  Der Mittelwertsatz liefert uns
+  \[
+  \eq{eq:6.13-3}
+  \abs{\varphi_\epsilon\ast u(x)-\varphi_\epsilon\ast u(y)}
+  \underset{\scriptsize ~\eqref{eq:6.13-2}}\leq\epsilon^{-1}c(B)\abs{x-y}
+  \]
+  mit $x,y\in\Omega$, $\epsilon>0$ und $u\in B$. 
+
+  Wir definieren $B_\epsilon:=\{\varphi_\epsilon\ast u\with u\in B\}$. Nach \eqref{eq:6.13-1}, \eqref{eq:6.13-3} und dem Satz von Arzela-Ascoli ist $B_\epsilon$ kompakt in $C(\bar\Omega)\hookrightarrow L_1(\Omega)$, d.h.
+  \[
+  \eq{eq:6.13-4}
+ B_\epsilon\;\text{ist relativ kompakt in}\;L_1(\Omega).
+ \]
+
+  Sei $u\in\D(\R^n)$. Dann ist
+  \begin{equation}
+  \begin{split}
+    \abs{u(x)-\varphi_\epsilon\ast u(x)}&\underset{z=\frac y\epsilon}\leq
+    \int_{\B^n}\abs{u(x)-u(x-\epsilon z)}\varphi(z)\d z \\
+    &\underset{\scriptsize\text{MWS}}=\int_{\B^n}\Abs{\int_0^1\nabla u(x-t\epsilon z)\cdot z\d t}\varphi(z)\d z \\
+    &\stackrel[\scriptsize\text{Schwartz}]{\scriptsize\text{Cauchy-}}\leq
+    \epsilon\norm\varphi_\infty\int_{\B^n}\int_0^1
+    \abs{\
+      \nabla u(\underbrace{x\;-\;t\;\epsilon\;z}_{\parbox{1.89cm}{\centering\scriptsize$\in V\;\text{für}\;\epsilon\;\text{klein},$ \\ $\; x\in\Omega$}})
+    }\d t\d z\, .
+  \end{split}
+  \end{equation}
+  Also ist
+  \[
+  \norm{u-\varphi_\epsilon\ast u}_{L_1(\Omega)}\leq c(\varphi)\epsilon\norm{\nabla u}_{L_1(V)}
+  \]
+  mit $u\in\D(\R^n)$. Aus Korollar~\ref{kor:6.6} und der Tatsache, dass $r_\Omega\D(\R^n)\overset d\subset W_p^1(\Omega)$ ist, folgt
+  \[
+  \eq{eq:6.13-5}
+  \norm{u-\varphi_\epsilon\ast u}_{L_1(\Omega)}\leq c(\varphi, B)\epsilon
+  \]
+  für alle $u\in B$.
+
+  Sei nun $r>0$ beliebig. Dann existiert ein $\epsilon_0>0$ mit $c_0(\varphi, B)\epsilon_0<\frac r2$. Aus \eqref{eq:6.13-4} folgt dann, dass $w_1,\ldots,w_l\in B_{\epsilon_0}$ existieren mit
+  \[
+  \eq{eq:6.13-6}
+  B_{\epsilon_0}\subset\bigcup_{j=1}^l\B_{L_1(\Omega)}\left(w_j,\frac r2\right).
+  \]
+  Für ein beliebiges $u\in B$ ist wegen \eqref{eq:6.13-5} $\norm{u-\varphi_{\epsilon_0}\ast u}_{L_1(\Omega)}<\frac r2$. Mit \eqref{eq:6.13-6} folgt die Existenz eines $j\in\{1,\ldots,l\}$ mit $\varphi_{\epsilon_0}\ast u\in\B_{L_1(\Omega)}(w_j,\frac r2)$. Also ist auch $u\in\B_{L_1(\Omega)}(w_j,\frac r2)$. Da $u$ beliebig ist, ist 
+  \[ B\subset\bigcup_{j=1}^l\B_{L_1(\Omega)}(w_j,r)\, . \]
+  Da $r>0$ beliebig war, ist $B$ total beschränkt, also relativ kompakt. Somit ist 
+  \[ \eq{eq:6.13-7} W_p^1(\Omega)\hhookrightarrow L_1(\Omega)\, . \]
+  
+  Seien nun $1<q<p\ast$ und $p<n$. Dann existiert ein $\Theta\in(0,1)$ mit
+  \[ \frac 1q=\frac \Theta1+\frac{1-\Theta}{p\ast}. \]
+  Die Hölder-Ungleichung liefert damit
+  \begin{dmath}
+    %\eq{eq:6.13-8}
+    \label{eq:6.13-8}
+    \norm u_{L_q(\Omega)}\leq\norm u_{L_1(\Omega)}^\Theta\norm u_{L_{p\ast}(\Omega)}^{1-\Theta}
+    \overset{\scriptsize\text{Lem.~\ref{lemma:6.11}}}\leq c\norm u_{L_1(\Omega)}^\Theta
+    \underbrace{\norm u_{L_q(V)}^{1-\Theta}}_{\leq c(B)}
+    \leq c(B)\norm u_{L_1(\Omega)}^\Theta\, .
+  \end{dmath}
+  Aus \eqref{eq:6.13-7}, \eqref{eq:6.13-8} und der Cauchy-Schwartzschen Ungleichung folgt dann $W_p^1(\Omega)\hhookrightarrow L_q(\Omega)$.
+\end{proof}
+
+\begin{bem}
+  \label{bem:6.14}
+  \begin{enumerate}[\rm(a)]
+  \item \label{bem:6.14-1} Es sei $\Omega$ beschränkt und $C^1$. Dann ist $W_p^1(\Omega)\hhookrightarrow L_q(\Omega)$ für $1\leq p<\infty$.
+    \begin{proof}
+      Aus $p<n$ folgt $p<p\ast$. $p\geq n(n-\epsilon)\ast\nearrow_{\epsilon\ra0}\infty$
+    \end{proof}
+  \item \label{bem:6.14-2} Sei $\Omega\subset\R^n$ offen und beschränkt. Dann ist $\mathring W_p^1(\Omega)\hhookrightarrow L_p(\Omega)$.
+    \begin{proof}
+      (\ref{bem:6.14-1}) $+$ triviale Fortsetzung.
+    \end{proof}
+  \end{enumerate}
+\end{bem}
+
+% -------------- 12.05.2011 --------------------------
+
+\begin{defi}
+  Es sind für $0<\nu<1$
+  \begin{align*} 
+      BUC^\nu(\Omega):=\left\{ u:\Omega\ra\K \with \norm
+        u_{BUC^\nu(\Omega)}< \infty \right\}
+        \intertext{mit}
+        \norm
+        u_{BUC^\nu(\Omega)}:=\sup_{x\in\Omega}\abs{u(x)} +\sup_{\
+          \begin{subarray}{c}
+            x,y\in\Omega \\
+            x\neq y
+          \end{subarray}
+        } \frac{\abs{u(x)-u(y)}}{\abs{x-y}^\nu} 
+\end{align*}
+und
+\begin{align*}
+      BUC^{k+\nu}(\Omega):=\left\{ 
+        u\in BUC^k(\Omega)\with \partial^\alpha u\in BUC^\nu(\Omega)\, \fa\, \abs\alpha \leq k \right 
+      \} .
+  \end{align*}
+\end{defi}
+
+\begin{theorem}[Sobolev-Morrey]
+  \label{theorem:6.15}
+  \index{Theorem~von!Sobolev-Morrey}
+  Es seien $m\in\N$, $1\leq p<\infty$ und $0\leq\nu\leq m-\frac np$ mit $\nu<m-\frac np$, falls $m-\frac np\in\N$. Dann gilt:
+  \begin{enumerate}[\rm(i)]
+  \item \label{theorem:6.15-1} $\mathring W_p^m(\Omega)\hookrightarrow BUC^\nu(\Omega)$
+  \item Ist $\Omega\in\Ext^m$, dann ist $W_p^m(\Omega)\hookrightarrow BUC^\nu(\Omega)=BUC^\nu(\bar\Omega)$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Adams ("`Sobolev Spaces"'), Triebel.
+\end{proof}
+
+\begin{bem*}
+  $-\Delta u=f$ in $\Omega$, $u\rvert_{\partial\Omega}=0$ und für $f\in C(\bar\Omega)$ gibt es im Allgemeinen keine Lösung $u\in C^2(\Omega)\cap C(\bar\Omega)$. Deshalb betrachten wir $u\in W_p^2(\Omega)$. Es ergibt sich dabei allerdings die Frage, wie wir $u\rvert_{\partial\Omega}=0$ interpretieren.
+\end{bem*}
+
+\begin{theorem}[\idx{Spursatz}]
+  \label{theorem:6.16}
+  Es sei $\Omega\subset\R^n$ und $C^2$. Dann gilt für $1<p<\infty$, dass ein $c>0$ existiert mit
+  \[ \norm{u\rvert_{\partial\Omega}}_{L_p(\partial\Omega)}\leq c\norm u_{W_p^1(\Omega)} \]
+  für alle $u\in C^\infty(\bar\Omega)$.
+
+  Die Restriktion $[u\mapsto u\rvert_{\partial\Omega}]$ lässt sich also eindeutig stetig zum Spuroperator $\gamma_0\in\L(W_p^1(\Omega),L_p(\partial\Omega))$ fortsetzen.
+\end{theorem}
+
+\begin{proof}
+  Sei $\nu$ die äußere Einheitsnormale an $\partial\Omega$ mit $\norm{\nu(x)}=1$ mit $x\in\partial\Omega$. $\nu$ kann zu einem $C^2$-Vektorfeld auf $\bar\Omega$ erweitert werden. Für $u\in C^\infty(\bar\Omega)$ ist
+  \begin{dmath*}
+    \int_{\partial\Omega}\abs u^p\d\sigma
+    =\int_{\partial\Omega}(\abs u^p\nu)\cdot\nu\d\sigma
+    \hiderel{\underset{\scriptsize\text{Gauß}}=}\int_\Omega\div(\abs u^p\nu)\d x
+    \leq\int_\Omega\sum_{j=1}^n\left(
+      p\abs u^{p-1}\cdot\abs{\partial_j u}\abs{\nu^j}
+      +\abs u^p\cdot\abs{\partial_j\nu^j}
+    \right)\d x 
+    \leq c\cdot\left(\norm\nu_{C^1(\bar\Omega)}\int_\Omega\sum_{j=1}^n\left(
+      p\abs u^{p-1}\cdot\abs{\partial_j u}+\abs u^p
+    \right) \d x\right)
+    \mkern-14mu\underset{\scriptsize\text{Young}}\leq c\cdot\int_\Omega\sum_{j=1}^n\left(
+      \abs u^p+\abs{\partial_j u}+\abs u^p
+    \right) \d x\, .
+  \end{dmath*}
+  Damit ist 
+  \[
+  \norm {u\rvert_{\partial\Omega}}_{L_p(\Omega)}\leq c\cdot\norm u_{W_p^1(\Omega)}
+  \]
+  für alle $u\in C^\infty(\bar\Omega)$. Mit Korollar~\ref{kor:6.6} folgt damit $C^\infty(\bar\Omega)\overset d\subset W_p^1(\Omega)$.
+
+  In den Übungen werden wir zeigen, dass eine Erweiterung $\gamma_0\in \L(W_p^1(\Omega),\allowbreak L_p(\partial\Omega))$ existiert mit $\gamma_0(u)=u\rvert_{\partial\Omega}$ für $u\in C\infty(\bar\Omega)$. Damit folgt die Behauptung.
+\end{proof}
+
+\begin{bem}
+  \label{bem:6.17}
+  Es seien $1<p<\infty$, $m\in\N^*$ und $\Omega\in C^2$ beschränkt. Dann gelten:
+  \begin{enumerate}[\rm(i)]
+  \item \label{bem:6.17-1} Sei
+    \begin{dseries*}
+      \begin{math}
+        \mathring W_p^m(\Omega)=\operatorname{cl}_{W_p^m(\Omega)}\D(\Omega)
+      \end{math},
+      \begin{math}
+        \partial^\alpha u\vert_{\partial\Omega}=0
+      \end{math}
+    \end{dseries*}
+    für alle $u\in\D(\Omega)$ und $\alpha\in\N^m$. Dann ist
+    \begin{dmath*}
+      \gamma_0(\partial^\alpha u)=0
+      \condition{für alle $u\in\mathring W_p^m(\Omega)$, $\abs\alpha\leq m-1$}.
+    \end{dmath*}
+  \item \label{bem:6.17-2} Gauß:
+    \begin{dmath*}
+      \int_\Omega\div(u)\d x = \int_{\partial\Omega}\gamma_0(u)\cdot \nu \d\sigma
+      \condition{für alle $u\in W_p^1(\Omega,\K^n)=(W_p^1(\Omega))^n$}.
+    \end{dmath*}
+  \end{enumerate}
+\end{bem}
+
+\begin{erinnerung}
+\[ -\Delta u = f \quad \text{in } \Omega \, , \quad u\vert_{\partial \Omega} = 0\]
+hat im Allgemeinen keine Lösung $u \in C^2(\Omega)$, falls $f \in C(\Omega)$. Nun muss also $u \in W_p^2(\Omega)$ sein, jedoch stellt sich dann die Frage, wie $u|_{\partial\Omega}$ zu interpretieren ist.
+
+Die Idee ist nun
+\[
+	u \stackrel{!}\in \mathring W^2_p = \{u \in W^2_p \with \gamma_0 u = 0\}
+\]
+und wenn $f\in L_p(\Omega)$, dann existiert genau ein $u \in \mathring W^2_p(\Omega)$ für $-\Delta u = f(u)$.
+\end{erinnerung}
+
+\begin{defi}
+Es sei $m\in \N, 1\leq p < \infty, 1 = \frac 1 p + \frac 1 {p'}$.
+\begin{enumerate}[(a)]
+\item Eine Folge $(u_j)$ in $L_p$ konvergiert schwach gegen $u \in L_p(\Omega)$
+\begin{align*}
+	&: \Longleftrightarrow u_j \rightharpoonup u \text{ in } L_p(\Omega) \\
+	& : \Longleftrightarrow \, \fa \, v \in L_{p'}(\Omega) : \int_\Omega u_j v \d x \longrightarrow \int_\Omega uv \d x \text{ in } \K \, .
+\end{align*}
+\item Eine Folge $(u_j) \in W^m_p(\Omega)$ konvergiert schwach gegen $u \in W_p^m (\Omega)$
+\begin{align*}
+	& : \Longleftrightarrow u_j \rightharpoonup u \text{ in } W_p^m(\Omega) \\
+	& : \Longleftrightarrow \partial^\alpha u_j \rightharpoonup \partial^\alpha u \text{ in } L_p(\Omega) \, \forall \, \abs\alpha \leq m \, .
+\end{align*}
+\end{enumerate}
+\end{defi}
+
+\begin{bem}
+Man kann "`schwache Konvergenz"' (bzw. "`schwache Topologie"') für allgemeine (z.B. Banach-/lokal konvexe Räume) definieren (s. z.B. Rudin). Wir haben in der Definition benutzt, dass gilt
+\[
+	(L_p(\Omega))' := \mathcal L(L_p(\Omega),\K) \, , \quad (L_p(\Omega))' \cong L_{p'} (\Omega) \, ,
+\]
+denn ist $v \in L_{p'} (\Omega)$, so ist
+\[
+	\langle v ,u\rangle := \int_\Omega vu \d x \, , \quad u \in L_p(\Omega) 
+\]
+und damit folgt mit Hölder, dass $\langle v, \, \cdot \, \rangle \in \mathcal L(L_p(\Omega), \K)$ gilt.
+
+Speziell gilt also $(L_2(\Omega))' \cong L_2(\Omega)$.
+\end{bem}
+
+\begin{bem}
+\label{bem:6.19}
+Sei $1\leq p < \infty, m \in \N$, dann ist:
+\begin{enumerate}[(a)]
+\item Ist $u_j \ra u$ in $W^m_p(\Omega)$, dann folgt $u_j \rightharpoonup u$ in $W^m_p(\Omega)$, d.h. "`starke Konvergenz ist stärker als schwache Konvergenz"'.
+\begin{proof}
+$\fa \, v \in L_{p'}(\Omega), \abs \alpha \leq m$ gilt
+\[
+	\Abs{\int_\Omega (\partial^\alpha u_j - \partial^\alpha u) v \d x} \stackrel[\scriptsize\text{Hölder}]{}\leq \norm v_{L_{p'}(\Omega)} \norm{\partial^\alpha u_j -\partial^\alpha u }_{L_p(\Omega)} \longrightarrow 0 \, .
+\] 
+\end{proof}
+\item Sei $1 < p < \infty, (u_j)\subset W^m_p(\Omega)$ beschränkt (bzgl. $\norm{\, \cdot\, }_{W^m_p}$), dann folgt, dass eine Teilfolge $(u_{j'})$ und ein $u \in W^m_p(\Omega)$ existiert, so dass $u_j \rightharpoonup u$ in $W^m_p(\Omega)$, d.h. beschränkte Folgen sind relativ schwach kompakt.
+\begin{proof}
+Vgl. Rudin.
+\end{proof}
+\item Sei $M\subset W^m_p(\Omega)$ konvex und abgeschlossen (bzgl. $\norm{\, \cdot\, }_{W^m_p}$), sowie $(u_j) \in M$ mit $u_j \rightharpoonup u $ in $W^m_p(\Omega)$, dann ist $u \in M$, d.h. "`abgeschlossene konvexe Mengen sind schwach abgeschlossen"' (Theorem von Mazun; ohne Beweis, vgl. Rudin).
+\item Es sei $u_j \rightharpoonup u $ in $W^p_m (\Omega)$, dann folgt $(u_j)$ ist beschränkt in $W^m_p(\Omega)$ (bzgl. $\norm{\, \cdot\, }_{W^m_p}$), d.h. "`schwach konvergente Folgen sind beschränkt"'.
+\begin{proof}
+Theorem von Mackey, vgl. Rudin.
+\end{proof}
+\item $u_ j \rightharpoonup u $ in $W^m_p(\Omega), u_j \rightharpoonup v$ in $W^m_p(\Omega)$, dann gilt $u=v$, d.h. "`Grenzwerte von schwach konvergenten Folgen sind eindeutig"'.
+\begin{proof}
+Aus Theorem~\ref{theorem:3.6} folgt die Behauptung.
+\end{proof}
+\item Sei $u_j \rightharpoonup u $ in $W^m_p(\Omega)$, dann folgt $\norm u_{W^m_p(\Omega)} \leq \lim \inf \norm{u_j}_{W^m_p(\Omega)}$.
+\end{enumerate}
+\end{bem}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "Skript"
+%%% End: 
